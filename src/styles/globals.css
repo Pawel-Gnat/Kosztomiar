@@ -1,0 +1,26 @@
+:root {
+  --text-color: black;
+  --primary-color: #fff1eb;
+  --secondary-color: #ace0f9;
+  --text-size: clamp(1.6rem, 3vw, 2rem);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  min-height: 100vh;
+  background-image: linear-gradient(
+    to top,
+    var(--primary-color) 0%,
+    var(--secondary-color) 100%
+  );
+}
