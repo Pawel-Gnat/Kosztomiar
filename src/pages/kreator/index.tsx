@@ -1,3 +1,10 @@
+import { DashboardNavbar } from '@/components/layout/DashboardNavbar/DashboardNavbar';
+
 export default function KreatorPage() {
-  return <p>KreatorPage</p>;
+  return (
+    <>
+      <DashboardNavbar />
+      <p>KreatorPage</p>
+    </>
+  );
 }
