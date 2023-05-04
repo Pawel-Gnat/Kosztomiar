@@ -1,3 +1,10 @@
+import Navbar from '@/components/layout/Navbar/Navbar';
+
 export default function LoginPage() {
-  return <p>LoginPage</p>;
+  return (
+    <>
+      <Navbar />
+      <p>LoginPage</p>
+    </>
+  );
 }
