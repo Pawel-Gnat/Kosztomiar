@@ -1,3 +1,9 @@
+import DashBoardLayout from '@/components/layout/DashboardLayout/DashboardLayout';
+
 export default function ProjektIDPage() {
-  return <p>ProjektIDPage</p>;
+  return (
+    <DashBoardLayout>
+      <p>ProjektIDPage</p>
+    </DashBoardLayout>
+  );
 }

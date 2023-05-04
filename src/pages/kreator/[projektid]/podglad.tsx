@@ -1,3 +1,10 @@
+import DashBoardLayout from '@/components/layout/DashboardLayout/DashboardLayout';
+import { DashboardNavbar } from '@/components/layout/DashboardNavbar/DashboardNavbar';
+
 export default function PodgladPage() {
-  return <p>PodgladPage</p>;
+  return (
+    <DashBoardLayout>
+      <p>PodgladPage</p>
+    </DashBoardLayout>
+  );
 }

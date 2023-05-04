@@ -1,5 +1,5 @@
 :root {
-  --text-color: black;
+  --text-color: #070606;
   --primary-color: #fff1eb;
   --secondary-color: #ace0f9;
   --text-size: clamp(1.6rem, 3vw, 2rem);

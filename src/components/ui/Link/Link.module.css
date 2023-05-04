@@ -1,0 +1,11 @@
+.navlink {
+  font-size: var(--text-size);
+  font-weight: bold;
+  color: var(--text-color);
+  text-align: center;
+  display: inline-block;
+  padding: 2rem;
+  margin: 1rem;
+  border: 1px solid var(--text-color);
+  border-radius: 100vw;
+}

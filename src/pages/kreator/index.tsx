@@ -1,10 +1,9 @@
-import { DashboardNavbar } from '@/components/layout/DashboardNavbar/DashboardNavbar';
+import DashBoardLayout from '@/components/layout/DashboardLayout/DashboardLayout';
 
 export default function KreatorPage() {
   return (
-    <>
-      <DashboardNavbar />
+    <DashBoardLayout>
       <p>KreatorPage</p>
-    </>
+    </DashBoardLayout>
   );
 }
