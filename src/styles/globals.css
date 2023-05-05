@@ -3,6 +3,7 @@
   --primary-color: #fff1eb;
   --secondary-color: #ace0f9;
   --text-size: clamp(1.6rem, 3vw, 2rem);
+  --border-radius: 10px;
 }
 
 * {
