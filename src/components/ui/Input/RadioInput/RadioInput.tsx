@@ -1,19 +1,19 @@
-import styles from './CheckboxInput.module.css';
+import styles from './RadioInput.module.css';
 import { useRef } from 'react';
 
 type Props = {
   content: string;
+  name: string;
   value: string;
   onChange: (value: string) => void;
 };
 
-export const CheckboxInput = (props: Props) => {
+export const RadioInput = (props: Props) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   function handleInput() {
-    if (inputRef.current) {
-      const value = inputRef.current.value;
-      props.onChange(value);
+    if (inputRef.current && inputRef.current.checked) {
+      props.onChange(props.value);
     }
   }
 
@@ -21,11 +21,11 @@ export const CheckboxInput = (props: Props) => {
     <label>
       {props.content}:
       <input
-        type="checkbox"
-        name={`measurement-unit-${props.content}`}
+        type="radio"
+        name={props.name}
         ref={inputRef}
-        value={props.value}
         onChange={handleInput}
+        value={props.value}
       />
     </label>
   );

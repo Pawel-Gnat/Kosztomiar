@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styles from './NewProjectForm.module.css';
 import { TextInput } from '@/components/ui/Input/TextInput/TextInput';
 import { CheckboxInput } from '@/components/ui/Input/CheckboxInput/CheckboxInput';
+import { RadioInput } from '@/components/ui/Input/RadioInput/RadioInput';
 
 type Project = {
-  id: string;
+  // id: string;
   name: string;
   measurements: string[];
   price: boolean;
@@ -14,7 +15,7 @@ type Project = {
 
 export default function NewProjectForm() {
   const [formData, setFormData] = useState<Project>({
-    id: new Date().getTime().toString(),
+    // id: new Date().getTime().toString(),
     name: '',
     measurements: [],
     price: false,
@@ -22,12 +23,19 @@ export default function NewProjectForm() {
     isLoading: false,
   });
 
-  function handlePriceSelection(e: React.ChangeEvent<HTMLInputElement>) {
-    setFormData((prevState) => ({ ...prevState, price: !prevState.price }));
+  function handlePriceSelection(value: string) {
+    setFormData((prevState) => ({
+      ...prevState,
+      price: value === 'true' ? true : false,
+    }));
   }
 
   function handleName(value: string) {
     setFormData((prevState) => ({ ...prevState, name: value }));
+  }
+
+  function handleCurrencySelection(value: string) {
+    setFormData((prevState) => ({ ...prevState, currency: value }));
   }
 
   function handleMeasurements(value: string) {
@@ -78,33 +86,41 @@ export default function NewProjectForm() {
       </div>
       <div>
         <p>Uwzględniać ceny w projekcie? </p>
-        <label>
-          Tak
-          <input type="radio" name="price" value="true" onChange={handlePriceSelection} />
-        </label>
-        <label>
-          Nie
-          <input
-            type="radio"
-            name="price"
-            value="false"
-            onChange={handlePriceSelection}
-          />
-        </label>
+        <RadioInput
+          content="Tak"
+          name="price"
+          onChange={handlePriceSelection}
+          value="true"
+        />
+        <RadioInput
+          content="Nie"
+          name="price"
+          onChange={handlePriceSelection}
+          value="false"
+        />
       </div>
 
       {formData.price ? (
         <div>
           <p>Wybierz walutę</p>
-          <label>
-            PLN <input type="radio" name="currency" value="PLN" />
-          </label>
-          <label>
-            EUR <input type="radio" name="currency" value="EUR" />
-          </label>
-          <label>
-            USD <input type="radio" name="currency" value="USD" />
-          </label>
+          <RadioInput
+            content="PLN"
+            name="currency"
+            onChange={handleCurrencySelection}
+            value="PLN"
+          />
+          <RadioInput
+            content="EUR"
+            name="currency"
+            onChange={handleCurrencySelection}
+            value="EUR"
+          />
+          <RadioInput
+            content="USD"
+            name="currency"
+            onChange={handleCurrencySelection}
+            value="USD"
+          />
         </div>
       ) : null}
       <button>Stwórz projekt</button>
