@@ -1,27 +1,21 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import styles from './NewProjectForm.module.css';
 import { TextInput } from '@/components/ui/Input/TextInput/TextInput';
 import { CheckboxInput } from '@/components/ui/Input/CheckboxInput/CheckboxInput';
 import { RadioInput } from '@/components/ui/Input/RadioInput/RadioInput';
-
-type Project = {
-  // id: string;
-  name: string;
-  measurements: string[];
-  price: boolean;
-  currency: string | null;
-  isLoading: boolean;
-};
+import { Project } from '@/types/types';
+import UserContext from '@/store/user-context';
 
 export default function NewProjectForm() {
   const [formData, setFormData] = useState<Project>({
-    // id: new Date().getTime().toString(),
+    id: new Date().getTime().toString(),
     name: '',
     measurements: [],
     price: false,
     currency: null,
     isLoading: false,
   });
+  const context = useContext(UserContext);
 
   function handlePriceSelection(value: string) {
     setFormData((prevState) => ({
@@ -52,9 +46,22 @@ export default function NewProjectForm() {
     }
   }
 
+  function clearForm() {
+    setFormData((prevState) => ({
+      ...prevState,
+      id: new Date().getTime().toString(),
+      name: '',
+      measurements: [],
+      price: false,
+      currency: null,
+      isLoading: false,
+    }));
+  }
+
   async function submitHandler(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log(formData);
+    context.setProjects(formData);
+    clearForm();
   }
 
   return (
