@@ -5,17 +5,20 @@ import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
 
 export default function ProjektIDPage() {
-  const [project, setProject] = useState([]);
+  const [project, setProject] = useState<Project>();
   const context = useContext(UserContext);
 
   const router = useRouter();
   const projectID = router.query.projektid;
 
   useEffect(() => {
-    const filteredProject = context.projects.filter(
+    const filteredProject = context.projects.find(
       (project: Project) => project.id === projectID,
     );
-    setProject(filteredProject);
+
+    if (filteredProject) {
+      setProject(filteredProject);
+    }
   }, [projectID, context.projects]);
 
   useEffect(() => {
@@ -25,7 +28,7 @@ export default function ProjektIDPage() {
   return (
     <DashBoardLayout>
       <p>ProjektIDPage</p>
-      <p>{project[0]?.name}</p>
+      {project && <p>{project.name}</p>}
     </DashBoardLayout>
   );
 }
