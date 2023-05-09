@@ -1,9 +1,9 @@
-import DashBoardLayout from '@/components/layout/DashboardLayout/DashboardLayout';
+import DashboardLayout from '@/components/layout/DashboardLayout/DashboardLayout';
 
 export default function KreatorPage() {
   return (
-    <DashBoardLayout>
+    <DashboardLayout>
       <p>KreatorPage</p>
-    </DashBoardLayout>
+    </DashboardLayout>
   );
 }

@@ -1,10 +1,13 @@
-import DashBoardLayout from '@/components/layout/DashboardLayout/DashboardLayout';
-import { DashboardNavbar } from '@/components/layout/DashboardNavbar/DashboardNavbar';
+import { ProjectLayout } from '@/components/layout/ProjectLayout/ProjectLayout';
+import { useProject } from '@/hooks/useProject';
 
 export default function UstawieniaPage() {
+  const project = useProject();
+
   return (
-    <DashBoardLayout>
+    <ProjectLayout>
       <p>UstawieniaPage</p>
-    </DashBoardLayout>
+      {project && <p>{project.name}</p>}
+    </ProjectLayout>
   );
 }
