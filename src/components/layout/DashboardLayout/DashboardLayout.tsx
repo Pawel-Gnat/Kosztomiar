@@ -1,12 +1,12 @@
 import { ReactNode } from 'react';
-import styles from './DashBoardLayout.module.css';
+import styles from './DashboardLayout.module.css';
 import { DashboardNavbar } from '../DashboardNavbar/DashboardNavbar';
 
 type Props = {
   children: ReactNode;
 };
 
-function DashBoardLayout(props: Props) {
+function DashboardLayout(props: Props) {
   return (
     <div className={styles.dashboard}>
       <DashboardNavbar />
@@ -15,4 +15,4 @@ function DashBoardLayout(props: Props) {
   );
 }
 
-export default DashBoardLayout;
+export default DashboardLayout;

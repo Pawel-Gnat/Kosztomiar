@@ -5,10 +5,12 @@ import { CheckboxInput } from '@/components/ui/Input/CheckboxInput/CheckboxInput
 import { RadioInput } from '@/components/ui/Input/RadioInput/RadioInput';
 import { Project } from '@/types/types';
 import UserContext from '@/store/user-context';
+import { getDate } from '@/components/utils/getDate';
 
 export default function NewProjectForm() {
   const [formData, setFormData] = useState<Project>({
     id: new Date().getTime().toString(),
+    createdDate: getDate(),
     name: '',
     measurements: [],
     price: false,
@@ -51,6 +53,7 @@ export default function NewProjectForm() {
       ...prevState,
       id: new Date().getTime().toString(),
       name: '',
+      createdDate: getDate(),
       measurements: [],
       price: false,
       currency: null,
