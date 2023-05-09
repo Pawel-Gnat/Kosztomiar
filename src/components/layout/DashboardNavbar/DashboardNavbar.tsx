@@ -1,8 +1,13 @@
 import Link from 'next/link';
 import styles from './DashboardNavbar.module.css';
 import stylesLink from '../../ui/Link/Link.module.css';
+import { useContext } from 'react';
+import UserContext from '@/store/user-context';
+import { Project } from '@/types/types';
 
 export const DashboardNavbar = () => {
+  const context = useContext(UserContext);
+
   return (
     <>
       <header className={styles.header}>
@@ -15,6 +20,12 @@ export const DashboardNavbar = () => {
 
           <div>
             <p>Projekty</p>
+            {context.projects.length > 0 &&
+              context.projects.map((project: Project) => (
+                <Link href={`/kreator/${project.id}`} key={project.id}>
+                  {project.name}
+                </Link>
+              ))}
           </div>
 
           <div>
