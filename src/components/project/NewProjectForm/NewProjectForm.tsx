@@ -6,6 +6,7 @@ import { RadioInput } from '@/components/ui/Input/RadioInput/RadioInput';
 import { Project } from '@/types/types';
 import UserContext from '@/store/user-context';
 import { getDate } from '@/components/utils/getDate';
+import { createNewProject } from '@/components/utils/createNewProject';
 
 export default function NewProjectForm() {
   const [formData, setFormData] = useState<Project>({
@@ -15,6 +16,7 @@ export default function NewProjectForm() {
     measurements: [],
     price: false,
     currency: null,
+    data: [],
     isLoading: false,
   });
   const context = useContext(UserContext);
@@ -57,13 +59,15 @@ export default function NewProjectForm() {
       measurements: [],
       price: false,
       currency: null,
+      data: [],
       isLoading: false,
     }));
   }
 
   async function submitHandler(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    context.setProjects(formData);
+    await createNewProject(formData);
+    context.setProjects();
     clearForm();
   }
 

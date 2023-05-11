@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import styles from './TextInput.module.css';
+import styles from './NumberInput.module.css';
 
 type Props = {
   content: string;
@@ -8,7 +8,7 @@ type Props = {
   onChange: (value: string) => void;
 };
 
-export const TextInput = (props: Props) => {
+export const NumberInput = (props: Props) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   function handleInput() {
@@ -22,7 +22,7 @@ export const TextInput = (props: Props) => {
     <div className={styles.container}>
       <input
         className={styles.input}
-        type="string"
+        type="number"
         id={props.name}
         name={props.name}
         placeholder=" "

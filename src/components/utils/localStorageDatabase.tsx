@@ -8,8 +8,6 @@ export const getProjectsFromLocalStorage = async () => {
   return projects;
 };
 
-export const setProjectToLocalStorage = async (project: Project) => {
-  const existingProjects = await getProjectsFromLocalStorage();
-  const updatedProjects = existingProjects.concat(project);
-  localStorage.setItem('projects', JSON.stringify(updatedProjects));
+export const setProjectsToLocalStorage = async (projects: Project[]) => {
+  localStorage.setItem('projects', JSON.stringify(projects));
 };
