@@ -5,5 +5,18 @@ export type Project = {
   measurements: string[];
   price: boolean;
   currency: string | null;
+  data: Category[];
   isLoading: boolean;
+};
+
+export type Category = {
+  category: string;
+  elements: Element[];
+};
+
+export type Element = {
+  name: string;
+  value: string;
+  unit: string;
+  price: string;
 };

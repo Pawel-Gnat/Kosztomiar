@@ -2,12 +2,8 @@ import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
 import { Space_Grotesk } from 'next/font/google';
 import UserContext from '@/store/user-context';
-import {
-  getProjectsFromLocalStorage,
-  setProjectToLocalStorage,
-} from '@/components/utils/localStorageDatabase';
+import { getProjectsFromLocalStorage } from '@/components/utils/localStorageDatabase';
 import { useEffect, useState } from 'react';
-import { Project } from '@/types/types';
 
 const fonts = Space_Grotesk({
   weight: ['300', '400', '600'],
@@ -17,8 +13,7 @@ const fonts = Space_Grotesk({
 export default function App({ Component, pageProps }: AppProps) {
   const [projects, setProjects] = useState([]);
 
-  const handleCreatedProject = async (project: Project) => {
-    await setProjectToLocalStorage(project);
+  const handleProjects = async () => {
     const updatedProjects = await getProjectsFromLocalStorage();
     setProjects(updatedProjects);
   };
@@ -37,7 +32,7 @@ export default function App({ Component, pageProps }: AppProps) {
       value={{
         isLoggedIn: false,
         projects: projects,
-        setProjects: handleCreatedProject,
+        setProjects: handleProjects,
       }}
     >
       <style jsx global>{`
