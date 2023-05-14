@@ -18,7 +18,8 @@ export const ProjectCategoryElements = (props: Props) => {
           <td>{el.unit}</td>
           {props.price && (
             <td>
-              {el.price} {props.currency}
+              {+el.price && +el.price % 1 === 0 ? +el.price : (+el.price).toFixed(2)}{' '}
+              {props.currency}
             </td>
           )}
         </tr>
