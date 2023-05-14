@@ -2,6 +2,7 @@ import styles from './ProjectCategory.module.css';
 import { ProjectCategoryElements } from '../ProjectCategoryElements/ProjectCategoryElements';
 import { NewCategoryElementForm } from '../NewCategoryElementForm/NewCategoryElementForm';
 import { Category } from '@/types/types';
+import { sumValueOfProjectElements } from '@/components/utils/sumValueOfProjectElements';
 
 type Props = {
   name: string;
@@ -39,6 +40,16 @@ export const ProjectCategory = (props: Props) => {
             price={price}
           />
         </tbody>
+        <tfoot>
+          {price && (
+            <tr>
+              <td colSpan={4}>Suma</td>
+              <td>
+                {sumValueOfProjectElements(categoryElements)} {currency}
+              </td>
+            </tr>
+          )}
+        </tfoot>
       </table>
       {categoryName && <NewCategoryElementForm category={categoryName.category} />}
     </div>
