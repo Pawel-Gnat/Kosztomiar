@@ -8,16 +8,17 @@ type Props = {
   measurements: string[];
   price: boolean;
   data: Category[];
+  id: string;
 };
 
 export const ProjectContainer = (props: Props) => {
-  const { currency, data, measurements, price } = props;
+  const { id, currency, data, measurements, price } = props;
   const categoryInfo = { currency, measurements, price, data };
 
   return (
     <div>
       {data.map((el, index) => (
-        <ProjectCategory key={index} name={el.category} {...categoryInfo} />
+        <ProjectCategory key={index} name={el.category} {...categoryInfo} id={id} />
       ))}
       <NewCategoryForm />
     </div>

@@ -12,8 +12,13 @@ export const NewCategoryForm = () => {
     category: '',
     elements: [],
   });
+  const [isFormActive, setIsFormActive] = useState(false);
 
   const context = useContext(UserContext);
+
+  function toggleActiveForm() {
+    setIsFormActive((prevState) => !prevState);
+  }
 
   function handleName(value: string) {
     setCategory((prevState) => ({ ...prevState, category: value }));
@@ -21,6 +26,11 @@ export const NewCategoryForm = () => {
 
   function clearForm() {
     setCategory((prevState) => ({ ...prevState, category: '' }));
+  }
+
+  function handleCancel() {
+    toggleActiveForm();
+    clearForm();
   }
 
   async function submitHandler(e: React.FormEvent<HTMLFormElement>) {
@@ -35,15 +45,22 @@ export const NewCategoryForm = () => {
 
   return (
     <>
-      <button>Stwórz kategorię</button>
-      <form autoComplete="off" onSubmit={submitHandler}>
-        <TextInput
-          content="Nazwa kategorii"
-          name="category-name"
-          value={category.category}
-          onChange={handleName}
-        />
-      </form>
+      {isFormActive ? (
+        <form autoComplete="off" onSubmit={submitHandler}>
+          <TextInput
+            content="Nazwa kategorii"
+            name="category-name"
+            value={category.category}
+            onChange={handleName}
+          />
+          <button type="button" onClick={handleCancel}>
+            Anuluj
+          </button>
+          <button type="submit">Dodaj</button>
+        </form>
+      ) : (
+        <button onClick={toggleActiveForm}>Stwórz kategorię</button>
+      )}
     </>
   );
 };

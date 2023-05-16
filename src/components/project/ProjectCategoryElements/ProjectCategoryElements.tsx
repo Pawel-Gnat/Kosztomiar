@@ -1,13 +1,24 @@
 import styles from './ProjectCategoryElement.module.css';
 import { Element } from '@/types/types';
+import { CiCircleMore, CiCircleRemove } from 'react-icons/ci';
 
 type Props = {
   currency: string | null;
   price: boolean;
   data: Element[];
+  deleteElement: (element: Element) => void;
+  editElement: (element: Element) => void;
 };
 
 export const ProjectCategoryElements = (props: Props) => {
+  function deleteElementHandler(el: Element) {
+    props.deleteElement(el);
+  }
+
+  function editElementHandler(el: Element) {
+    props.editElement(el);
+  }
+
   return (
     <>
       {props.data.map((el, index) => (
@@ -22,6 +33,14 @@ export const ProjectCategoryElements = (props: Props) => {
               {props.currency}
             </td>
           )}
+          <td>
+            <button onClick={() => editElementHandler(el)}>
+              <CiCircleMore />
+            </button>
+            <button onClick={() => deleteElementHandler(el)}>
+              <CiCircleRemove />
+            </button>
+          </td>
         </tr>
       ))}
     </>
