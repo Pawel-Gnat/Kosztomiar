@@ -7,7 +7,6 @@ import {
 export const createNewCategory = async (
   projectID: string,
   name: string,
-  // category: string,
   category: Category,
 ) => {
   const existingProjects: Project[] = await getProjectsFromLocalStorage();
