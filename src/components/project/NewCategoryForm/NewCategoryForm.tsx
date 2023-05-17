@@ -1,10 +1,10 @@
 import styles from './NewCategoryForm.module.css';
-import { TextInput } from '@/components/ui/Input/TextInput/TextInput';
 import { useContext, useState } from 'react';
 import { useProject } from '@/hooks/useProject';
 import { createNewCategory } from '@/components/utils/createNewCategory';
 import { Category } from '@/types/types';
 import UserContext from '@/store/user-context';
+import { CategoryForm } from '../CategoryForm/CategoryForm';
 
 export const NewCategoryForm = () => {
   const project = useProject();
@@ -35,10 +35,11 @@ export const NewCategoryForm = () => {
 
   async function submitHandler(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    clearForm();
 
     if (project) {
       await createNewCategory(project.id, project.name, category);
+      clearForm();
+      toggleActiveForm();
       context.setProjects();
     }
   }
@@ -46,18 +47,12 @@ export const NewCategoryForm = () => {
   return (
     <>
       {isFormActive ? (
-        <form autoComplete="off" onSubmit={submitHandler}>
-          <TextInput
-            content="Nazwa kategorii"
-            name="category-name"
-            value={category.category}
-            onChange={handleName}
-          />
-          <button type="button" onClick={handleCancel}>
-            Anuluj
-          </button>
-          <button type="submit">Dodaj</button>
-        </form>
+        <CategoryForm
+          onSubmit={submitHandler}
+          onChange={handleName}
+          value={category.category}
+          onClick={handleCancel}
+        />
       ) : (
         <button onClick={toggleActiveForm}>Stwórz kategorię</button>
       )}

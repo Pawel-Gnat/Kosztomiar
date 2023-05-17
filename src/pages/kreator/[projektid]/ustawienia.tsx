@@ -1,4 +1,5 @@
 import { ProjectLayout } from '@/components/layout/ProjectLayout/ProjectLayout';
+import { ProjectCategoriesList } from '@/components/project/ProjectCategoriesList/ProjectCategoriesList';
 import {
   getProjectsFromLocalStorage,
   setProjectsToLocalStorage,
@@ -30,9 +31,14 @@ export default function UstawieniaPage() {
 
   return (
     <ProjectLayout>
-      <p>UstawieniaPage</p>
-      {project && <p>{project.name}</p>}
-      <button onClick={(event) => deleteProject(project)}>Usuń projekt</button>
+      {project && (
+        <>
+          <p>UstawieniaPage</p>
+          <p>{project.name}</p>
+          <ProjectCategoriesList project={project} />
+          <button onClick={(e) => deleteProject(project)}>Usuń projekt</button>
+        </>
+      )}
     </ProjectLayout>
   );
 }
