@@ -1,28 +1,24 @@
 .container {
-  /* display: block; */
   position: relative;
-  min-width: 20rem;
+  min-width: 30rem;
   width: 100%;
   max-width: 50rem;
   height: 5rem;
 }
 
 .label {
-  /* display: inline-block; */
   font-size: var(--text-size);
   color: var(--text-color);
   position: absolute;
-  top: 1rem;
+  top: 1.3rem;
   left: 1rem;
   padding: 0 0.5rem;
-  background-color: white;
+  background-color: var(--bg-color);
   transition: top 0.2s ease-in, font-size 0.2s ease-in;
 }
 
 .input {
-  /* display: inline-block; */
   font-family: inherit;
-  /* font-size: inherit; */
   font-size: var(--text-size);
   color: var(--text-color);
   position: absolute;
@@ -35,14 +31,15 @@
   border-radius: var(--border-radius);
   background-color: transparent;
   outline: none;
+  transition: border-color 0.2s;
 }
 
 .input:focus {
-  border-color: purple;
+  border-color: var(--secondary-color);
 }
 
 .input:focus ~ .label,
 .input:not(:placeholder-shown) ~ .label {
-  top: -1rem;
+  top: -0.8rem;
   font-size: calc(0.6 * var(--text-size));
 }

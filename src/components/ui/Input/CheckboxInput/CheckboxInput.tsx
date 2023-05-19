@@ -18,15 +18,19 @@ export const CheckboxInput = (props: Props) => {
   }
 
   return (
-    <label>
-      {props.content}:
+    <div className={styles.container}>
       <input
+        className={styles.input}
+        id={props.content}
         type="checkbox"
         name={`measurement-unit-${props.content}`}
         ref={inputRef}
         value={props.value}
         onChange={handleInput}
       />
-    </label>
+      <label className={styles.label} htmlFor={props.content}>
+        {props.content}
+      </label>
+    </div>
   );
 };

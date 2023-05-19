@@ -18,15 +18,19 @@ export const RadioInput = (props: Props) => {
   }
 
   return (
-    <label>
-      {props.content}:
+    <div className={styles.container}>
       <input
+        className={styles.input}
+        id={props.content}
         type="radio"
         name={props.name}
         ref={inputRef}
         onChange={handleInput}
         value={props.value}
       />
-    </label>
+      <label className={styles.label} htmlFor={props.content}>
+        {props.content}:
+      </label>
+    </div>
   );
 };

@@ -10,7 +10,7 @@ function DashboardLayout(props: Props) {
   return (
     <div className={styles.dashboard}>
       <DashboardNavbar />
-      <main>{props.children}</main>
+      <main className={styles.main}>{props.children}</main>
     </div>
   );
 }

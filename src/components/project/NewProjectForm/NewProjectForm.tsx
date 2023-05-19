@@ -7,6 +7,10 @@ import { Project } from '@/types/types';
 import UserContext from '@/store/user-context';
 import { getDate } from '@/components/utils/getDate';
 import { createNewProject } from '@/components/utils/createNewProject';
+import { Text } from '@/components/ui/Text/Text';
+import { Button } from '@/components/ui/Button/Button';
+import { FiPlusSquare } from 'react-icons/fi';
+import { useRouter } from 'next/router';
 
 export default function NewProjectForm() {
   const [formData, setFormData] = useState<Project>({
@@ -20,6 +24,7 @@ export default function NewProjectForm() {
     isLoading: false,
   });
   const context = useContext(UserContext);
+  const router = useRouter();
 
   function handlePriceSelection(value: string) {
     setFormData((prevState) => ({
@@ -64,25 +69,28 @@ export default function NewProjectForm() {
     }));
   }
 
+  function handleFormButton() {
+    clearForm();
+    router.push('/kreator');
+  }
+
   async function submitHandler(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     await createNewProject(formData);
     context.setProjects();
-    clearForm();
+    handleFormButton();
   }
 
   return (
     <form className={styles.form} autoComplete="off" onSubmit={submitHandler}>
+      <TextInput
+        content="Nazwa projektu"
+        name="project-name"
+        value={formData.name}
+        onChange={handleName}
+      />
       <div>
-        <TextInput
-          content="Nazwa projektu"
-          name="project-name"
-          value={formData.name}
-          onChange={handleName}
-        />
-      </div>
-      <div>
-        <p>Wybierz jednostki miary: </p>
+        <Text content="Wybierz jednostki miary:" />
         <CheckboxInput content="metry" value="m" onChange={handleMeasurements} />
         <CheckboxInput
           content="metry kwadratowe"
@@ -99,7 +107,7 @@ export default function NewProjectForm() {
         <CheckboxInput content="sztuki" value="szt" onChange={handleMeasurements} />
       </div>
       <div>
-        <p>Uwzględniać ceny w projekcie? </p>
+        <Text content="Uwzględniać ceny w projekcie?" />
         <RadioInput
           content="Tak"
           name="price"
@@ -116,7 +124,7 @@ export default function NewProjectForm() {
 
       {formData.price ? (
         <div>
-          <p>Wybierz walutę</p>
+          <Text content="Wybierz walutę" />
           <RadioInput
             content="PLN"
             name="currency"
@@ -137,7 +145,20 @@ export default function NewProjectForm() {
           />
         </div>
       ) : null}
-      <button>Stwórz projekt</button>
+      <div className={styles.buttons}>
+        <Button
+          type="button"
+          onClick={handleFormButton}
+          content="Anuluj"
+          accent={false}
+        />
+        <Button
+          type="submit"
+          icon={<FiPlusSquare />}
+          content="Stwórz projekt"
+          accent={true}
+        />
+      </div>
     </form>
   );
 }
