@@ -1,5 +1,5 @@
 import styles from './CategoryForm.module.css';
-import { TextInput } from '@/components/ui/Input/TextInput/TextInput';
+import { Input } from '@/components/ui/Input/Input';
 
 type Props = {
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
@@ -12,7 +12,8 @@ export const CategoryForm = (props: Props) => {
   return (
     <>
       <form autoComplete="off" onSubmit={props.onSubmit}>
-        <TextInput
+        <Input
+          type="text"
           content="Nazwa kategorii"
           name="category-name"
           value={props.value}
