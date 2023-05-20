@@ -1,8 +1,5 @@
 import { useContext, useState } from 'react';
 import styles from './NewProjectForm.module.css';
-import { TextInput } from '@/components/ui/Input/TextInput/TextInput';
-import { CheckboxInput } from '@/components/ui/Input/CheckboxInput/CheckboxInput';
-import { RadioInput } from '@/components/ui/Input/RadioInput/RadioInput';
 import { Project } from '@/types/types';
 import UserContext from '@/store/user-context';
 import { getDate } from '@/components/utils/getDate';
@@ -11,6 +8,7 @@ import { Text } from '@/components/ui/Text/Text';
 import { Button } from '@/components/ui/Button/Button';
 import { FiPlusSquare } from 'react-icons/fi';
 import { useRouter } from 'next/router';
+import { Input, CheckboxInput, RadioInput } from '@/components/ui/Input/Input';
 
 export default function NewProjectForm() {
   const [formData, setFormData] = useState<Project>({
@@ -83,7 +81,8 @@ export default function NewProjectForm() {
 
   return (
     <form className={styles.form} autoComplete="off" onSubmit={submitHandler}>
-      <TextInput
+      <Input
+        type="text"
         content="Nazwa projektu"
         name="project-name"
         value={formData.name}

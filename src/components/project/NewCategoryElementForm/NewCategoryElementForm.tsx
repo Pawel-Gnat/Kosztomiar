@@ -1,9 +1,8 @@
 import styles from './NewCategoryElementForm.module.css';
 import { useProject } from '@/hooks/useProject';
-import { TextInput } from '@/components/ui/Input/TextInput/TextInput';
+import { Input } from '@/components/ui/Input/Input';
 import { useContext, useEffect, useState } from 'react';
 import { createNewCategoryElement } from '@/components/utils/createNewCategoryElement';
-import { NumberInput } from '@/components/ui/Input/NumberInput/NumberInput';
 import { Select } from '@/components/ui/Select/Select';
 import UserContext from '@/store/user-context';
 import { Element } from '@/types/types';
@@ -122,13 +121,15 @@ export const NewCategoryElementForm = (props: Props) => {
     <>
       {isFormActive ? (
         <form autoComplete="off" onSubmit={submitHandler}>
-          <TextInput
+          <Input
+            type="text"
             content="Nazwa materiału"
             name="material-name"
             value={newElement.name}
             onChange={handleName}
           />
-          <NumberInput
+          <Input
+            type="number"
             content="Wartość"
             name="material-value"
             value={newElement.value}
@@ -143,7 +144,8 @@ export const NewCategoryElementForm = (props: Props) => {
             />
           )}
           {project && project.price && (
-            <NumberInput
+            <Input
+              type="number"
               content="Cena"
               name="material-price"
               value={newElement.price}

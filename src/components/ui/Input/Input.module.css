@@ -43,3 +43,49 @@
   top: -0.8rem;
   font-size: calc(0.6 * var(--text-size));
 }
+
+.radio-box-container {
+  display: flex;
+  align-items: center;
+}
+
+.radio-box-label {
+  font-size: var(--text-size);
+  color: var(--text-color);
+  margin-left: 1rem;
+  background-color: transparent;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.radio-box-label:hover {
+  color: var(--secondary-color);
+}
+
+.radio-box-input {
+  appearance: none;
+  font: inherit;
+  height: var(--text-size);
+  aspect-ratio: 1/1;
+  border: 1px solid var(--text-color);
+  border-radius: var(--border-radius);
+}
+
+.radio-box-input {
+  display: grid;
+  place-content: center;
+}
+
+.radio-box-input::before {
+  content: '';
+  height: calc(var(--text-size) * 0.6);
+  aspect-ratio: 1/1;
+  border-radius: 3px;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em var(--secondary-color);
+}
+
+.radio-box-input:checked::before {
+  transform: scale(1);
+}

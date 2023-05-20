@@ -6,7 +6,6 @@ import { sumValueOfProjectElements } from '@/components/utils/sumValueOfProjectE
 import { deleteCategoryElement } from '@/components/utils/deleteCategoryElement';
 import { useContext, useState } from 'react';
 import UserContext from '@/store/user-context';
-import { CiCircleMore, CiCircleRemove } from 'react-icons/ci';
 
 type Props = {
   name: string;
