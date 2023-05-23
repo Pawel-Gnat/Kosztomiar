@@ -1,4 +1,4 @@
-// import styles from './DashboardLayout.module.css';
+import styles from './DashboardLayout.module.css';
 import { ReactNode } from 'react';
 import { DashboardNavbar } from '../DashboardNavbar/DashboardNavbar';
 
@@ -8,10 +8,9 @@ type Props = {
 
 function DashboardLayout(props: Props) {
   return (
-    // <div className={styles.dashboard}>
-    <div>
+    <div className={styles.dashboard}>
       <DashboardNavbar />
-      {/* <main className={styles.main}>{props.children}</main> */}
+      <main className={styles.main}>{props.children}</main>
       <main>{props.children}</main>
     </div>
   );
