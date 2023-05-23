@@ -37,18 +37,19 @@ export const ProjectCategory = (props: Props) => {
 
   return (
     <div>
-      <table>
+      <table className={styles.table}>
         <caption>{name}</caption>
         <thead>
           <tr>
             <th>L.p.</th>
-            <th>Nazwa</th>
+            <th className={styles.full}>Nazwa</th>
             <th>Wartość</th>
             <th>J.m.</th>
             {price && <th>Cena</th>}
+            <th>-</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className={styles.body}>
           <ProjectCategoryElements
             data={categoryElements}
             currency={currency}
@@ -60,18 +61,22 @@ export const ProjectCategory = (props: Props) => {
         <tfoot>
           {price && (
             <tr>
-              <td colSpan={4}>Suma</td>
-              <td>
+              <td colSpan={4} className={styles['right-align']}>
+                Suma:
+              </td>
+              <td className={styles.nowrap}>
                 {sumValueOfProjectElements(categoryElements)} {currency}
               </td>
             </tr>
           )}
         </tfoot>
       </table>
-      <NewCategoryElementForm
-        category={categoryName.category}
-        editedElement={editedElement}
-      />
+      <div className={styles['new-element-container']}>
+        <NewCategoryElementForm
+          category={categoryName.category}
+          editedElement={editedElement}
+        />
+      </div>
     </div>
   );
 };

@@ -7,6 +7,8 @@ import { Select } from '@/components/ui/Select/Select';
 import UserContext from '@/store/user-context';
 import { Element } from '@/types/types';
 import { deleteCategoryElement } from '@/components/utils/deleteCategoryElement';
+import { Button } from '@/components/ui/Button/Button';
+import { FiPlusSquare } from 'react-icons/fi';
 
 type Props = {
   category: string;
@@ -120,45 +122,65 @@ export const NewCategoryElementForm = (props: Props) => {
   return (
     <>
       {isFormActive ? (
-        <form autoComplete="off" onSubmit={submitHandler}>
-          <Input
-            type="text"
-            content="Nazwa materiału"
-            name="material-name"
-            value={newElement.name}
-            onChange={handleName}
-          />
-          <Input
-            type="number"
-            content="Wartość"
-            name="material-value"
-            value={newElement.value}
-            onChange={handleValue}
-          />
-          {project && (
-            <Select
-              key={newElement.unit}
-              measurements={project.measurements}
-              onChange={handleSelect}
-              value={newElement.unit}
+        <form className={styles.form} autoComplete="off" onSubmit={submitHandler}>
+          <div className={styles.inputs}>
+            <Input
+              type="text"
+              content="Nazwa materiału"
+              name="material-name"
+              value={newElement.name}
+              onChange={handleName}
             />
-          )}
-          {project && project.price && (
             <Input
               type="number"
-              content="Cena"
-              name="material-price"
-              value={newElement.price}
-              onChange={handlePrice}
+              content="Wartość"
+              name="material-value"
+              value={newElement.value}
+              onChange={handleValue}
             />
-          )}
-          <button type="button" onClick={handleCancel}>
-            Anuluj
-          </button>
-          <button type="submit">Dodaj</button>
+            {project && (
+              <Select
+                key={newElement.unit}
+                measurements={project.measurements}
+                onChange={handleSelect}
+                value={newElement.unit}
+              />
+            )}
+            {project && project.price && (
+              <Input
+                type="number"
+                content="Cena"
+                name="material-price"
+                value={newElement.price}
+                onChange={handlePrice}
+              />
+            )}
+          </div>
+          <div className={styles.buttons}>
+            <Button
+              type="button"
+              content="Anuluj"
+              isSmall={true}
+              accent={false}
+              onClick={handleCancel}
+            />
+            <Button
+              type="submit"
+              content="Dodaj"
+              isSmall={true}
+              accent={false}
+              icon={<FiPlusSquare />}
+            />
+          </div>
         </form>
       ) : (
-        <button onClick={toggleActiveForm}>Dodaj materiał</button>
+        <Button
+          type="button"
+          content="Dodaj materiał"
+          isSmall={true}
+          accent={true}
+          onClick={toggleActiveForm}
+        />
       )}
     </>
   );

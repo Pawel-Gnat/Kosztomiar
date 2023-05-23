@@ -150,12 +150,14 @@ export default function NewProjectForm() {
           onClick={handleFormButton}
           content="Anuluj"
           accent={false}
+          isSmall={false}
         />
         <Button
           type="submit"
           icon={<FiPlusSquare />}
           content="Stwórz projekt"
           accent={true}
+          isSmall={false}
         />
       </div>
     </form>

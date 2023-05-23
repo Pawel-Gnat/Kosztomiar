@@ -1,4 +1,5 @@
-import styles from './ProjectCategoryElement.module.css';
+import styles from './ProjectCategoryElements.module.css';
+import { Button } from '@/components/ui/Button/Button';
 import { Element } from '@/types/types';
 import { CiCircleMore, CiCircleRemove } from 'react-icons/ci';
 
@@ -33,13 +34,23 @@ export const ProjectCategoryElements = (props: Props) => {
               {props.currency}
             </td>
           )}
-          <td>
-            <button onClick={() => editElementHandler(el)}>
-              <CiCircleMore />
-            </button>
-            <button onClick={() => deleteElementHandler(el)}>
-              <CiCircleRemove />
-            </button>
+          <td className={styles.nowrap}>
+            <Button
+              type="button"
+              content="Edytuj"
+              accent={false}
+              isSmall={true}
+              icon={<CiCircleMore />}
+              onClick={() => editElementHandler(el)}
+            />
+            <Button
+              type="button"
+              content="Usuń"
+              accent={false}
+              isSmall={true}
+              icon={<CiCircleRemove />}
+              onClick={() => deleteElementHandler(el)}
+            />
           </td>
         </tr>
       ))}

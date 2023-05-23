@@ -15,6 +15,11 @@
   cursor: pointer;
 }
 
+.table {
+  font-size: var(--text-size-projects);
+  padding: 1rem;
+}
+
 .accent {
   border: 1px solid var(--primary-color);
   background-color: var(--primary-color);

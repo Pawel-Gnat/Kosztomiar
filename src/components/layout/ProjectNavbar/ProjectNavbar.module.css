@@ -1,9 +1,10 @@
 .nav {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4rem;
 }
 
 .nav > div {
   display: flex;
-  gap: 1rem;
 }

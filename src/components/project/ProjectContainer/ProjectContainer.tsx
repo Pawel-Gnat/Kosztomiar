@@ -16,11 +16,14 @@ export const ProjectContainer = (props: Props) => {
   const categoryInfo = { currency, measurements, price, data };
 
   return (
-    <div>
+    <div className={styles.container}>
       {data.map((el, index) => (
         <ProjectCategory key={index} name={el.category} {...categoryInfo} id={id} />
       ))}
-      <NewCategoryForm />
+      <div className={styles['category-form']}>
+        {/* <div> */}
+        <NewCategoryForm />
+      </div>
     </div>
   );
 };

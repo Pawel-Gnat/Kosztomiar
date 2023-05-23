@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import './Select.module.css';
+import styles from './Select.module.css';
 
 type Props = {
   value: string;
@@ -18,8 +18,10 @@ export const Select = (props: Props) => {
   }
 
   return (
-    <>
-      <label htmlFor="units">J.m.</label>
+    <div className={styles.container}>
+      <label className={styles.label} htmlFor="units">
+        J.m.
+      </label>
       <select id="units" ref={selectRef} onChange={handleSelect} required={true}>
         <option value={props.value} hidden={true}>
           {props.value}
@@ -31,6 +33,6 @@ export const Select = (props: Props) => {
           </option>
         ))}
       </select>
-    </>
+    </div>
   );
 };

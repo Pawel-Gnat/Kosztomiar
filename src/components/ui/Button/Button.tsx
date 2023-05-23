@@ -5,6 +5,7 @@ type Button = {
   type: 'submit' | 'button';
   onClick?: () => void;
   icon?: ReactNode;
+  isSmall: boolean;
   content: string;
   accent: boolean;
 };
@@ -15,7 +16,11 @@ export const Button = (props: Button) => {
     : styles.button;
 
   return (
-    <button className={buttonClassName} type={props.type} onClick={props.onClick}>
+    <button
+      className={props.isSmall ? `${styles.table} ${buttonClassName}` : buttonClassName}
+      type={props.type}
+      onClick={props.onClick}
+    >
       {props.icon}
       {props.content}
     </button>

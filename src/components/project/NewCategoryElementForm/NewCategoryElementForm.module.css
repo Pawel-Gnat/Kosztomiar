@@ -1,0 +1,26 @@
+.form {
+  font-size: var(--text-size--projects);
+  width: 100%;
+  max-width: 100rem;
+}
+
+.inputs {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.inputs div:first-of-type {
+  flex-grow: 1;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.buttons button {
+  width: 100%;
+  max-width: 15rem;
+}

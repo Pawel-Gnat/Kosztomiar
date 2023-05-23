@@ -1,5 +1,6 @@
 import { ProjectLayout } from '@/components/layout/ProjectLayout/ProjectLayout';
 import { ProjectCategoriesList } from '@/components/project/ProjectCategoriesList/ProjectCategoriesList';
+import { Button } from '@/components/ui/Button/Button';
 import {
   getProjectsFromLocalStorage,
   setProjectsToLocalStorage,
@@ -9,6 +10,7 @@ import UserContext from '@/store/user-context';
 import { Project } from '@/types/types';
 import { useRouter } from 'next/router';
 import { useContext } from 'react';
+import { CiCircleRemove } from 'react-icons/ci';
 
 export default function UstawieniaPage() {
   const project = useProject()!;
@@ -33,10 +35,15 @@ export default function UstawieniaPage() {
     <ProjectLayout>
       {project && (
         <>
-          <p>UstawieniaPage</p>
-          <p>{project.name}</p>
           <ProjectCategoriesList project={project} />
-          <button onClick={(e) => deleteProject(project)}>Usuń projekt</button>
+          <Button
+            type="button"
+            content="Usuń projekt"
+            isSmall={true}
+            accent={true}
+            icon={<CiCircleRemove />}
+            onClick={() => deleteProject(project)}
+          />
         </>
       )}
     </ProjectLayout>

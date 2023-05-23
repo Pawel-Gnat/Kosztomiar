@@ -7,7 +7,6 @@ export default function PodgladPage() {
   return (
     <ProjectLayout>
       <p>PodgladPage</p>
-      {project && <p>{project.name}</p>}
     </ProjectLayout>
   );
 }

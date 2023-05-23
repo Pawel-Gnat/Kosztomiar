@@ -5,10 +5,5 @@ import { useProject } from '@/hooks/useProject';
 export default function ProjektPage() {
   const project = useProject();
 
-  return (
-    <ProjectLayout>
-      <p>Project Page</p>
-      {project && <ProjectContainer {...project} />}
-    </ProjectLayout>
-  );
+  return <ProjectLayout>{project && <ProjectContainer {...project} />}</ProjectLayout>;
 }

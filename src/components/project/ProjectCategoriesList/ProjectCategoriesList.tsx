@@ -8,6 +8,7 @@ import { CiCircleMore, CiCircleRemove } from 'react-icons/ci';
 import UserContext from '@/store/user-context';
 import { useContext, useState } from 'react';
 import { CategoryForm } from '../CategoryForm/CategoryForm';
+import { Button } from '@/components/ui/Button/Button';
 
 export const ProjectCategoriesList = (props: { project: Project }) => {
   const [category, setCategory] = useState({
@@ -71,11 +72,16 @@ export const ProjectCategoriesList = (props: { project: Project }) => {
 
   return (
     <>
-      <ul>
+      <ul className={styles.container}>
         {props.project.data.map((el, index) => (
           <li key={index} className={styles.list}>
             {el.category}
-            <button
+            <Button
+              type="button"
+              content="Edytuj nazwę"
+              isSmall={true}
+              accent={false}
+              icon={<CiCircleMore />}
               onClick={() =>
                 setCategory((prevState) => ({
                   ...prevState,
@@ -84,12 +90,15 @@ export const ProjectCategoriesList = (props: { project: Project }) => {
                   isEditing: true,
                 }))
               }
-            >
-              <CiCircleMore />
-            </button>
-            <button onClick={() => deleteCategoryHandler(el.category)}>
-              <CiCircleRemove />
-            </button>
+            />
+            <Button
+              type="button"
+              content="Usuń kategorię"
+              isSmall={true}
+              accent={false}
+              icon={<CiCircleRemove />}
+              onClick={() => deleteCategoryHandler(el.category)}
+            />
           </li>
         ))}
       </ul>

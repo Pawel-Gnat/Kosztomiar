@@ -1,0 +1,17 @@
+.form {
+  font-size: var(--text-size--projects);
+  width: 100%;
+  max-width: 100rem;
+  margin: 0 2rem;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.buttons button {
+  width: 100%;
+  max-width: 15rem;
+}

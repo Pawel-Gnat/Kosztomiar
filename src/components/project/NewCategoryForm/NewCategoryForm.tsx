@@ -5,6 +5,7 @@ import { createNewCategory } from '@/components/utils/createNewCategory';
 import { Category } from '@/types/types';
 import UserContext from '@/store/user-context';
 import { CategoryForm } from '../CategoryForm/CategoryForm';
+import { Button } from '@/components/ui/Button/Button';
 
 export const NewCategoryForm = () => {
   const project = useProject();
@@ -54,7 +55,13 @@ export const NewCategoryForm = () => {
           onClick={handleCancel}
         />
       ) : (
-        <button onClick={toggleActiveForm}>Stwórz kategorię</button>
+        <Button
+          type="button"
+          content="Stwórz kategorię"
+          isSmall={true}
+          accent={true}
+          onClick={toggleActiveForm}
+        />
       )}
     </>
   );

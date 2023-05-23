@@ -1,17 +1,16 @@
 .container {
   position: relative;
-  min-width: 30rem;
-  width: 100%;
-  max-width: 50rem;
+  min-width: 10rem;
   height: 5rem;
 }
 
 .label {
-  font-size: var(--text-size);
+  font-size: inherit;
   color: var(--text-color);
   position: absolute;
-  top: 1.3rem;
+  top: 50%;
   left: 1rem;
+  transform: translateY(-50%);
   padding: 0 0.5rem;
   background-color: var(--bg-color);
   transition: top 0.2s ease-in, font-size 0.2s ease-in;
@@ -19,7 +18,7 @@
 
 .input {
   font-family: inherit;
-  font-size: var(--text-size);
+  font-size: inherit;
   color: var(--text-color);
   position: absolute;
   top: 0;
@@ -40,7 +39,7 @@
 
 .input:focus ~ .label,
 .input:not(:placeholder-shown) ~ .label {
-  top: -0.8rem;
+  top: 0;
   font-size: calc(0.6 * var(--text-size));
 }
 
@@ -50,7 +49,7 @@
 }
 
 .radio-box-label {
-  font-size: var(--text-size);
+  font-size: inherit;
   color: var(--text-color);
   margin-left: 1rem;
   background-color: transparent;
@@ -65,7 +64,7 @@
 .radio-box-input {
   appearance: none;
   font: inherit;
-  height: var(--text-size);
+  height: 100%;
   aspect-ratio: 1/1;
   border: 1px solid var(--text-color);
   border-radius: var(--border-radius);
@@ -78,7 +77,7 @@
 
 .radio-box-input::before {
   content: '';
-  height: calc(var(--text-size) * 0.6);
+  height: calc(var(--text-size) * 1);
   aspect-ratio: 1/1;
   border-radius: 3px;
   transform: scale(0);
