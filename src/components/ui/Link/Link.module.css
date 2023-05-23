@@ -1,0 +1,36 @@
+.navlink {
+  font-size: var(--text-size);
+  color: var(--text-color);
+  text-align: center;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  margin: 1rem;
+  border: 1px solid var(--primary-color);
+  border-radius: var(--border-radius);
+  transition: color 0.2s, border-color 0.2s, background-color 0.2s;
+  white-space: nowrap;
+}
+
+.project-navbar-link {
+  font-size: var(--text-size-projects);
+  padding: 1rem 2rem;
+  margin: 0rem 1rem;
+}
+
+.accent {
+  border: 1px solid var(--primary-color);
+  background-color: var(--primary-color);
+}
+
+.navlink:hover,
+.navlink:focus {
+  color: var(--bg-color);
+  border-color: var(--secondary-color);
+  background-color: var(--secondary-color);
+}
+
+.navlink > svg {
+  margin-right: 1rem;
+}

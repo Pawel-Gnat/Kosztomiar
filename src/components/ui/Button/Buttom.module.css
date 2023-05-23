@@ -1,0 +1,37 @@
+.button {
+  font-family: inherit;
+  font-size: var(--text-size);
+  color: var(--text-color);
+  text-align: center;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  margin: 1rem;
+  border: 1px solid var(--primary-color);
+  border-radius: var(--border-radius);
+  background-color: transparent;
+  transition: color 0.2s, border-color 0.2s, background-color 0.2s;
+  cursor: pointer;
+}
+
+.table {
+  font-size: var(--text-size-projects);
+  padding: 1rem;
+}
+
+.accent {
+  border: 1px solid var(--primary-color);
+  background-color: var(--primary-color);
+}
+
+.button:hover,
+.button:focus {
+  color: var(--bg-color);
+  border-color: var(--secondary-color);
+  background-color: var(--secondary-color);
+}
+
+.button > svg {
+  margin-right: 1rem;
+}

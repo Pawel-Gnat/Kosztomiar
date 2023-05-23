@@ -1,0 +1,4 @@
+.text {
+  font-size: var(--text-size);
+  color: var(--text-color);
+}
