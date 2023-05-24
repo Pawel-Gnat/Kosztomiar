@@ -1,5 +1,5 @@
+import styles from './DashBoardLayout.module.css';
 import { ReactNode } from 'react';
-import styles from './DashboardLayout.module.css';
 import { DashboardNavbar } from '../DashboardNavbar/DashboardNavbar';
 
 type Props = {
