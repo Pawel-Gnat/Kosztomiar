@@ -34,3 +34,24 @@
 .navlink > svg {
   margin-right: 1rem;
 }
+
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  font-size: var(--text-size);
+  color: var(--text-color);
+  text-transform: uppercase;
+  font-weight: bold;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logo svg {
+  height: 4rem;
+  aspect-ratio: 1/1;
+}
