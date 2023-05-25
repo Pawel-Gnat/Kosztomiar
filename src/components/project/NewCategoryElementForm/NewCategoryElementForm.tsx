@@ -126,14 +126,14 @@ export const NewCategoryElementForm = (props: Props) => {
           <div className={styles.inputs}>
             <Input
               type="text"
-              content="Nazwa materiału"
+              content="Nazwa"
               name="material-name"
               value={newElement.name}
               onChange={handleName}
             />
             <Input
               type="number"
-              content="Wartość"
+              content="Ilość"
               name="material-value"
               value={newElement.value}
               onChange={handleValue}

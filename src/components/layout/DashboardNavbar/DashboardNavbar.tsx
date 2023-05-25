@@ -6,6 +6,7 @@ import UserContext from '@/store/user-context';
 import { Project } from '@/types/types';
 import { FiLogIn, FiFolder, FiPlusSquare } from 'react-icons/fi';
 import { Text } from '@/components/ui/Text/Text';
+import { Logo } from '@/assets/Logo/Logo';
 
 export const DashboardNavbar = () => {
   const context = useContext(UserContext);
@@ -15,8 +16,9 @@ export const DashboardNavbar = () => {
       <header>
         <nav className={styles.nav}>
           <div className={styles.logo}>
-            <Link href="/" className={stylesLink.navlink}>
-              Kosztomiar
+            <Link href="/" className={stylesLink.logo}>
+              <Logo />
+              <Text content="Kosztomiar" />
             </Link>
           </div>
 
@@ -26,7 +28,7 @@ export const DashboardNavbar = () => {
               <Text content="Projekty" />
             </div>
             {context.projects.length > 0 && (
-              <ul>
+              <ul className={styles['list-container']}>
                 {context.projects.map((project: Project) => (
                   <li key={project.id} className={styles.list}>
                     <Link href={`/kreator/${project.id}`}>{project.name}</Link>
@@ -36,7 +38,7 @@ export const DashboardNavbar = () => {
             )}
           </div>
 
-          <div>
+          <div className={styles.buttons}>
             <Link
               href="/kreator/nowy-projekt"
               className={`${stylesLink.accent} ${stylesLink.navlink}`}

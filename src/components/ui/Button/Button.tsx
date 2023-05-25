@@ -22,7 +22,7 @@ export const Button = (props: Button) => {
       onClick={props.onClick}
     >
       {props.icon}
-      {props.content}
+      <span>{props.content}</span>
     </button>
   );
 };
