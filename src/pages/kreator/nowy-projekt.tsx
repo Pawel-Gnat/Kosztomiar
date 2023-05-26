@@ -5,7 +5,6 @@ import { Text } from '@/components/ui/Text/Text';
 export default function NowyProjektPage() {
   return (
     <DashboardLayout>
-      <Text content="Nowy projekt" />
       <NewProjectForm />
     </DashboardLayout>
   );

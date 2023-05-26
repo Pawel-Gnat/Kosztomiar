@@ -1,10 +1,19 @@
 .nav {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 4rem;
+  gap: 1rem;
+  margin-bottom: 2rem;
 }
 
 .nav > div {
   display: flex;
+}
+
+@media (min-width: 576px) {
+  .nav {
+    flex-direction: row;
+    margin-bottom: 4rem;
+  }
 }

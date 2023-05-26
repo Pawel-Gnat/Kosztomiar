@@ -75,30 +75,32 @@ export const ProjectCategoriesList = (props: { project: Project }) => {
       <ul className={styles.container}>
         {props.project.data.map((el, index) => (
           <li key={index} className={styles.list}>
-            {el.category}
-            <Button
-              type="button"
-              content="Edytuj nazwę"
-              isSmall={true}
-              accent={false}
-              icon={<CiCircleMore />}
-              onClick={() =>
-                setCategory((prevState) => ({
-                  ...prevState,
-                  category: el.category,
-                  currentCategoryName: el.category,
-                  isEditing: true,
-                }))
-              }
-            />
-            <Button
-              type="button"
-              content="Usuń kategorię"
-              isSmall={true}
-              accent={false}
-              icon={<CiCircleRemove />}
-              onClick={() => deleteCategoryHandler(el.category)}
-            />
+            <span>{el.category}</span>
+            <div>
+              <Button
+                type="button"
+                content="Edytuj nazwę"
+                isSmall={true}
+                accent={false}
+                icon={<CiCircleMore />}
+                onClick={() =>
+                  setCategory((prevState) => ({
+                    ...prevState,
+                    category: el.category,
+                    currentCategoryName: el.category,
+                    isEditing: true,
+                  }))
+                }
+              />
+              <Button
+                type="button"
+                content="Usuń kategorię"
+                isSmall={true}
+                accent={false}
+                icon={<CiCircleRemove />}
+                onClick={() => deleteCategoryHandler(el.category)}
+              />
+            </div>
           </li>
         ))}
       </ul>
