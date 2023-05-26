@@ -2,6 +2,7 @@ import Link from 'next/link';
 import styles from './Navbar.module.css';
 import stylesLink from '../../ui/Link/Link.module.css';
 import { Logo } from '@/assets/Logo/Logo';
+import { Text } from '@/components/ui/Text/Text';
 
 export default function Navbar() {
   return (
@@ -9,7 +10,8 @@ export default function Navbar() {
       <nav className={styles.nav}>
         <div className={stylesLink['logo-container']}>
           <Link href="/" className={stylesLink.logo}>
-            <Logo /> Kosztomiar
+            <Logo />
+            <Text content="Kosztomiar" />
           </Link>
         </div>
         <div>

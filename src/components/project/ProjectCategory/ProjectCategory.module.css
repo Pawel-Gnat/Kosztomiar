@@ -19,19 +19,21 @@
 }
 
 .table th {
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0.25rem;
 }
 
 .table td {
-  padding: 0.25rem 0.5rem;
+  padding: 0.25rem 0.25rem;
 }
 
 .body tr:nth-child(2n + 1) {
   background-color: var(--opacity-color);
 }
 
-.full {
+.full,
+.table td:nth-of-type(2) {
   width: 100%;
+  word-break: break-word;
 }
 
 .nowrap {
@@ -47,4 +49,20 @@
   flex-direction: column;
   align-items: center;
   margin: 2rem;
+}
+
+@media (min-width: 375px) {
+  .table th {
+    padding: 0.5rem 0.5rem;
+  }
+
+  .table td {
+    padding: 0.25rem 0.5rem;
+  }
+}
+
+@media (min-width: 576px) {
+  .table th {
+    padding: 0.5rem 1rem;
+  }
 }

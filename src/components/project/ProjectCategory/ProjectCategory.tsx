@@ -43,7 +43,7 @@ export const ProjectCategory = (props: Props) => {
           <tr>
             <th>L.p.</th>
             <th className={styles.full}>Nazwa</th>
-            <th>Wartość</th>
+            <th>Ilość</th>
             <th>J.m.</th>
             {price && <th>Cena</th>}
             <th>-</th>

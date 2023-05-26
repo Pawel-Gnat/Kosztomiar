@@ -7,8 +7,8 @@
   --secondary-color: #83c9f4;
   --opacity-color: rgb(163, 213, 255, 0.3);
   --bg-color: #d9f0ff;
-  --text-size: clamp(1.4rem, 3vw, 1.8rem);
-  --text-size-projects: clamp(1.2rem, 3vw, 1.4rem);
+  --text-size: clamp(1.3rem, 3vw, 1.8rem);
+  --text-size-projects: clamp(1rem, 3vw, 1.4rem);
   --border-radius: 5px;
 }
 

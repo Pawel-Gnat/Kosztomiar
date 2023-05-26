@@ -7,7 +7,7 @@
   justify-content: center;
   align-items: center;
   padding: 2rem;
-  margin: 1rem;
+  margin: 1rem 0.25rem;
   border: 1px solid var(--primary-color);
   border-radius: var(--border-radius);
   background-color: transparent;
@@ -32,6 +32,33 @@
   background-color: var(--secondary-color);
 }
 
-.button > svg {
-  margin-right: 1rem;
+td > .button:has(svg) span {
+  display: none;
+}
+
+.button svg {
+  min-height: 1.5rem;
+  min-width: 1.5rem;
+}
+
+.button:has(svg) > span {
+  margin-left: 1rem;
+}
+
+@media (min-width: 320px) {
+  .button {
+    margin: 0.5rem;
+  }
+}
+
+@media (min-width: 576px) {
+  .button {
+    margin: 1rem;
+  }
+}
+
+@media (min-width: 640px) {
+  td > .button:has(svg) span {
+    display: block;
+  }
 }
