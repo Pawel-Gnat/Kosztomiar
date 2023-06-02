@@ -18,7 +18,6 @@ export default function PodgladPage() {
         <PDFViewer style={viewerStyle} width={'100%'}>
           <PDFDocument data={project} />
         </PDFViewer>
-
         <PDFDownloadLink
           document={<PDFDocument data={project} />}
           fileName={project && project.name}
