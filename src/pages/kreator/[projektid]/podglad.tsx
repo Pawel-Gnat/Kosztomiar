@@ -7,10 +7,15 @@ import { PDFDownloadLink, PDFViewer } from '@react-pdf/renderer';
 export default function PodgladPage() {
   const project = useProject()!;
 
+  const viewerStyle = {
+    maxWidth: 1000,
+    aspectRatio: '1/1',
+  };
+
   return (
     <ProjectLayout>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <PDFViewer style={{ maxWidth: 1000, aspectRatio: '1/1' }} width={'100%'}>
+        <PDFViewer style={viewerStyle} width={'100%'}>
           <PDFDocument data={project} />
         </PDFViewer>
 
