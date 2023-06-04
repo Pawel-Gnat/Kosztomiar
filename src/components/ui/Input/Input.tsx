@@ -14,9 +14,13 @@ export const Input = (props: Props) => {
 
   function handleInput() {
     if (inputRef.current) {
-      const value = inputRef.current.value.trim();
-      props.onChange(value);
+      const value = inputRef.current.value.trimStart();
+      props.onChange(handleWhiteSpace(value));
     }
+  }
+
+  function handleWhiteSpace(text: string) {
+    return text.replace(/\s+/g, ' ');
   }
 
   return (
