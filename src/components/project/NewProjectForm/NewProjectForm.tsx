@@ -67,16 +67,21 @@ export default function NewProjectForm() {
     }));
   }
 
-  function handleFormButton() {
+  function handleCancelButton() {
     clearForm();
     router.push('/kreator');
+  }
+
+  function redirectToNewProject(id: string) {
+    router.push(`/kreator/${id}`);
   }
 
   async function submitHandler(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     await createNewProject(formData);
     context.setProjects();
-    handleFormButton();
+    clearForm();
+    redirectToNewProject(formData.id);
   }
 
   return (
@@ -147,7 +152,7 @@ export default function NewProjectForm() {
       <div className={styles.buttons}>
         <Button
           type="button"
-          onClick={handleFormButton}
+          onClick={handleCancelButton}
           content="Anuluj"
           accent={false}
           isSmall={false}
