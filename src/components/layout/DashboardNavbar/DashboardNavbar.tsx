@@ -7,9 +7,11 @@ import { Project } from '@/types/types';
 import { FiLogIn, FiFolder, FiPlusSquare } from 'react-icons/fi';
 import { Text } from '@/components/ui/Text/Text';
 import { Logo } from '@/assets/Logo/Logo';
+import { useRouter } from 'next/router';
 
 export const DashboardNavbar = () => {
   const context = useContext(UserContext);
+  const router = useRouter();
 
   return (
     <>
@@ -31,7 +33,14 @@ export const DashboardNavbar = () => {
               <ul className={styles['list-container']}>
                 {context.projects.map((project: Project) => (
                   <li key={project.id} className={styles.list}>
-                    <Link href={`/kreator/${project.id}`}>{project.name}</Link>
+                    <Link
+                      href={`/kreator/${project.id}`}
+                      className={
+                        router.query.projektid === project.id ? stylesLink.active : ''
+                      }
+                    >
+                      {project.name}
+                    </Link>
                   </li>
                 ))}
               </ul>
