@@ -6,6 +6,8 @@ type Props = {
   content: string;
   name?: string;
   value: string;
+  error: boolean;
+  errorText?: string;
   onChange: (value: string) => void;
 };
 
@@ -23,10 +25,12 @@ export const Input = (props: Props) => {
     return text.replace(/\s+/g, ' ');
   }
 
+  const labelClass = props.error ? `${styles.input} ${styles.error}` : styles.input;
+
   return (
     <div className={styles.container}>
       <input
-        className={styles.input}
+        className={labelClass}
         type={props.type}
         id={props.name}
         name={props.name}
@@ -40,6 +44,9 @@ export const Input = (props: Props) => {
       <label className={styles.label} htmlFor={props.name}>
         {props.content}
       </label>
+      {props.error ? (
+        <p className={`${styles['error-text']} ${styles.error}`}>{props.errorText}</p>
+      ) : null}
     </div>
   );
 };
@@ -53,6 +60,10 @@ export const RadioInput = (props: Props) => {
     }
   }
 
+  const labelClass = props.error
+    ? `${styles['radio-box-label']} ${styles.error}`
+    : styles['radio-box-label'];
+
   return (
     <div className={styles['radio-box-container']}>
       <input
@@ -64,7 +75,7 @@ export const RadioInput = (props: Props) => {
         onChange={handleInput}
         value={props.value}
       />
-      <label className={styles['radio-box-label']} htmlFor={props.content}>
+      <label className={labelClass} htmlFor={props.content}>
         {props.content}:
       </label>
     </div>
@@ -81,6 +92,10 @@ export const CheckboxInput = (props: Props) => {
     }
   }
 
+  const labelClass = props.error
+    ? `${styles['radio-box-label']} ${styles.error}`
+    : styles['radio-box-label'];
+
   return (
     <div className={styles['radio-box-container']}>
       <input
@@ -92,7 +107,7 @@ export const CheckboxInput = (props: Props) => {
         value={props.value}
         onChange={handleInput}
       />
-      <label className={styles['radio-box-label']} htmlFor={props.content}>
+      <label className={`${labelClass}`} htmlFor={props.content}>
         {props.content}
       </label>
     </div>

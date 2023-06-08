@@ -5,7 +5,7 @@ import { CiCircleMore, CiCircleRemove } from 'react-icons/ci';
 
 type Props = {
   currency: string | null;
-  price: boolean;
+  price: boolean | null;
   data: Element[];
   deleteElement: (element: Element) => void;
   editElement: (element: Element) => void;

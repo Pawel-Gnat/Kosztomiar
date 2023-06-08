@@ -6,7 +6,7 @@ import { ProjectCategory } from '../ProjectCategory/ProjectCategory';
 type Props = {
   currency: string | null;
   measurements: string[];
-  price: boolean;
+  price: boolean | null;
   data: Category[];
   id: string;
 };
@@ -21,7 +21,6 @@ export const ProjectContainer = (props: Props) => {
         <ProjectCategory key={index} name={el.category} {...categoryInfo} id={id} />
       ))}
       <div className={styles['category-form']}>
-        {/* <div> */}
         <NewCategoryForm />
       </div>
     </div>

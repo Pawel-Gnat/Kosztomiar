@@ -11,7 +11,7 @@ type Props = {
   name: string;
   currency: string | null;
   measurements: string[];
-  price: boolean;
+  price: boolean | null;
   data: Category[];
   key: number;
   id: string;

@@ -5,7 +5,7 @@ import { useContext, useEffect, useState } from 'react';
 import { createNewCategoryElement } from '@/components/utils/createNewCategoryElement';
 import { Select } from '@/components/ui/Select/Select';
 import UserContext from '@/store/user-context';
-import { Element } from '@/types/types';
+import { Category, Element, Project } from '@/types/types';
 import { deleteCategoryElement } from '@/components/utils/deleteCategoryElement';
 import { Button } from '@/components/ui/Button/Button';
 import { FiPlusSquare } from 'react-icons/fi';
@@ -16,7 +16,7 @@ type Props = {
 };
 
 export const NewCategoryElementForm = (props: Props) => {
-  const project = useProject();
+  const project = useProject()!;
   const [isFormActive, setIsFormActive] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editedElement, setEditedElement] = useState<Element>({
@@ -30,6 +30,13 @@ export const NewCategoryElementForm = (props: Props) => {
     value: '',
     unit: '',
     price: '',
+  });
+  const [error, setError] = useState({
+    nameError: false,
+    errorText: '',
+    valueError: false,
+    unitError: false,
+    priceError: false,
   });
 
   const context = useContext(UserContext);
@@ -97,8 +104,116 @@ export const NewCategoryElementForm = (props: Props) => {
     clearForm();
   }
 
+  function handleNameError() {
+    if (newElement.name === '') {
+      setError((prevState) => ({
+        ...prevState,
+        nameError: true,
+        errorText: 'Podaj nazwę',
+      }));
+
+      setTimeout(() => {
+        setError((prevState) => ({
+          ...prevState,
+          nameError: false,
+          errorText: '',
+        }));
+      }, 1500);
+    }
+  }
+
+  function getCategory(categoryName: string) {
+    const existingProject: Category[] = project.data;
+    return existingProject.find(
+      (categoryContainer) => categoryContainer.category === categoryName,
+    );
+  }
+
+  function checkIfNameExists(elementName: string) {
+    const currentCategory = getCategory(props.category)!;
+
+    if (isEditing && editedElement.name.toLowerCase() === elementName.toLowerCase()) {
+      return false;
+    }
+
+    if (
+      currentCategory.elements.find(
+        (element) => element.name.toLowerCase() === elementName.toLowerCase(),
+      )
+    ) {
+      setError((prevState) => ({
+        ...prevState,
+        nameError: true,
+        errorText: 'Nazwa już istnieje',
+      }));
+
+      setTimeout(() => {
+        setError((prevState) => ({
+          ...prevState,
+          nameError: false,
+          errorText: '',
+        }));
+      }, 1500);
+
+      return true;
+    }
+  }
+
+  function handleValueError() {
+    const element = isEditing ? editedElement : newElement;
+
+    if (element.value === '' || +element.value <= 0) {
+      setError((prevState) => ({ ...prevState, valueError: true }));
+
+      setTimeout(() => {
+        setError((prevState) => ({ ...prevState, valueError: false }));
+      }, 1500);
+    }
+  }
+
+  function handleUnitError() {
+    const element = isEditing ? editedElement : newElement;
+
+    if (element.unit === '') {
+      setError((prevState) => ({ ...prevState, unitError: true }));
+
+      setTimeout(() => {
+        setError((prevState) => ({ ...prevState, unitError: false }));
+      }, 1500);
+    }
+  }
+
+  function handlePriceError() {
+    const element = isEditing ? editedElement : newElement;
+
+    if (element.price === '' || +element.price <= 0) {
+      setError((prevState) => ({ ...prevState, priceError: true }));
+
+      setTimeout(() => {
+        setError((prevState) => ({ ...prevState, priceError: false }));
+      }, 1500);
+    }
+  }
+
   async function submitHandler(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    handleNameError();
+    handleValueError();
+    handleUnitError();
+    handlePriceError();
+
+    if (
+      checkIfNameExists(newElement.name) ||
+      !newElement.name ||
+      !newElement.value ||
+      +newElement.value <= 0 ||
+      !newElement.unit ||
+      (project.price && !newElement.price) ||
+      (project.price && +newElement.price <= 0)
+    ) {
+      return;
+    }
 
     if (project) {
       if (isEditing) {
@@ -130,6 +245,8 @@ export const NewCategoryElementForm = (props: Props) => {
               name="material-name"
               value={newElement.name}
               onChange={handleName}
+              error={error.nameError}
+              errorText={error.errorText}
             />
             <Input
               type="number"
@@ -137,6 +254,7 @@ export const NewCategoryElementForm = (props: Props) => {
               name="material-value"
               value={newElement.value}
               onChange={handleValue}
+              error={error.valueError}
             />
             {project && (
               <Select
@@ -144,6 +262,7 @@ export const NewCategoryElementForm = (props: Props) => {
                 measurements={project.measurements}
                 onChange={handleSelect}
                 value={newElement.unit}
+                error={error.unitError}
               />
             )}
             {project && project.price && (
@@ -153,6 +272,7 @@ export const NewCategoryElementForm = (props: Props) => {
                 name="material-price"
                 value={newElement.price}
                 onChange={handlePrice}
+                error={error.priceError}
               />
             )}
           </div>
