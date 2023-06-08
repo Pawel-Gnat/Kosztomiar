@@ -51,11 +51,11 @@
 }
 
 .list a:hover {
-  color: var(--secondary-color);
+  color: var(--accent-color);
 }
 
 .list::marker {
-  color: var(--secondary-color);
+  color: var(--primary-color);
 }
 
 .icon {

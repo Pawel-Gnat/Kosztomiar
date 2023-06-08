@@ -1,12 +1,18 @@
 :root {
-  /* --text-color: #070606; */
-  --text-color: #070606;
-  /* --primary-color: #fff1eb; */
-  --primary-color: #a3d5ff;
-  /* --secondary-color: #ace0f9; */
-  --secondary-color: #83c9f4;
-  --opacity-color: rgb(163, 213, 255, 0.3);
-  --bg-color: #d9f0ff;
+  --text-color: #02121c;
+  --primary-color: #4d93c2;
+  --secondary-color: #b4ddf8;
+  --accent-color: #0d5c91;
+  --opacity-color: rgb(15, 107, 169, 0.3);
+  --bg-color: #d0eafb;
+
+  /* --text-color: #1a1a19;
+  --primary-color: #abacaa;
+  --secondary-color: #ffffff;
+  --accent-color: #777977;
+  --opacity-color: rgb(171, 172, 170, 0.3);
+  --bg-color: #f5f5f5; */
+
   --error-color: #d8000c;
   --text-size: clamp(1.3rem, 3vw, 1.8rem);
   --text-size-projects: clamp(1rem, 3vw, 1.4rem);

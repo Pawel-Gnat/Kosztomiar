@@ -34,7 +34,7 @@
 }
 
 .input:focus {
-  border-color: var(--secondary-color);
+  border-color: var(--accent-color);
 }
 
 .input:focus ~ .label,
@@ -67,7 +67,7 @@
 }
 
 .radio-box-label:hover {
-  color: var(--secondary-color);
+  color: var(--accent-color);
 }
 
 .radio-box-input {
@@ -91,7 +91,7 @@
   border-radius: 3px;
   transform: scale(0);
   transition: 120ms transform ease-in-out;
-  box-shadow: inset 1em 1em var(--secondary-color);
+  box-shadow: inset 1em 1em var(--accent-color);
 }
 
 .radio-box-input:checked::before {

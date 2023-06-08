@@ -28,7 +28,7 @@
 }
 
 .select:focus {
-  border-color: var(--secondary-color);
+  border-color: var(--accent-color);
 }
 
 .error {
