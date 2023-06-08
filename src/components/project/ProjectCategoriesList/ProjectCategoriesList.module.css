@@ -1,5 +1,6 @@
 .container {
-  margin-bottom: 2rem;
+  max-width: 140rem;
+  margin: 0 auto 2rem;
 }
 
 .list {
@@ -24,6 +25,5 @@
 @media (min-width: 640px) {
   .list {
     flex-direction: row;
-    padding: 0 1rem;
   }
 }

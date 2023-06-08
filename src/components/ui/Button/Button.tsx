@@ -1,4 +1,4 @@
-import styles from './Buttom.module.css';
+import styles from './Button.module.css';
 import { ReactNode } from 'react';
 
 type Button = {

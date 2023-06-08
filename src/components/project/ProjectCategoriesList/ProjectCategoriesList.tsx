@@ -9,6 +9,7 @@ import UserContext from '@/store/user-context';
 import { useContext, useState } from 'react';
 import { CategoryForm } from '../CategoryForm/CategoryForm';
 import { Button } from '@/components/ui/Button/Button';
+import { useProject } from '@/hooks/useProject';
 
 export const ProjectCategoriesList = (props: { project: Project }) => {
   const [category, setCategory] = useState({
@@ -16,7 +17,12 @@ export const ProjectCategoriesList = (props: { project: Project }) => {
     currentCategoryName: '',
     isEditing: false,
   });
+  const [error, setError] = useState({
+    nameError: false,
+    errorText: '',
+  });
   const context = useContext(UserContext);
+  const project = useProject()!;
 
   async function deleteCategoryHandler(el: string) {
     const existingProjects = await getProjectsFromLocalStorage();
@@ -51,8 +57,58 @@ export const ProjectCategoriesList = (props: { project: Project }) => {
     clearForm();
   }
 
+  function handleNameError() {
+    if (category.category === '') {
+      setError((prevState) => ({
+        ...prevState,
+        nameError: true,
+        errorText: 'Podaj nazwę',
+      }));
+
+      setTimeout(() => {
+        setError((prevState) => ({
+          ...prevState,
+          nameError: false,
+          errorText: '',
+        }));
+      }, 1500);
+    }
+  }
+
+  function checkIfNameExists(categoryName: string) {
+    const existingCategories: Category[] = project.data;
+
+    if (
+      existingCategories.find(
+        (category) => category.category.toLowerCase() === categoryName.toLowerCase(),
+      )
+    ) {
+      setError((prevState) => ({
+        ...prevState,
+        nameError: true,
+        errorText: 'Nazwa już istnieje',
+      }));
+
+      setTimeout(() => {
+        setError((prevState) => ({
+          ...prevState,
+          nameError: false,
+          errorText: '',
+        }));
+      }, 1500);
+
+      return true;
+    }
+  }
+
   async function submitHandler(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    handleNameError();
+
+    if (checkIfNameExists(category.category) || !category.category) {
+      return;
+    }
 
     const existingProjects = await getProjectsFromLocalStorage();
     const currentProject = existingProjects.find(
@@ -110,6 +166,7 @@ export const ProjectCategoriesList = (props: { project: Project }) => {
           onChange={handleName}
           value={category.category}
           onClick={handleCancel}
+          error={error}
         />
       )}
     </>
