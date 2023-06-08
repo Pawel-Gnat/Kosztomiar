@@ -7,6 +7,7 @@ type Props = {
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
   onChange: (value: string) => void;
   value: string;
+  error: { nameError: boolean; errorText: string };
   onClick: () => void;
 };
 
@@ -20,6 +21,8 @@ export const CategoryForm = (props: Props) => {
           name="category-name"
           value={props.value}
           onChange={props.onChange}
+          error={props.error.nameError}
+          errorText={props.error.errorText}
         />
         <div className={styles.buttons}>
           <Button

@@ -3,7 +3,7 @@ export type Project = {
   createdDate: string;
   name: string;
   measurements: string[];
-  price: boolean;
+  price: boolean | null;
   currency: string | null;
   data: Category[];
   isLoading: boolean;

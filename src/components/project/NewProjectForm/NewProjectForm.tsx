@@ -16,11 +16,20 @@ export default function NewProjectForm() {
     createdDate: getDate(),
     name: '',
     measurements: [],
-    price: false,
+    price: null,
     currency: null,
     data: [],
     isLoading: false,
   });
+
+  const [error, setError] = useState({
+    nameError: false,
+    errorText: '',
+    measurementError: false,
+    priceError: false,
+    currencyError: false,
+  });
+
   const context = useContext(UserContext);
   const router = useRouter();
 
@@ -29,13 +38,17 @@ export default function NewProjectForm() {
       ...prevState,
       price: value === 'true' ? true : false,
     }));
+
+    if (formData.price === false) {
+      handleCurrencySelection(null);
+    }
   }
 
   function handleName(value: string) {
     setFormData((prevState) => ({ ...prevState, name: value }));
   }
 
-  function handleCurrencySelection(value: string) {
+  function handleCurrencySelection(value: string | null) {
     setFormData((prevState) => ({ ...prevState, currency: value }));
   }
 
@@ -76,8 +89,93 @@ export default function NewProjectForm() {
     router.push(`/kreator/${id}`);
   }
 
+  function handleNameError() {
+    if (formData.name === '') {
+      setError((prevState) => ({
+        ...prevState,
+        nameError: true,
+        errorText: 'Podaj nazwę',
+      }));
+
+      setTimeout(() => {
+        setError((prevState) => ({
+          ...prevState,
+          nameError: false,
+          errorText: '',
+        }));
+      }, 1500);
+    }
+  }
+
+  function checkIfNameExists(projectName: string) {
+    const existingNames: Project[] = context.projects;
+
+    if (existingNames.find((project) => project.name === projectName)) {
+      setError((prevState) => ({
+        ...prevState,
+        nameError: true,
+        errorText: 'Nazwa już istnieje',
+      }));
+
+      setTimeout(() => {
+        setError((prevState) => ({
+          ...prevState,
+          nameError: false,
+          errorText: '',
+        }));
+      }, 1500);
+
+      return true;
+    }
+  }
+
+  function handleMeasurementError() {
+    if (formData.measurements.length === 0) {
+      setError((prevState) => ({ ...prevState, measurementError: true }));
+
+      setTimeout(() => {
+        setError((prevState) => ({ ...prevState, measurementError: false }));
+      }, 1500);
+    }
+  }
+
+  function handlePriceError() {
+    if (formData.price === null) {
+      setError((prevState) => ({ ...prevState, priceError: true }));
+
+      setTimeout(() => {
+        setError((prevState) => ({ ...prevState, priceError: false }));
+      }, 1500);
+    }
+  }
+
+  function handleCurrencyError() {
+    if (formData.price === true && formData.currency === null) {
+      setError((prevState) => ({ ...prevState, currencyError: true }));
+
+      setTimeout(() => {
+        setError((prevState) => ({ ...prevState, currencyError: false }));
+      }, 1500);
+    }
+  }
+
   async function submitHandler(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    handleNameError();
+    handleMeasurementError();
+    handlePriceError();
+    handleCurrencyError();
+
+    if (
+      checkIfNameExists(formData.name) ||
+      !formData.name ||
+      !formData.measurements.length ||
+      formData.price === null ||
+      (formData.price === true && !formData.currency)
+    ) {
+      return;
+    }
+
     await createNewProject(formData);
     context.setProjects();
     clearForm();
@@ -92,23 +190,47 @@ export default function NewProjectForm() {
         name="project-name"
         value={formData.name}
         onChange={handleName}
+        error={error.nameError}
+        errorText={error.errorText}
       />
       <div>
         <Text content="Wybierz jednostki miary:" />
-        <CheckboxInput content="metry" value="m" onChange={handleMeasurements} />
+        <CheckboxInput
+          content="metry"
+          value="m"
+          onChange={handleMeasurements}
+          error={error.measurementError}
+        />
         <CheckboxInput
           content="metry kwadratowe"
           value="m2"
           onChange={handleMeasurements}
+          error={error.measurementError}
         />
         <CheckboxInput
           content="metry sześcienne"
           value="m3"
           onChange={handleMeasurements}
+          error={error.measurementError}
         />
-        <CheckboxInput content="kilogramy" value="kg" onChange={handleMeasurements} />
-        <CheckboxInput content="litry" value="l" onChange={handleMeasurements} />
-        <CheckboxInput content="sztuki" value="szt" onChange={handleMeasurements} />
+        <CheckboxInput
+          content="kilogramy"
+          value="kg"
+          onChange={handleMeasurements}
+          error={error.measurementError}
+        />
+        <CheckboxInput
+          content="litry"
+          value="l"
+          onChange={handleMeasurements}
+          error={error.measurementError}
+        />
+        <CheckboxInput
+          content="sztuki"
+          value="szt"
+          onChange={handleMeasurements}
+          error={error.measurementError}
+        />
       </div>
       <div>
         <Text content="Uwzględniać ceny w projekcie?" />
@@ -117,12 +239,14 @@ export default function NewProjectForm() {
           name="price"
           onChange={handlePriceSelection}
           value="true"
+          error={error.priceError}
         />
         <RadioInput
           content="Nie"
           name="price"
           onChange={handlePriceSelection}
           value="false"
+          error={error.priceError}
         />
       </div>
 
@@ -134,18 +258,21 @@ export default function NewProjectForm() {
             name="currency"
             onChange={handleCurrencySelection}
             value="PLN"
+            error={error.currencyError}
           />
           <RadioInput
             content="EUR"
             name="currency"
             onChange={handleCurrencySelection}
             value="EUR"
+            error={error.currencyError}
           />
           <RadioInput
             content="USD"
             name="currency"
             onChange={handleCurrencySelection}
             value="USD"
+            error={error.currencyError}
           />
         </div>
       ) : null}
