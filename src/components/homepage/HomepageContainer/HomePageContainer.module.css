@@ -1,0 +1,15 @@
+.waves {
+  position: absolute;
+  min-height: 100vh;
+  inset: 0;
+  background-image: url(/assets/svg/wave.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: -1;
+}
+
+.main {
+  width: 100%;
+  max-width: 144rem;
+  margin: 0 auto;
+}

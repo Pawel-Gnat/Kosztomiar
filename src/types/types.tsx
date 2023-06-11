@@ -20,3 +20,10 @@ export type Element = {
   unit: string;
   price: string;
 };
+
+export type Card = {
+  heading: string;
+  text: string;
+  img?: string;
+  svg?: JSX.Element;
+};
