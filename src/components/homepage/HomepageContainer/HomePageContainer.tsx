@@ -1,5 +1,6 @@
 import Navbar from '@/components/layout/Navbar/Navbar';
 import styles from './HomePageContainer.module.css';
+import { Footer } from '../Footer/Footer';
 
 export const HomePageContainer = (props: { children: React.ReactNode }) => {
   return (
@@ -7,6 +8,7 @@ export const HomePageContainer = (props: { children: React.ReactNode }) => {
       <div className={styles.waves}></div>
       <Navbar />
       <main className={styles.main}>{props.children}</main>;
+      <Footer />
     </>
   );
 };

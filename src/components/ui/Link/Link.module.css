@@ -13,6 +13,14 @@
   white-space: nowrap;
 }
 
+.footerlink {
+  font-size: var(--text-size-projects);
+  color: var(--text-color);
+  padding: 1rem;
+  margin: 0.5rem 0.75rem;
+  transition: color 0.2s;
+}
+
 .project-navbar-link {
   font-size: var(--text-size-projects);
   padding: 1rem;
@@ -22,6 +30,11 @@
 .accent {
   border: 1px solid var(--primary-color);
   background-color: var(--primary-color);
+}
+
+.footerlink:hover,
+.footerlink:focus {
+  color: var(--accent-color);
 }
 
 .navlink:hover,
@@ -34,6 +47,7 @@
 .navlink > svg {
   margin-right: 1rem;
 }
+
 .logo-container {
   display: flex;
   align-items: center;
@@ -85,7 +99,7 @@
   font-weight: bold;
 }
 
-@media (min-width: 360px) {
+@media (min-width: 370px) {
   .logo p {
     display: block;
   }
