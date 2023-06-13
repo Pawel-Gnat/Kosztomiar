@@ -64,9 +64,3 @@ section {
 button {
   font-family: inherit;
 }
-
-@media (min-width: 1024px) {
-  section {
-    padding: 10rem 4rem;
-  }
-}
