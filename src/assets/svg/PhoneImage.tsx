@@ -16,7 +16,7 @@ export const PhoneImage = () => {
         height="335"
         rx="40"
         stroke="#112D55"
-        stroke-width="20"
+        strokeWidth="20"
       />
     </svg>
   );

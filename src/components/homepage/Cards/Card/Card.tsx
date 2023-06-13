@@ -14,6 +14,7 @@ export const Card = (props: CardType) => {
           alt=""
           aria-hidden={true}
           className={styles.image}
+          priority
         />
       )}
       {props.svg}
