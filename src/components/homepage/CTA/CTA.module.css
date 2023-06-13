@@ -1,0 +1,12 @@
+.cta {
+  text-align: center;
+}
+
+.heading {
+  font-size: var(--text-primary-heading-size);
+  margin-bottom: 1rem;
+}
+
+.cta a {
+  margin-top: 2rem;
+}

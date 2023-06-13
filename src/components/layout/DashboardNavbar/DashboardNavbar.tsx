@@ -6,7 +6,7 @@ import UserContext from '@/store/user-context';
 import { Project } from '@/types/types';
 import { FiLogIn, FiFolder, FiPlusSquare } from 'react-icons/fi';
 import { Text } from '@/components/ui/Text/Text';
-import { Logo } from '@/assets/Logo/Logo';
+import { Logo } from '@/assets/svg/Logo';
 import { useRouter } from 'next/router';
 
 export const DashboardNavbar = () => {

@@ -1,0 +1,13 @@
+.cards {
+  margin-top: 5rem;
+}
+
+@media (min-width: 640px) {
+  .cards > div:nth-child(even) > div {
+    order: 1;
+  }
+
+  .cards > div:nth-child(even) > svg {
+    order: 2;
+  }
+}

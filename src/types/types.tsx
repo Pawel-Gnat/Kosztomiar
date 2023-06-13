@@ -20,3 +20,19 @@ export type Element = {
   unit: string;
   price: string;
 };
+
+export type Card = {
+  heading: string;
+  text: string;
+  img?: string;
+  svg?: JSX.Element;
+};
+
+export type AccordionItem = {
+  key: number;
+  heading: string;
+  text: string;
+  isActive: boolean;
+  setActiveIndex: (index: number | null) => void;
+  indexItem: number;
+};

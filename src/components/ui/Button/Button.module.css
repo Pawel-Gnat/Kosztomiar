@@ -28,8 +28,8 @@
 .button:hover,
 .button:focus {
   color: var(--bg-color);
-  border-color: var(--secondary-color);
-  background-color: var(--secondary-color);
+  border-color: var(--accent-color);
+  background-color: var(--accent-color);
 }
 
 td > .button:has(svg) span {
