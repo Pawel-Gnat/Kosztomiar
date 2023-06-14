@@ -20,9 +20,26 @@ export const ProjectCategoryElements = (props: Props) => {
     props.editElement(el);
   }
 
+  function sortAlphabetically(data: Element[]) {
+    return data.sort((a, b) => {
+      const firstElement = a.name.toLowerCase();
+      const secondElement = b.name.toLowerCase();
+
+      if (firstElement < secondElement) {
+        return -1;
+      }
+
+      if (firstElement > secondElement) {
+        return 1;
+      }
+
+      return 0;
+    });
+  }
+
   return (
     <>
-      {props.data.map((el, index) => (
+      {sortAlphabetically(props.data).map((el, index) => (
         <tr key={index}>
           <td>{index + 1}</td>
           <td>{el.name}</td>
