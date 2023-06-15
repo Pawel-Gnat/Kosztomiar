@@ -5,20 +5,20 @@ import { useContext, useEffect, useState } from 'react';
 import { createNewCategoryElement } from '@/components/utils/createNewCategoryElement';
 import { Select } from '@/components/ui/Select/Select';
 import UserContext from '@/store/user-context';
-import { Category, Element, Project } from '@/types/types';
+import { Category, EditedElement, Element } from '@/types/types';
 import { deleteCategoryElement } from '@/components/utils/deleteCategoryElement';
 import { Button } from '@/components/ui/Button/Button';
 import { FiPlusSquare } from 'react-icons/fi';
 
 type Props = {
   category: string;
-  editedElement: Element | null;
+  editedElement: EditedElement;
+  onEdit: (element: EditedElement) => void;
 };
 
 export const NewCategoryElementForm = (props: Props) => {
   const project = useProject()!;
   const [isFormActive, setIsFormActive] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
   const [editedElement, setEditedElement] = useState<Element>({
     name: '',
     value: '',
@@ -42,20 +42,15 @@ export const NewCategoryElementForm = (props: Props) => {
   const context = useContext(UserContext);
 
   useEffect(() => {
-    if (props.editedElement) {
-      setNewElement(props.editedElement);
-      setEditedElement(props.editedElement);
+    if (props.editedElement.isEditing) {
+      setNewElement(props.editedElement.element);
+      setEditedElement(props.editedElement.element);
       toggleActiveForm();
-      toggleEditing();
     }
   }, [props.editedElement]);
 
   function toggleActiveForm() {
     setIsFormActive((prevState) => !prevState);
-  }
-
-  function toggleEditing() {
-    setIsEditing((prevState) => !prevState);
   }
 
   function handleName(value: string) {
@@ -95,9 +90,17 @@ export const NewCategoryElementForm = (props: Props) => {
   }
 
   function handleCancel() {
-    if (isEditing) {
+    if (props.editedElement.isEditing) {
       resetEditedElementState();
-      toggleEditing();
+      props.onEdit({
+        element: {
+          name: '',
+          value: '',
+          unit: '',
+          price: '',
+        },
+        isEditing: false,
+      });
     }
 
     toggleActiveForm();
@@ -132,7 +135,10 @@ export const NewCategoryElementForm = (props: Props) => {
   function checkIfNameExists(elementName: string) {
     const currentCategory = getCategory(props.category)!;
 
-    if (isEditing && editedElement.name.toLowerCase() === elementName.toLowerCase()) {
+    if (
+      props.editedElement.isEditing &&
+      editedElement.name.toLowerCase() === elementName.toLowerCase()
+    ) {
       return false;
     }
 
@@ -160,7 +166,7 @@ export const NewCategoryElementForm = (props: Props) => {
   }
 
   function handleValueError() {
-    const element = isEditing ? editedElement : newElement;
+    const element = props.editedElement.isEditing ? editedElement : newElement;
 
     if (element.value === '' || +element.value <= 0) {
       setError((prevState) => ({ ...prevState, valueError: true }));
@@ -172,7 +178,7 @@ export const NewCategoryElementForm = (props: Props) => {
   }
 
   function handleUnitError() {
-    const element = isEditing ? editedElement : newElement;
+    const element = props.editedElement.isEditing ? editedElement : newElement;
 
     if (element.unit === '') {
       setError((prevState) => ({ ...prevState, unitError: true }));
@@ -184,7 +190,7 @@ export const NewCategoryElementForm = (props: Props) => {
   }
 
   function handlePriceError() {
-    const element = isEditing ? editedElement : newElement;
+    const element = props.editedElement.isEditing ? editedElement : newElement;
 
     if (element.price === '' || +element.price <= 0) {
       setError((prevState) => ({ ...prevState, priceError: true }));
@@ -216,10 +222,9 @@ export const NewCategoryElementForm = (props: Props) => {
     }
 
     if (project) {
-      if (isEditing) {
+      if (props.editedElement.isEditing) {
         await deleteCategoryElement(project.id, props.category, editedElement);
         resetEditedElementState();
-        toggleEditing();
       }
 
       await createNewCategoryElement(

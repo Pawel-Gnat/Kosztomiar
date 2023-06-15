@@ -1,7 +1,7 @@
 import styles from './ProjectCategory.module.css';
 import { ProjectCategoryElements } from '../ProjectCategoryElements/ProjectCategoryElements';
 import { NewCategoryElementForm } from '../NewCategoryElementForm/NewCategoryElementForm';
-import { Category, Element } from '@/types/types';
+import { Category, EditedElement, Element } from '@/types/types';
 import { sumValueOfProjectElements } from '@/components/utils/sumValueOfProjectElements';
 import { deleteCategoryElement } from '@/components/utils/deleteCategoryElement';
 import { useContext, useState } from 'react';
@@ -20,7 +20,15 @@ type Props = {
 export const ProjectCategory = (props: Props) => {
   const { currency, name, price, data } = props;
   const context = useContext(UserContext);
-  const [editedElement, setEditedElement] = useState<Element | null>(null);
+  const [editedElement, setEditedElement] = useState<EditedElement>({
+    element: {
+      name: '',
+      value: '',
+      unit: '',
+      price: '',
+    },
+    isEditing: false,
+  });
 
   const filteredData = Array.from(data.filter((el) => el.category === name));
   const categoryName = data.find((el) => el.category === name)!;
@@ -31,7 +39,11 @@ export const ProjectCategory = (props: Props) => {
     context.setProjects();
   }
 
-  async function editElement(element: Element) {
+  async function editElement(element: EditedElement) {
+    setEditedElement(element);
+  }
+
+  async function onEdit(element: EditedElement) {
     setEditedElement(element);
   }
 
@@ -75,6 +87,7 @@ export const ProjectCategory = (props: Props) => {
         <NewCategoryElementForm
           category={categoryName.category}
           editedElement={editedElement}
+          onEdit={onEdit}
         />
       </div>
     </div>
