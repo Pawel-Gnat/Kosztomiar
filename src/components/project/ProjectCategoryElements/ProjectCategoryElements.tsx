@@ -1,6 +1,6 @@
 import styles from './ProjectCategoryElements.module.css';
 import { Button } from '@/components/ui/Button/Button';
-import { Element } from '@/types/types';
+import { EditedElement, Element } from '@/types/types';
 import { CiCircleMore, CiCircleRemove } from 'react-icons/ci';
 
 type Props = {
@@ -8,7 +8,7 @@ type Props = {
   price: boolean | null;
   data: Element[];
   deleteElement: (element: Element) => void;
-  editElement: (element: Element) => void;
+  editElement: (element: EditedElement) => void;
 };
 
 export const ProjectCategoryElements = (props: Props) => {
@@ -17,7 +17,7 @@ export const ProjectCategoryElements = (props: Props) => {
   }
 
   function editElementHandler(el: Element) {
-    props.editElement(el);
+    props.editElement({ element: el, isEditing: true });
   }
 
   function sortAlphabetically(data: Element[]) {

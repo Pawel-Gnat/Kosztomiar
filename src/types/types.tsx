@@ -21,6 +21,11 @@ export type Element = {
   price: string;
 };
 
+export type EditedElement = {
+  element: Element;
+  isEditing: boolean;
+};
+
 export type Card = {
   heading: string;
   text: string;
