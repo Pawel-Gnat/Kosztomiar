@@ -50,6 +50,7 @@
   right: 2rem;
   transform: translateY(-50%);
   text-align: right;
+  pointer-events: none;
 }
 
 .radio-box-container {

@@ -1,66 +1,116 @@
+import { FieldError, UseFormRegister, FieldValues } from 'react-hook-form';
 import styles from './Input.module.css';
-import { useRef } from 'react';
+import { FormCategory, FormProject } from '@/types/types';
 
 type Props = {
   type?: 'text' | 'number';
   content: string;
-  name?: string;
-  value: string;
-  error: boolean;
-  errorText?: string;
-  onChange: (value: string) => void;
+  name: keyof FormProject;
+  value?: string;
+  error?: FieldError;
+  register: UseFormRegister<{
+    name: string;
+    units: null;
+    price: string;
+    currency: string;
+  }>;
 };
 
-export const Input = (props: Props) => {
-  const inputRef = useRef<HTMLInputElement>(null);
+// type Props<T> = {
+//   type?: 'text' | 'number';
+//   content: string;
+//   name: keyof T;
+//   value?: string;
+//   error?: FieldError;
+//   register: UseFormRegister<T>;
+// };
 
-  function handleInput() {
-    if (inputRef.current) {
-      const value = inputRef.current.value.trimStart();
-      props.onChange(handleWhiteSpace(value));
-    }
-  }
-
-  function handleWhiteSpace(text: string) {
-    return text.replace(/\s+/g, ' ');
-  }
-
-  const labelClass = props.error ? `${styles.input} ${styles.error}` : styles.input;
+export const Input = ({ type, content, name, error, register }: Props) => {
+  // export const Input = <T,>({ type, content, name, error, register }: Props<T>) => {
+  const labelClass = error ? `${styles.input} ${styles.error}` : styles.input;
 
   return (
     <div className={styles.container}>
       <input
         className={labelClass}
-        type={props.type}
-        id={props.name}
-        name={props.name}
+        type={type}
+        id={name}
         placeholder=" "
         autoComplete="off"
-        ref={inputRef}
-        value={props.value}
-        onChange={handleInput}
-        required={true}
+        {...register(name)}
       />
-      <label className={styles.label} htmlFor={props.name}>
-        {props.content}
+      <label className={styles.label} htmlFor={name}>
+        {content}
       </label>
-      {props.error ? (
-        <p className={`${styles['error-text']} ${styles.error}`}>{props.errorText}</p>
-      ) : null}
+      {error && (
+        <p className={`${styles['error-text']} ${styles.error}`}>{error.message}</p>
+      )}
     </div>
   );
 };
 
-export const RadioInput = (props: Props) => {
-  const inputRef = useRef<HTMLInputElement>(null);
+// type PropsCategory<T> = {
+//   type?: 'text' | 'number';
+//   content: string;
+//   name: keyof T;
+//   value?: string;
+//   error?: FieldError;
+//   // register: UseFormRegister<T>;
+//   register: UseFormRegister<{
+//     category: string;
+//   }>;
+// };
 
-  function handleInput() {
-    if (inputRef.current && inputRef.current.checked) {
-      props.onChange(props.value);
-    }
-  }
+type PropsCategory = {
+  type?: 'text' | 'number';
+  content: string;
+  name: keyof FormCategory;
+  value?: string;
+  error?: FieldError;
+  // register: UseFormRegister<T>;
+  register: UseFormRegister<{
+    category: string;
+  }>;
+};
 
-  const labelClass = props.error
+export const InputCategory = ({
+  type,
+  content,
+  name,
+  error,
+  register,
+}: PropsCategory) => {
+  // export const InputCategory = <T,>({
+  //   type,
+  //   content,
+  //   name,
+  //   error,
+  //   register,
+  // }: PropsCategory<T>) => {
+  const labelClass = error ? `${styles.input} ${styles.error}` : styles.input;
+
+  return (
+    <div className={styles.container}>
+      <input
+        className={labelClass}
+        type={type}
+        id={name}
+        placeholder=" "
+        autoComplete="off"
+        {...register(name)}
+      />
+      <label className={styles.label} htmlFor={name}>
+        {content}
+      </label>
+      {error && (
+        <p className={`${styles['error-text']} ${styles.error}`}>{error.message}</p>
+      )}
+    </div>
+  );
+};
+
+export const CheckboxInput = ({ content, value, name, error, register }: Props) => {
+  const labelClass = error
     ? `${styles['radio-box-label']} ${styles.error}`
     : styles['radio-box-label'];
 
@@ -68,47 +118,34 @@ export const RadioInput = (props: Props) => {
     <div className={styles['radio-box-container']}>
       <input
         className={styles['radio-box-input']}
-        id={props.content}
-        type="radio"
-        name={props.name}
-        ref={inputRef}
-        onChange={handleInput}
-        value={props.value}
-      />
-      <label className={labelClass} htmlFor={props.content}>
-        {props.content}:
-      </label>
-    </div>
-  );
-};
-
-export const CheckboxInput = (props: Props) => {
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  function handleInput() {
-    if (inputRef.current) {
-      const value = inputRef.current.value;
-      props.onChange(value);
-    }
-  }
-
-  const labelClass = props.error
-    ? `${styles['radio-box-label']} ${styles.error}`
-    : styles['radio-box-label'];
-
-  return (
-    <div className={styles['radio-box-container']}>
-      <input
-        className={styles['radio-box-input']}
-        id={props.content}
+        id={content}
         type="checkbox"
-        name={`measurement-unit-${props.content}`}
-        ref={inputRef}
-        value={props.value}
-        onChange={handleInput}
+        value={value}
+        {...register(name)}
       />
-      <label className={`${labelClass}`} htmlFor={props.content}>
-        {props.content}
+      <label className={`${labelClass}`} htmlFor={content}>
+        {content}
+      </label>
+    </div>
+  );
+};
+
+export const RadioInput = ({ content, value, name, error, register }: Props) => {
+  const labelClass = error
+    ? `${styles['radio-box-label']} ${styles.error}`
+    : styles['radio-box-label'];
+
+  return (
+    <div className={styles['radio-box-container']}>
+      <input
+        className={styles['radio-box-input']}
+        id={content}
+        type="radio"
+        value={value}
+        {...register(name)}
+      />
+      <label className={labelClass} htmlFor={content}>
+        {content}:
       </label>
     </div>
   );

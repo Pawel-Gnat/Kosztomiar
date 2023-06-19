@@ -2,97 +2,54 @@ import styles from './NewCategoryForm.module.css';
 import { useContext, useState } from 'react';
 import { useProject } from '@/hooks/useProject';
 import { createNewCategory } from '@/components/utils/createNewCategory';
-import { Category } from '@/types/types';
 import UserContext from '@/store/user-context';
 import { CategoryForm } from '../CategoryForm/CategoryForm';
 import { Button } from '@/components/ui/Button/Button';
+import { FieldValues, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { NewCategoryFormSchema } from '@/schemas/NewCategoryFormSchema';
+import { FormCategory } from '@/types/types';
 
 export const NewCategoryForm = () => {
   const project = useProject()!;
-  const [category, setCategory] = useState<Category>({
-    category: '',
-    elements: [],
-  });
-  const [isFormActive, setIsFormActive] = useState(false);
-  const [error, setError] = useState({
-    nameError: false,
-    errorText: '',
-  });
-
   const context = useContext(UserContext);
+  const [isFormActive, setIsFormActive] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    // } = useForm<FormCategory>({
+    defaultValues: {
+      category: '',
+    },
+    resolver: zodResolver(NewCategoryFormSchema(project)),
+  });
 
   function toggleActiveForm() {
     setIsFormActive((prevState) => !prevState);
   }
 
-  function handleName(value: string) {
-    setCategory((prevState) => ({ ...prevState, category: value }));
-  }
-
-  function clearForm() {
-    setCategory((prevState) => ({ ...prevState, category: '' }));
-  }
-
   function handleCancel() {
     toggleActiveForm();
-    clearForm();
+    reset();
   }
 
-  function handleNameError() {
-    if (category.category === '') {
-      setError((prevState) => ({
-        ...prevState,
-        nameError: true,
-        errorText: 'Podaj nazwę',
-      }));
+  function setCategoryValues(values: FieldValues) {
+    const data = {
+      category: values.category,
+      elements: [],
+    };
 
-      setTimeout(() => {
-        setError((prevState) => ({
-          ...prevState,
-          nameError: false,
-          errorText: '',
-        }));
-      }, 1500);
-    }
+    return data;
   }
 
-  function checkIfNameExists(categoryName: string) {
-    const existingCategories: Category[] = project.data;
-
-    if (
-      existingCategories.find(
-        (category) => category.category.toLowerCase() === categoryName.toLowerCase(),
-      )
-    ) {
-      setError((prevState) => ({
-        ...prevState,
-        nameError: true,
-        errorText: 'Nazwa już istnieje',
-      }));
-
-      setTimeout(() => {
-        setError((prevState) => ({
-          ...prevState,
-          nameError: false,
-          errorText: '',
-        }));
-      }, 1500);
-
-      return true;
-    }
-  }
-
-  async function submitHandler(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    handleNameError();
-
-    if (checkIfNameExists(category.category) || !category.category) {
-      return;
-    }
-
-    await createNewCategory(project.id, project.name, category);
-    clearForm();
+  async function submitHandler(formValues: FieldValues) {
+    const data = setCategoryValues(formValues);
+    await createNewCategory(project.id, project.name, data);
     toggleActiveForm();
+    reset();
     context.setProjects();
   }
 
@@ -100,11 +57,10 @@ export const NewCategoryForm = () => {
     <>
       {isFormActive ? (
         <CategoryForm
-          onSubmit={submitHandler}
-          onChange={handleName}
-          value={category.category}
+          onSubmit={handleSubmit(submitHandler)}
           onClick={handleCancel}
-          error={error}
+          error={errors}
+          register={register}
         />
       ) : (
         <Button

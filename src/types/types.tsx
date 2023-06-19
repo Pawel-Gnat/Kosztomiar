@@ -1,3 +1,14 @@
+export type FormProject = {
+  name: string;
+  units: string[] | null;
+  price: string;
+  currency: string;
+};
+
+export type FormCategory = {
+  category: string;
+};
+
 export type Project = {
   id: string;
   createdDate: string;
@@ -6,7 +17,6 @@ export type Project = {
   price: boolean | null;
   currency: string | null;
   data: Category[];
-  isLoading: boolean;
 };
 
 export type Category = {

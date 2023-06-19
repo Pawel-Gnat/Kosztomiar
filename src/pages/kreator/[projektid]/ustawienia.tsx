@@ -17,11 +17,10 @@ export default function UstawieniaPage() {
   const router = useRouter();
   const context = useContext(UserContext);
 
-  async function deleteProject(project: Project) {
+  async function deleteProject(currentProject: Project) {
     const existingProjects = await getProjectsFromLocalStorage();
     const filteredProjects = existingProjects.filter(
-      (existingProject: Project) =>
-        JSON.stringify(existingProject) !== JSON.stringify(project),
+      (project: Project) => JSON.stringify(project) !== JSON.stringify(currentProject),
     );
 
     if (filteredProjects) {
@@ -33,19 +32,15 @@ export default function UstawieniaPage() {
 
   return (
     <ProjectLayout>
-      {project && (
-        <>
-          <ProjectCategoriesList project={project} />
-          <Button
-            type="button"
-            content="Usuń projekt"
-            isSmall={true}
-            accent={true}
-            icon={<CiCircleRemove />}
-            onClick={() => deleteProject(project)}
-          />
-        </>
-      )}
+      <ProjectCategoriesList project={project} />
+      <Button
+        type="button"
+        content="Usuń projekt"
+        isSmall={true}
+        accent={true}
+        icon={<CiCircleRemove />}
+        onClick={() => deleteProject(project)}
+      />
     </ProjectLayout>
   );
 }
