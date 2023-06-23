@@ -1,44 +1,43 @@
 import { useRef } from 'react';
 import styles from './Select.module.css';
+import { FieldErrors, ControllerRenderProps } from 'react-hook-form';
+import { FormElement } from '@/types/types';
 
 type Props = {
-  value: string;
-  measurements: string[];
-  error: boolean;
-  onChange: (value: string) => void;
+  name: string;
+  value: string[];
+  options: string[];
+  error?: FieldErrors<FormElement>;
+  field: ControllerRenderProps<FormElement, 'unit'>;
 };
 
-export const Select = (props: Props) => {
+export const Select = ({ name, value, options, error, field }: Props) => {
   const selectRef = useRef<HTMLSelectElement>(null);
 
-  function handleSelect() {
-    if (selectRef.current) {
-      const value = selectRef.current.value;
-      props.onChange(value);
-    }
-  }
+  const handleSelectChange = () => {
+    const selectedValue = selectRef.current?.value;
+    field.onChange(selectedValue);
+  };
 
-  const selectClass = props.error
-    ? `${styles.select} ${styles.error}`
-    : `${styles.select}`;
+  const selectClass = error ? `${styles.select} ${styles.error}` : `${styles.select}`;
 
   return (
     <div className={styles.container}>
-      <label className={styles.label} htmlFor="units">
+      <label className={styles.label} htmlFor={name}>
         J.m.
       </label>
+
       <select
-        id="units"
-        ref={selectRef}
+        id={name}
         className={selectClass}
-        onChange={handleSelect}
-        required={true}
+        ref={selectRef}
+        onChange={handleSelectChange}
       >
-        <option value={props.value} hidden={true}>
-          {props.value}
+        <option value={value} hidden={true}>
+          {value}
         </option>
 
-        {props.measurements.map((el, index) => (
+        {options.map((el, index) => (
           <option key={index} value={el}>
             {el}
           </option>

@@ -24,3 +24,17 @@ export const deleteCategoryElement = async (
   currentCategory.elements = newCategoryElements;
   setProjectsToLocalStorage(existingProjects);
 };
+
+export const deleteCategory = async (project: Project, element: string) => {
+  const existingProjects = await getProjectsFromLocalStorage();
+  const currentProject = existingProjects.find(
+    (currentProject: Project) =>
+      JSON.stringify(currentProject) === JSON.stringify(project),
+  );
+  const newCategories = currentProject.data.filter(
+    (data: Category) => data.category !== element,
+  );
+
+  currentProject.data = newCategories;
+  setProjectsToLocalStorage(existingProjects);
+};

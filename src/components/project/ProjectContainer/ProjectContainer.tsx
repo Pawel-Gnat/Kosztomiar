@@ -6,7 +6,7 @@ import { ProjectCategory } from '../ProjectCategory/ProjectCategory';
 type Props = {
   currency: string | null;
   measurements: string[];
-  price: boolean | null;
+  price: string | null;
   data: Category[];
   id: string;
 };

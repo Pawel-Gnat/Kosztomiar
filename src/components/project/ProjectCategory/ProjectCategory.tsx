@@ -1,51 +1,95 @@
 import styles from './ProjectCategory.module.css';
 import { ProjectCategoryElements } from '../ProjectCategoryElements/ProjectCategoryElements';
 import { NewCategoryElementForm } from '../NewCategoryElementForm/NewCategoryElementForm';
-import { Category, EditedElement, Element } from '@/types/types';
+import { Category, Element, FormElement } from '@/types/types';
 import { sumValueOfProjectElements } from '@/components/utils/sumValueOfProjectElements';
-import { deleteCategoryElement } from '@/components/utils/deleteCategoryElement';
+import { deleteCategoryElement } from '@/components/utils/deleteUtils';
 import { useContext, useState } from 'react';
 import UserContext from '@/store/user-context';
+import { FieldValues, useForm, useController } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { NewElementFormSchema } from '@/schemas/NewElementFormSchema';
+import { useProject } from '@/hooks/useProject';
+import { createNewCategoryElement } from '@/components/utils/createUtils';
 
 type Props = {
   name: string;
   currency: string | null;
   measurements: string[];
-  price: boolean | null;
+  price: string | null;
   data: Category[];
   key: number;
   id: string;
 };
 
+const INITIAL_EDITED_ELEMENT_STATE = {
+  name: '',
+  value: 0,
+  unit: '',
+  price: 0,
+};
+
+const INITIAL_IS_FORM_ACTIVE_STATE = {
+  isActive: false,
+  isEditing: false,
+};
+
+const FORM_DEFAULT_VALUES = {
+  name: '',
+  value: 0,
+  unit: [''],
+  price: '0',
+};
+
 export const ProjectCategory = (props: Props) => {
-  const { currency, name, price, data } = props;
+  const { name, currency, price, data, id } = props;
   const context = useContext(UserContext);
-  const [editedElement, setEditedElement] = useState<EditedElement>({
-    element: {
-      name: '',
-      value: '',
-      unit: '',
-      price: '',
-    },
-    isEditing: false,
-  });
+  const project = useProject()!;
+  const [isFormActive, setIsFormActive] = useState(INITIAL_IS_FORM_ACTIVE_STATE);
+  const [editedElement, setEditedElement] = useState(INITIAL_EDITED_ELEMENT_STATE);
 
   const filteredData = Array.from(data.filter((el) => el.category === name));
   const categoryName = data.find((el) => el.category === name)!;
   const categoryElements = filteredData[0].elements;
 
-  async function deleteElement(element: Element) {
+  const {
+    register,
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors },
+  } = useForm<FormElement>({
+    defaultValues: FORM_DEFAULT_VALUES,
+    resolver: zodResolver(NewElementFormSchema(project, categoryName)),
+  });
+
+  const { field } = useController({ name: 'unit', control });
+
+  const deleteElement = async (element: Element) => {
     await deleteCategoryElement(props.id, categoryName.category, element);
     context.setProjects();
-  }
+  };
 
-  async function editElement(element: EditedElement) {
-    setEditedElement(element);
-  }
+  const submitHandler = async (formValues: FieldValues) => {
+    if (isFormActive.isEditing) {
+      await deleteCategoryElement(props.id, categoryName.category, editedElement);
+      setEditedElement((prevState) => ({
+        ...prevState,
+        ...INITIAL_EDITED_ELEMENT_STATE,
+      }));
+    }
 
-  async function onEdit(element: EditedElement) {
-    setEditedElement(element);
-  }
+    await createNewCategoryElement(project, categoryName.category, formValues as Element);
+    reset((prevState) => ({
+      ...prevState,
+      name: '',
+      value: 0,
+      unit: [''],
+      price: '0',
+    }));
+    setIsFormActive((prevState) => ({ ...prevState, ...INITIAL_IS_FORM_ACTIVE_STATE }));
+    context.setProjects();
+  };
 
   return (
     <div>
@@ -57,7 +101,7 @@ export const ProjectCategory = (props: Props) => {
             <th className={styles.full}>Nazwa</th>
             <th>Ilość</th>
             <th>J.m.</th>
-            {price && <th>Cena</th>}
+            {price === 'true' && <th>Cena</th>}
             <th>-</th>
           </tr>
         </thead>
@@ -67,11 +111,13 @@ export const ProjectCategory = (props: Props) => {
             currency={currency}
             price={price}
             deleteElement={deleteElement}
-            editElement={editElement}
+            setIsFormActive={setIsFormActive}
+            setEditedElement={setEditedElement}
+            reset={reset}
           />
         </tbody>
         <tfoot>
-          {price && (
+          {price === 'true' && (
             <tr>
               <td colSpan={4} className={styles['right-align']}>
                 Suma:
@@ -85,9 +131,14 @@ export const ProjectCategory = (props: Props) => {
       </table>
       <div className={styles['new-element-container']}>
         <NewCategoryElementForm
-          category={categoryName.category}
-          editedElement={editedElement}
-          onEdit={onEdit}
+          onSubmit={handleSubmit(submitHandler)}
+          error={errors}
+          register={register}
+          control={control}
+          field={field}
+          reset={reset}
+          setIsFormActive={setIsFormActive}
+          isFormActive={isFormActive.isActive}
         />
       </div>
     </div>

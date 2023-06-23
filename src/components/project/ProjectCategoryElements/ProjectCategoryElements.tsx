@@ -1,54 +1,80 @@
 import styles from './ProjectCategoryElements.module.css';
 import { Button } from '@/components/ui/Button/Button';
-import { EditedElement, Element } from '@/types/types';
+import { sortElementsAlphabetically } from '@/components/utils/sortElementsAlphabetically';
+import { Element, FormElement } from '@/types/types';
 import { CiCircleMore, CiCircleRemove } from 'react-icons/ci';
+import { UseFormReset } from 'react-hook-form';
+import { Dispatch, SetStateAction } from 'react';
 
 type Props = {
   currency: string | null;
-  price: boolean | null;
+  price: string | null;
   data: Element[];
   deleteElement: (element: Element) => void;
-  editElement: (element: EditedElement) => void;
+  setEditedElement: Dispatch<
+    SetStateAction<{
+      name: string;
+      value: number;
+      unit: string;
+      price: number;
+    }>
+  >;
+  setIsFormActive: Dispatch<
+    SetStateAction<{
+      isActive: boolean;
+      isEditing: boolean;
+    }>
+  >;
+  reset: UseFormReset<FormElement>;
 };
 
-export const ProjectCategoryElements = (props: Props) => {
-  function deleteElementHandler(el: Element) {
-    props.deleteElement(el);
-  }
+export const ProjectCategoryElements = ({
+  currency,
+  price,
+  data,
+  deleteElement,
+  setEditedElement,
+  setIsFormActive,
+  reset,
+}: Props) => {
+  const deleteElementHandler = (el: Element) => {
+    deleteElement(el);
+  };
 
-  function editElementHandler(el: Element) {
-    props.editElement({ element: el, isEditing: true });
-  }
-
-  function sortAlphabetically(data: Element[]) {
-    return data.sort((a, b) => {
-      const firstElement = a.name.toLowerCase();
-      const secondElement = b.name.toLowerCase();
-
-      if (firstElement < secondElement) {
-        return -1;
-      }
-
-      if (firstElement > secondElement) {
-        return 1;
-      }
-
-      return 0;
-    });
-  }
+  const editElementHandler = (el: Element) => {
+    reset((prevState) => ({
+      ...prevState,
+      name: el.name,
+      value: +el.value,
+      unit: [el.unit],
+      price: el.price.toString(),
+    }));
+    setEditedElement((prevState) => ({
+      ...prevState,
+      name: el.name,
+      value: +el.value,
+      unit: el.unit,
+      price: el.price,
+    }));
+    setIsFormActive((prevState) => ({
+      ...prevState,
+      isActive: true,
+      isEditing: true,
+    }));
+  };
 
   return (
     <>
-      {sortAlphabetically(props.data).map((el, index) => (
+      {sortElementsAlphabetically(data).map((el, index) => (
         <tr key={index}>
           <td>{index + 1}</td>
           <td>{el.name}</td>
           <td>{el.value}</td>
           <td>{el.unit}</td>
-          {props.price && (
+          {price === 'true' && (
             <td>
               {+el.price && +el.price % 1 === 0 ? +el.price : (+el.price).toFixed(2)}{' '}
-              {props.currency}
+              {currency}
             </td>
           )}
           <td className={styles.nowrap}>
