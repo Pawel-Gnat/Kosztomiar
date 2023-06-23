@@ -1,8 +1,8 @@
 import { Button } from '@/components/ui/Button/Button';
 import styles from './CategoryForm.module.css';
-import { Input, InputCategory } from '@/components/ui/Input/Input';
+import { Input } from '@/components/ui/Input/Input';
 import { FiPlusSquare } from 'react-icons/fi';
-import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
+import { FieldErrors, UseFormRegister } from 'react-hook-form';
 import { FormCategory } from '@/types/types';
 
 type Props = {
@@ -15,15 +15,7 @@ type Props = {
 export const CategoryForm = ({ onSubmit, error, register, onClick }: Props) => {
   return (
     <form autoComplete="off" className={styles.form} onSubmit={onSubmit}>
-      {/* <Input
-        type="text"
-        content="Nazwa kategorii"
-        name="category"
-        error={error.category}
-        register={register}
-      /> */}
-
-      <InputCategory
+      <Input
         type="text"
         content="Nazwa kategorii"
         name="category"

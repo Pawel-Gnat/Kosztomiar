@@ -1,7 +1,7 @@
 import styles from './NewCategoryForm.module.css';
 import { useContext, useState } from 'react';
 import { useProject } from '@/hooks/useProject';
-import { createNewCategory } from '@/components/utils/createNewCategory';
+import { createNewCategory } from '@/components/utils/createUtils';
 import UserContext from '@/store/user-context';
 import { CategoryForm } from '../CategoryForm/CategoryForm';
 import { Button } from '@/components/ui/Button/Button';
@@ -19,39 +19,38 @@ export const NewCategoryForm = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm({
-    // } = useForm<FormCategory>({
+  } = useForm<FormCategory>({
     defaultValues: {
       category: '',
     },
     resolver: zodResolver(NewCategoryFormSchema(project)),
   });
 
-  function toggleActiveForm() {
+  const toggleActiveForm = () => {
     setIsFormActive((prevState) => !prevState);
-  }
+  };
 
-  function handleCancel() {
+  const handleCancel = () => {
     toggleActiveForm();
     reset();
-  }
+  };
 
-  function setCategoryValues(values: FieldValues) {
+  const setCategoryValues = (values: FieldValues) => {
     const data = {
       category: values.category,
       elements: [],
     };
 
     return data;
-  }
+  };
 
-  async function submitHandler(formValues: FieldValues) {
+  const submitHandler = async (formValues: FieldValues) => {
     const data = setCategoryValues(formValues);
     await createNewCategory(project.id, project.name, data);
     toggleActiveForm();
     reset();
     context.setProjects();
-  }
+  };
 
   return (
     <>

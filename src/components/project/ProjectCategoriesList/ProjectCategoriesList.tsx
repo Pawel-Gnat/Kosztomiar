@@ -1,130 +1,63 @@
-import {
-  getProjectsFromLocalStorage,
-  setProjectsToLocalStorage,
-} from '@/components/utils/localStorageDatabase';
 import styles from './ProjectCategoriesList.module.css';
-import { Category, Project } from '@/types/types';
+import { FormCategory, Project } from '@/types/types';
 import { CiCircleMore, CiCircleRemove } from 'react-icons/ci';
 import UserContext from '@/store/user-context';
 import { useContext, useState } from 'react';
 import { CategoryForm } from '../CategoryForm/CategoryForm';
 import { Button } from '@/components/ui/Button/Button';
 import { useProject } from '@/hooks/useProject';
+import { FieldValues, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { deleteCategory } from '@/components/utils/deleteUtils';
+import { NewCategoryFormSchema } from '@/schemas/NewCategoryFormSchema';
+import { editCategory } from '@/components/utils/editUtils';
 
 export const ProjectCategoriesList = (props: { project: Project }) => {
-  const [category, setCategory] = useState({
-    category: '',
-    currentCategoryName: '',
-    isEditing: false,
-  });
-  const [error, setError] = useState({
-    nameError: false,
-    errorText: '',
-  });
+  const [form, setForm] = useState({ currentCategoryName: '', isActive: false });
   const context = useContext(UserContext);
   const project = useProject()!;
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<FormCategory>({
+    resolver: zodResolver(NewCategoryFormSchema(project)),
+  });
 
-  async function deleteCategoryHandler(el: string) {
-    const existingProjects = await getProjectsFromLocalStorage();
-    const currentProject = existingProjects.find(
-      (project: Project) => JSON.stringify(project) === JSON.stringify(props.project),
-    );
-    const newCategories = currentProject.data.filter(
-      (data: Category) => data.category !== el,
-    );
-    currentProject.data = newCategories;
+  const deleteCategoryHandler = async (el: string) => {
+    await deleteCategory(project, el);
+    context.setProjects();
+  };
 
-    if (existingProjects) {
-      await setProjectsToLocalStorage(existingProjects);
-      context.setProjects();
-    }
-  }
+  const toggleActiveForm = () => {
+    setForm((prevState) => ({ ...prevState, isActive: !prevState.isActive }));
+  };
 
-  function handleName(value: string) {
-    setCategory((prevState) => ({ ...prevState, category: value }));
-  }
+  const setCurrentCategoryName = (el: string) => {
+    setForm((prevState) => ({ ...prevState, currentCategoryName: el }));
+  };
 
-  function clearForm() {
-    setCategory((prevState) => ({
-      ...prevState,
-      category: '',
-      currentCategoryName: '',
-      isEditing: false,
-    }));
-  }
+  const handleEdit = (el: string) => {
+    form.isActive
+      ? (reset({ category: el }), setCurrentCategoryName(el))
+      : toggleActiveForm();
 
-  function handleCancel() {
-    clearForm();
-  }
+    reset({ category: el });
+    setCurrentCategoryName(el);
+  };
 
-  function handleNameError() {
-    if (category.category === '') {
-      setError((prevState) => ({
-        ...prevState,
-        nameError: true,
-        errorText: 'Podaj nazwę',
-      }));
+  const handleForm = () => {
+    reset();
+    toggleActiveForm();
+  };
 
-      setTimeout(() => {
-        setError((prevState) => ({
-          ...prevState,
-          nameError: false,
-          errorText: '',
-        }));
-      }, 1500);
-    }
-  }
-
-  function checkIfNameExists(categoryName: string) {
-    const existingCategories: Category[] = project.data;
-
-    if (
-      existingCategories.find(
-        (category) => category.category.toLowerCase() === categoryName.toLowerCase(),
-      )
-    ) {
-      setError((prevState) => ({
-        ...prevState,
-        nameError: true,
-        errorText: 'Nazwa już istnieje',
-      }));
-
-      setTimeout(() => {
-        setError((prevState) => ({
-          ...prevState,
-          nameError: false,
-          errorText: '',
-        }));
-      }, 1500);
-
-      return true;
-    }
-  }
-
-  async function submitHandler(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-
-    handleNameError();
-
-    if (checkIfNameExists(category.category) || !category.category) {
-      return;
-    }
-
-    const existingProjects = await getProjectsFromLocalStorage();
-    const currentProject = existingProjects.find(
-      (project: Project) => JSON.stringify(project) === JSON.stringify(props.project),
-    );
-    const selectedCategory = currentProject.data.find(
-      (data: Category) => data.category === category.currentCategoryName,
-    );
-    selectedCategory.category = category.category;
-
-    if (existingProjects) {
-      await setProjectsToLocalStorage(existingProjects);
-      context.setProjects();
-      clearForm();
-    }
-  }
+  const submitHandler = async (formValues: FieldValues) => {
+    await editCategory(project, form.currentCategoryName, formValues.category);
+    handleForm();
+    setCurrentCategoryName('');
+    context.setProjects();
+  };
 
   return (
     <>
@@ -139,14 +72,7 @@ export const ProjectCategoriesList = (props: { project: Project }) => {
                 isSmall={true}
                 accent={false}
                 icon={<CiCircleMore />}
-                onClick={() =>
-                  setCategory((prevState) => ({
-                    ...prevState,
-                    category: el.category,
-                    currentCategoryName: el.category,
-                    isEditing: true,
-                  }))
-                }
+                onClick={() => handleEdit(el.category)}
               />
               <Button
                 type="button"
@@ -160,13 +86,12 @@ export const ProjectCategoriesList = (props: { project: Project }) => {
           </li>
         ))}
       </ul>
-      {category.isEditing && (
+      {form.isActive && (
         <CategoryForm
-          onSubmit={submitHandler}
-          onChange={handleName}
-          value={category.category}
-          onClick={handleCancel}
-          error={error}
+          onSubmit={handleSubmit(submitHandler)}
+          onClick={handleForm}
+          error={errors}
+          register={register}
         />
       )}
     </>

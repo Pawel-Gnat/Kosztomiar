@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import styles from './NewProjectForm.module.css';
 import UserContext from '@/store/user-context';
 import { getDate } from '@/components/utils/getDate';
-import { createNewProject } from '@/components/utils/createNewProject';
+import { createNewProject } from '@/components/utils/createUtils';
 import { Text } from '@/components/ui/Text/Text';
 import { Button } from '@/components/ui/Button/Button';
 import { FiPlusSquare } from 'react-icons/fi';
@@ -32,8 +32,7 @@ export default function NewProjectForm() {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm({
-    // } = useForm<FormProject>({
+  } = useForm<FormProject>({
     defaultValues: {
       name: '',
       units: null,
@@ -44,11 +43,11 @@ export default function NewProjectForm() {
   });
   const showCurrencies = watch('price');
 
-  function redirectToNewProject(id: string) {
+  const redirectToNewProject = (id: string) => {
     router.push(`/kreator/${id}`);
-  }
+  };
 
-  function setProjectValues(values: FieldValues) {
+  const setProjectValues = (values: FieldValues) => {
     const data = {
       id: new Date().getTime().toString(),
       createdDate: getDate(),
@@ -60,14 +59,14 @@ export default function NewProjectForm() {
     };
 
     return data;
-  }
+  };
 
-  async function submitHandler(formValues: FieldValues) {
+  const submitHandler = async (formValues: FieldValues) => {
     const data = setProjectValues(formValues);
     await createNewProject(data);
     context.setProjects();
     redirectToNewProject(data.id);
-  }
+  };
 
   return (
     <form
