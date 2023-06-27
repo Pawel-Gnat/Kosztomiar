@@ -1,5 +1,5 @@
 import styles from './ProjectCategoriesList.module.css';
-import { FormCategory, Project } from '@/types/types';
+import { Category, FormCategory, Project } from '@/types/types';
 import { CiCircleMore, CiCircleRemove } from 'react-icons/ci';
 import UserContext from '@/store/user-context';
 import { useContext, useState } from 'react';
@@ -11,11 +11,15 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { deleteCategory } from '@/components/utils/deleteUtils';
 import { NewCategoryFormSchema } from '@/schemas/NewCategoryFormSchema';
 import { editCategory } from '@/components/utils/editUtils';
+import { useModal } from '@/hooks/useModal';
+import { DeleteModal } from '@/components/modal/DeleteModal';
 
 export const ProjectCategoriesList = (props: { project: Project }) => {
   const [form, setForm] = useState({ currentCategoryName: '', isActive: false });
+  const [category, setCategory] = useState('');
   const context = useContext(UserContext);
   const project = useProject()!;
+  const { isModalOpen, handleModal } = useModal();
   const {
     register,
     handleSubmit,
@@ -25,9 +29,15 @@ export const ProjectCategoriesList = (props: { project: Project }) => {
     resolver: zodResolver(NewCategoryFormSchema(project)),
   });
 
-  const deleteCategoryHandler = async (el: string) => {
-    await deleteCategory(project, el);
+  const hideModal = () => {
+    handleModal({ active: false, type: '', name: '' });
+    setCategory('');
+  };
+
+  const deleteCategoryHandler = async () => {
+    await deleteCategory(project, category);
     context.setProjects();
+    hideModal();
   };
 
   const toggleActiveForm = () => {
@@ -80,7 +90,14 @@ export const ProjectCategoriesList = (props: { project: Project }) => {
                 isSmall={true}
                 accent={false}
                 icon={<CiCircleRemove />}
-                onClick={() => deleteCategoryHandler(el.category)}
+                onClick={() => {
+                  handleModal({
+                    active: true,
+                    type: 'kategorię',
+                    name: el.category,
+                  });
+                  setCategory(el.category);
+                }}
               />
             </div>
           </li>
@@ -92,6 +109,14 @@ export const ProjectCategoriesList = (props: { project: Project }) => {
           onClick={handleForm}
           error={errors}
           register={register}
+        />
+      )}
+      {isModalOpen.active && (
+        <DeleteModal
+          type={isModalOpen.type}
+          name={isModalOpen.name}
+          handleCancel={hideModal}
+          handleDelete={() => deleteCategoryHandler()}
         />
       )}
     </>
