@@ -97,7 +97,7 @@ export const ProjectCategory = (props: Props) => {
         <caption>{name}</caption>
         <thead>
           <tr>
-            <th>L.p.</th>
+            <th>Lp.</th>
             <th className={styles.full}>Nazwa</th>
             <th>Ilość</th>
             <th>J.m.</th>

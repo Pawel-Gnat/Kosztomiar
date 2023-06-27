@@ -2,7 +2,7 @@
   font-size: var(--text-size);
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 2rem;
   position: relative;
   width: max-content;
   left: 50%;
@@ -14,7 +14,7 @@
 .form > div {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 1.5rem;
 }
 
 .form > .buttons {

@@ -13,6 +13,7 @@
   background-color: transparent;
   transition: color 0.2s, border-color 0.2s, background-color 0.2s;
   cursor: pointer;
+  outline: none;
 }
 
 .table {
@@ -26,7 +27,7 @@
 }
 
 .button:hover,
-.button:focus {
+.button:focus-visible {
   color: var(--bg-color);
   border-color: var(--accent-color);
   background-color: var(--accent-color);

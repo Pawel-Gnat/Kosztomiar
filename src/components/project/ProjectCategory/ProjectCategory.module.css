@@ -2,7 +2,6 @@
   font-size: var(--text-size-projects);
   color: var(--text-color);
   width: 100%;
-  max-width: 140rem;
   text-align: center;
   margin: 0 auto;
   border-collapse: collapse;
@@ -15,19 +14,20 @@
 
 .table thead {
   margin-bottom: 1rem;
-  border-bottom: 1px solid var(--text-color);
 }
 
+.table td,
 .table th {
-  padding: 0.5rem 0.25rem;
-}
-
-.table td {
   padding: 0.25rem 0.25rem;
 }
 
+.table td:nth-of-type(2),
+.table th:nth-of-type(2) {
+  text-align: left;
+}
+
 .body tr:nth-child(2n + 1) {
-  background-color: var(--opacity-color);
+  background-color: var(--secondary-color);
 }
 
 .full,
@@ -46,22 +46,19 @@
 
 .new-element-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: flex-end;
   margin: 2rem;
 }
 
 @media (min-width: 375px) {
+  .table td,
   .table th {
-    padding: 0.5rem 0.5rem;
-  }
-
-  .table td {
     padding: 0.25rem 0.5rem;
   }
 }
 
 @media (min-width: 576px) {
+  .table td,
   .table th {
     padding: 0.5rem 1rem;
   }
