@@ -58,3 +58,11 @@ export type AccordionItem = {
   setActiveIndex: (index: number | null) => void;
   indexItem: number;
 };
+
+export type Modal = {
+  active?: boolean;
+  type: string;
+  name: string;
+  handleCancel?: () => void;
+  handleDelete?: () => void;
+};

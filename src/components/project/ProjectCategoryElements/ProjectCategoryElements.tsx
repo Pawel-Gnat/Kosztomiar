@@ -4,7 +4,9 @@ import { sortElementsAlphabetically } from '@/components/utils/sortElementsAlpha
 import { Element, FormElement } from '@/types/types';
 import { CiCircleMore, CiCircleRemove } from 'react-icons/ci';
 import { UseFormReset } from 'react-hook-form';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { DeleteModal } from '@/components/modal/DeleteModal';
+import { useModal } from '@/hooks/useModal';
 
 type Props = {
   currency: string | null;
@@ -37,8 +39,17 @@ export const ProjectCategoryElements = ({
   setIsFormActive,
   reset,
 }: Props) => {
+  const { isModalOpen, handleModal } = useModal();
+  const [element, setElement] = useState<null | Element>(null);
+
   const deleteElementHandler = (el: Element) => {
     deleteElement(el);
+    hideModal();
+  };
+
+  const hideModal = () => {
+    handleModal({ active: false, type: '', name: '' });
+    setElement(null);
   };
 
   const editElementHandler = (el: Element) => {
@@ -92,11 +103,22 @@ export const ProjectCategoryElements = ({
               accent={false}
               isSmall={true}
               icon={<CiCircleRemove />}
-              onClick={() => deleteElementHandler(el)}
+              onClick={() => {
+                handleModal({ active: true, type: 'element', name: el.name });
+                setElement(el);
+              }}
             />
           </td>
         </tr>
       ))}
+      {isModalOpen.active && element && (
+        <DeleteModal
+          type={isModalOpen.type}
+          name={isModalOpen.name}
+          handleCancel={hideModal}
+          handleDelete={() => deleteElementHandler(element)}
+        />
+      )}
     </>
   );
 };
