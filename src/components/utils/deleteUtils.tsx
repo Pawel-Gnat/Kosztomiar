@@ -27,10 +27,11 @@ export const deleteCategoryElement = async (
 
 export const deleteCategory = async (project: Project, element: string) => {
   const existingProjects = await getProjectsFromLocalStorage();
+
   const currentProject = existingProjects.find(
-    (currentProject: Project) =>
-      JSON.stringify(currentProject) === JSON.stringify(project),
+    (currentProject: Project) => currentProject.id === project.id,
   );
+
   const newCategories = currentProject.data.filter(
     (data: Category) => data.category !== element,
   );

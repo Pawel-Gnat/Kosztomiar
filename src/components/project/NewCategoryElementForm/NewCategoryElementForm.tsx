@@ -5,7 +5,7 @@ import { Dispatch, SetStateAction, useContext } from 'react';
 import { Select } from '@/components/ui/Select/Select';
 import { FormElement } from '@/types/types';
 import { Button } from '@/components/ui/Button/Button';
-import { FiPlusSquare } from 'react-icons/fi';
+import { FiPlusCircle } from 'react-icons/fi';
 import {
   Control,
   FieldErrors,
@@ -108,7 +108,7 @@ export const NewCategoryElementForm = ({
               content="Dodaj"
               isSmall={true}
               accent={false}
-              icon={<FiPlusSquare />}
+              icon={<FiPlusCircle />}
             />
           </div>
         </form>

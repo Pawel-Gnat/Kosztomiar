@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Modal } from '@/types/types';
 
 export const useModal = () => {
@@ -7,6 +7,14 @@ export const useModal = () => {
     type: '',
     name: '',
   });
+
+  useEffect(() => {
+    if (isModalOpen.active) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }, [isModalOpen]);
 
   const handleModal = (props: Modal) => {
     const { active, type, name } = props;

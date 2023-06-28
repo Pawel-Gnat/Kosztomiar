@@ -3,9 +3,9 @@ export const Logo = () => {
     <svg viewBox="0 0 110 110">
       <polygon
         points="50 3,100 25,100 75, 50 100,3 75,3 25"
-        stroke="#a3d5ff"
+        stroke="#0d5c91"
         fill="transparent"
-        strokeWidth="5"
+        strokeWidth="3"
       />
 
       <circle cx="31.25" cy="31.25" r="5" stroke="black" strokeWidth="0" fill="#070606" />

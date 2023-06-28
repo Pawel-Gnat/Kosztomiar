@@ -43,7 +43,7 @@ td > .button:has(svg) span {
 }
 
 .button:has(svg) > span {
-  margin-left: 1rem;
+  margin-left: 0.5rem;
 }
 
 @media (min-width: 320px) {
