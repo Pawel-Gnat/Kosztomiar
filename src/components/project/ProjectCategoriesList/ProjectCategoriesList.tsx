@@ -1,11 +1,10 @@
 import styles from './ProjectCategoriesList.module.css';
-import { Category, FormCategory, Project } from '@/types/types';
+import { FormCategory, Project } from '@/types/types';
 import { CiCircleMore, CiCircleRemove } from 'react-icons/ci';
 import UserContext from '@/store/user-context';
 import { useContext, useState } from 'react';
 import { CategoryForm } from '../CategoryForm/CategoryForm';
 import { Button } from '@/components/ui/Button/Button';
-import { useProject } from '@/hooks/useProject';
 import { FieldValues, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { deleteCategory } from '@/components/utils/deleteUtils';
@@ -13,12 +12,13 @@ import { NewCategoryFormSchema } from '@/schemas/NewCategoryFormSchema';
 import { editCategory } from '@/components/utils/editUtils';
 import { useModal } from '@/hooks/useModal';
 import { DeleteModal } from '@/components/modal/DeleteModal';
+import { Text } from '@/components/ui/Text/Text';
 
 export const ProjectCategoriesList = (props: { project: Project }) => {
+  const { project } = props;
   const [form, setForm] = useState({ currentCategoryName: '', isActive: false });
   const [category, setCategory] = useState('');
   const context = useContext(UserContext);
-  const project = useProject()!;
   const { isModalOpen, handleModal } = useModal();
   const {
     register,
@@ -34,7 +34,7 @@ export const ProjectCategoriesList = (props: { project: Project }) => {
     setCategory('');
   };
 
-  const deleteCategoryHandler = async () => {
+  const deleteCategoryHandler = async (project: Project) => {
     await deleteCategory(project, category);
     context.setProjects();
     hideModal();
@@ -71,8 +71,9 @@ export const ProjectCategoriesList = (props: { project: Project }) => {
 
   return (
     <>
+      <Text content="Twoje kategorie w projekcie" />
       <ul className={styles.container}>
-        {props.project.data.map((el, index) => (
+        {project.data.map((el, index) => (
           <li key={index} className={styles.list}>
             <span>{el.category}</span>
             <div>
@@ -103,6 +104,7 @@ export const ProjectCategoriesList = (props: { project: Project }) => {
           </li>
         ))}
       </ul>
+
       {form.isActive && (
         <CategoryForm
           onSubmit={handleSubmit(submitHandler)}
@@ -116,7 +118,7 @@ export const ProjectCategoriesList = (props: { project: Project }) => {
           type={isModalOpen.type}
           name={isModalOpen.name}
           handleCancel={hideModal}
-          handleDelete={() => deleteCategoryHandler()}
+          handleDelete={() => deleteCategoryHandler(project)}
         />
       )}
     </>

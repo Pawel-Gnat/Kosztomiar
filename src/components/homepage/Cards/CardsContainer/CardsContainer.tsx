@@ -8,7 +8,7 @@ const cardsContent = [
   {
     heading: 'Generowanie kosztorysów w aplikacji',
     text: 'Aplikacja umożliwia szybkie i łatwe generowanie kosztorysów bez konieczności korzystania z zewnętrznych narzędzi. Dzięki intuicyjnemu interfejsowi i zaawansowanym funkcjom, tworzenie dokładnych i profesjonalnych kosztorysów jeszcze nigdy nie było tak proste.',
-    img: '/assets/img/new-project-image.jpg',
+    img: '/assets/img/new-project-img.jpg',
   },
   {
     heading: 'Przechowywanie danych na serwerze',

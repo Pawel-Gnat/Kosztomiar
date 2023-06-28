@@ -26,9 +26,9 @@ export const Hero = () => {
         </div>
       </div>
       <Image
-        src="/assets/img/hero-image-mobile5.jpg"
+        src="/assets/img/hero-image.jpg"
         width={1000}
-        height={500}
+        height={700}
         alt=""
         aria-hidden={true}
         className={styles.image}

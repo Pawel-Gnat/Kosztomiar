@@ -7,17 +7,8 @@ export const PhoneImage = () => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <rect x="39" y="16" width="218" height="325" rx="30" fill="#75AFFF" />
-      <rect x="72" y="55" width="65" height="30" rx="15" fill="#112D55" />
-      <rect
-        x="10"
-        y="10"
-        width="220"
-        height="335"
-        rx="40"
-        stroke="#112D55"
-        strokeWidth="20"
-      />
+      <rect x="39" y="16" width="218" height="325" rx="30" fill="#4d93c2" />
+      <rect x="72" y="55" width="65" height="30" rx="15" fill="#b4ddf8" />
     </svg>
   );
 };

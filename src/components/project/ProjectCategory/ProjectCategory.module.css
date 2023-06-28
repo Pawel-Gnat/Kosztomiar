@@ -2,10 +2,10 @@
   font-size: var(--text-size-projects);
   color: var(--text-color);
   width: 100%;
-  max-width: 140rem;
   text-align: center;
   margin: 0 auto;
-  border-collapse: collapse;
+  border-spacing: 0;
+  box-shadow: -1px 10px 30px -20px rgba(66, 68, 90, 1);
 }
 
 .table caption {
@@ -13,21 +13,46 @@
   margin-bottom: 1rem;
 }
 
+.table th:first-child {
+  border-top-left-radius: var(--border-radius);
+}
+
+.table th:last-child {
+  border-top-right-radius: var(--border-radius);
+}
+
+.table tr:last-child td:last-child {
+  border-bottom-right-radius: var(--border-radius);
+}
+
+.table tr:last-child td:first-child {
+  border-bottom-left-radius: var(--border-radius);
+}
+
 .table thead {
   margin-bottom: 1rem;
-  border-bottom: 1px solid var(--text-color);
+}
+
+.table thead tr {
+  background-color: var(--primary-color);
+  margin: 1rem;
 }
 
 .table th {
-  padding: 0.5rem 0.25rem;
+  padding: 1rem 0.5rem;
 }
 
 .table td {
-  padding: 0.25rem 0.25rem;
+  padding: 0 0.5rem;
 }
 
-.body tr:nth-child(2n + 1) {
-  background-color: var(--opacity-color);
+.table td:nth-of-type(2),
+.table th:nth-of-type(2) {
+  text-align: left;
+}
+
+.body tr:nth-child(2n) {
+  background-color: var(--secondary-color);
 }
 
 .full,
@@ -46,23 +71,16 @@
 
 .new-element-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: flex-end;
   margin: 2rem;
 }
 
 @media (min-width: 375px) {
   .table th {
-    padding: 0.5rem 0.5rem;
+    padding: 1rem;
   }
 
   .table td {
-    padding: 0.25rem 0.5rem;
-  }
-}
-
-@media (min-width: 576px) {
-  .table th {
-    padding: 0.5rem 1rem;
+    padding: 0 1rem;
   }
 }

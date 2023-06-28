@@ -49,7 +49,7 @@ export default function UstawieniaPage() {
         <Button
           type="button"
           content="Usuń projekt"
-          isSmall={true}
+          isSmall={false}
           accent={true}
           icon={<CiCircleRemove />}
           onClick={() => {

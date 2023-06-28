@@ -66,13 +66,13 @@ export const ProjectCategory = (props: Props) => {
   const { field } = useController({ name: 'unit', control });
 
   const deleteElement = async (element: Element) => {
-    await deleteCategoryElement(props.id, categoryName.category, element);
+    await deleteCategoryElement(id, categoryName.category, element);
     context.setProjects();
   };
 
   const submitHandler = async (formValues: FieldValues) => {
     if (isFormActive.isEditing) {
-      await deleteCategoryElement(props.id, categoryName.category, editedElement);
+      await deleteCategoryElement(id, categoryName.category, editedElement);
       setEditedElement((prevState) => ({
         ...prevState,
         ...INITIAL_EDITED_ELEMENT_STATE,
@@ -97,12 +97,12 @@ export const ProjectCategory = (props: Props) => {
         <caption>{name}</caption>
         <thead>
           <tr>
-            <th>L.p.</th>
+            <th>Lp.</th>
             <th className={styles.full}>Nazwa</th>
             <th>Ilość</th>
             <th>J.m.</th>
             {price === 'true' && <th>Cena</th>}
-            <th>-</th>
+            <th></th>
           </tr>
         </thead>
         <tbody className={styles.body}>
