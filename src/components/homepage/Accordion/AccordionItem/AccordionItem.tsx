@@ -1,7 +1,7 @@
 import styles from './AccordionItem.module.css';
 import { Text } from '@/components/ui/Text/Text';
 import { AccordionItem as AccordionItemType } from '@/types/types';
-import { CiCircleChevUp } from 'react-icons/ci';
+import { CiCircleChevDown } from 'react-icons/ci';
 
 export const AccordionItem = (props: AccordionItemType) => {
   const toggleItem = () => {
@@ -16,7 +16,7 @@ export const AccordionItem = (props: AccordionItemType) => {
       >
         <button onClick={toggleItem} aria-expanded={props.isActive}>
           {props.heading}
-          <CiCircleChevUp />
+          <CiCircleChevDown />
         </button>
       </h3>
       <div

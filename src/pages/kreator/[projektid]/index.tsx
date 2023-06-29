@@ -3,7 +3,7 @@ import { ProjectContainer } from '@/components/project/ProjectContainer/ProjectC
 import { useProject } from '@/hooks/useProject';
 
 export default function ProjektPage() {
-  const project = useProject();
+  const project = useProject()!;
 
-  return <ProjectLayout>{project && <ProjectContainer {...project} />}</ProjectLayout>;
+  return <ProjectLayout>{<ProjectContainer {...project} />}</ProjectLayout>;
 }

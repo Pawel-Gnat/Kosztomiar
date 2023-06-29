@@ -1,12 +1,29 @@
+export type FormProject = {
+  name: string;
+  units: string[] | null;
+  price: string;
+  currency: string;
+};
+
+export type FormCategory = {
+  category: string;
+};
+
+export type FormElement = {
+  name: string;
+  value: number | null;
+  unit: string[];
+  price: string;
+};
+
 export type Project = {
   id: string;
-  createdDate: string;
   name: string;
-  measurements: string[];
-  price: boolean | null;
   currency: string | null;
+  measurements: string[];
+  price: string | null;
   data: Category[];
-  isLoading: boolean;
+  createdDate: string;
 };
 
 export type Category = {
@@ -16,9 +33,14 @@ export type Category = {
 
 export type Element = {
   name: string;
-  value: string;
+  value: number;
   unit: string;
-  price: string;
+  price: number;
+};
+
+export type EditedElement = {
+  element: Element;
+  isEditing: boolean;
 };
 
 export type Card = {
@@ -35,4 +57,12 @@ export type AccordionItem = {
   isActive: boolean;
   setActiveIndex: (index: number | null) => void;
   indexItem: number;
+};
+
+export type Modal = {
+  active?: boolean;
+  type: string;
+  name: string;
+  handleCancel?: () => void;
+  handleDelete?: () => void;
 };

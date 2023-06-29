@@ -1,135 +1,79 @@
-import {
-  getProjectsFromLocalStorage,
-  setProjectsToLocalStorage,
-} from '@/components/utils/localStorageDatabase';
 import styles from './ProjectCategoriesList.module.css';
-import { Category, Project } from '@/types/types';
+import { FormCategory, Project } from '@/types/types';
 import { CiCircleMore, CiCircleRemove } from 'react-icons/ci';
 import UserContext from '@/store/user-context';
 import { useContext, useState } from 'react';
 import { CategoryForm } from '../CategoryForm/CategoryForm';
 import { Button } from '@/components/ui/Button/Button';
-import { useProject } from '@/hooks/useProject';
+import { FieldValues, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { deleteCategory } from '@/components/utils/deleteUtils';
+import { NewCategoryFormSchema } from '@/schemas/NewCategoryFormSchema';
+import { editCategory } from '@/components/utils/editUtils';
+import { useModal } from '@/hooks/useModal';
+import { DeleteModal } from '@/components/modal/DeleteModal';
+import { Text } from '@/components/ui/Text/Text';
 
 export const ProjectCategoriesList = (props: { project: Project }) => {
-  const [category, setCategory] = useState({
-    category: '',
-    currentCategoryName: '',
-    isEditing: false,
-  });
-  const [error, setError] = useState({
-    nameError: false,
-    errorText: '',
-  });
+  const { project } = props;
+  const [form, setForm] = useState({ currentCategoryName: '', isActive: false });
+  const [category, setCategory] = useState('');
   const context = useContext(UserContext);
-  const project = useProject()!;
+  const { isModalOpen, handleModal } = useModal();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<FormCategory>({
+    resolver: zodResolver(NewCategoryFormSchema(project)),
+  });
 
-  async function deleteCategoryHandler(el: string) {
-    const existingProjects = await getProjectsFromLocalStorage();
-    const currentProject = existingProjects.find(
-      (project: Project) => JSON.stringify(project) === JSON.stringify(props.project),
-    );
-    const newCategories = currentProject.data.filter(
-      (data: Category) => data.category !== el,
-    );
-    currentProject.data = newCategories;
+  const hideModal = () => {
+    handleModal({ active: false, type: '', name: '' });
+    setCategory('');
+  };
 
-    if (existingProjects) {
-      await setProjectsToLocalStorage(existingProjects);
-      context.setProjects();
-    }
-  }
+  const deleteCategoryHandler = async (project: Project) => {
+    await deleteCategory(project, category);
+    context.setProjects();
+    hideModal();
+  };
 
-  function handleName(value: string) {
-    setCategory((prevState) => ({ ...prevState, category: value }));
-  }
+  const toggleActiveForm = () => {
+    setForm((prevState) => ({ ...prevState, isActive: !prevState.isActive }));
+  };
 
-  function clearForm() {
-    setCategory((prevState) => ({
-      ...prevState,
-      category: '',
-      currentCategoryName: '',
-      isEditing: false,
-    }));
-  }
+  const setCurrentCategoryName = (el: string) => {
+    setForm((prevState) => ({ ...prevState, currentCategoryName: el }));
+  };
 
-  function handleCancel() {
-    clearForm();
-  }
+  const handleEdit = (el: string) => {
+    form.isActive
+      ? (reset({ category: el }), setCurrentCategoryName(el))
+      : toggleActiveForm();
 
-  function handleNameError() {
-    if (category.category === '') {
-      setError((prevState) => ({
-        ...prevState,
-        nameError: true,
-        errorText: 'Podaj nazwę',
-      }));
+    reset({ category: el });
+    setCurrentCategoryName(el);
+  };
 
-      setTimeout(() => {
-        setError((prevState) => ({
-          ...prevState,
-          nameError: false,
-          errorText: '',
-        }));
-      }, 1500);
-    }
-  }
+  const handleForm = () => {
+    reset();
+    toggleActiveForm();
+  };
 
-  function checkIfNameExists(categoryName: string) {
-    const existingCategories: Category[] = project.data;
-
-    if (
-      existingCategories.find(
-        (category) => category.category.toLowerCase() === categoryName.toLowerCase(),
-      )
-    ) {
-      setError((prevState) => ({
-        ...prevState,
-        nameError: true,
-        errorText: 'Nazwa już istnieje',
-      }));
-
-      setTimeout(() => {
-        setError((prevState) => ({
-          ...prevState,
-          nameError: false,
-          errorText: '',
-        }));
-      }, 1500);
-
-      return true;
-    }
-  }
-
-  async function submitHandler(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-
-    handleNameError();
-
-    if (checkIfNameExists(category.category) || !category.category) {
-      return;
-    }
-
-    const existingProjects = await getProjectsFromLocalStorage();
-    const currentProject = existingProjects.find(
-      (project: Project) => JSON.stringify(project) === JSON.stringify(props.project),
-    );
-    const selectedCategory = currentProject.data.find(
-      (data: Category) => data.category === category.currentCategoryName,
-    );
-    selectedCategory.category = category.category;
-
-    if (existingProjects) {
-      await setProjectsToLocalStorage(existingProjects);
-      context.setProjects();
-      clearForm();
-    }
-  }
+  const submitHandler = async (formValues: FieldValues) => {
+    await editCategory(project, form.currentCategoryName, formValues.category);
+    handleForm();
+    setCurrentCategoryName('');
+    context.setProjects();
+  };
 
   return (
     <>
+      <Text content="Twoje kategorie w projekcie" />
       <ul className={styles.container}>
-        {props.project.data.map((el, index) => (
+        {project.data.map((el, index) => (
           <li key={index} className={styles.list}>
             <span>{el.category}</span>
             <div>
@@ -139,14 +83,7 @@ export const ProjectCategoriesList = (props: { project: Project }) => {
                 isSmall={true}
                 accent={false}
                 icon={<CiCircleMore />}
-                onClick={() =>
-                  setCategory((prevState) => ({
-                    ...prevState,
-                    category: el.category,
-                    currentCategoryName: el.category,
-                    isEditing: true,
-                  }))
-                }
+                onClick={() => handleEdit(el.category)}
               />
               <Button
                 type="button"
@@ -154,19 +91,34 @@ export const ProjectCategoriesList = (props: { project: Project }) => {
                 isSmall={true}
                 accent={false}
                 icon={<CiCircleRemove />}
-                onClick={() => deleteCategoryHandler(el.category)}
+                onClick={() => {
+                  handleModal({
+                    active: true,
+                    type: 'kategorię',
+                    name: el.category,
+                  });
+                  setCategory(el.category);
+                }}
               />
             </div>
           </li>
         ))}
       </ul>
-      {category.isEditing && (
+
+      {form.isActive && (
         <CategoryForm
-          onSubmit={submitHandler}
-          onChange={handleName}
-          value={category.category}
-          onClick={handleCancel}
-          error={error}
+          onSubmit={handleSubmit(submitHandler)}
+          onClick={handleForm}
+          error={errors}
+          register={register}
+        />
+      )}
+      {isModalOpen.active && (
+        <DeleteModal
+          type={isModalOpen.type}
+          name={isModalOpen.name}
+          handleCancel={hideModal}
+          handleDelete={() => deleteCategoryHandler(project)}
         />
       )}
     </>

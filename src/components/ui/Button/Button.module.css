@@ -13,6 +13,7 @@
   background-color: transparent;
   transition: color 0.2s, border-color 0.2s, background-color 0.2s;
   cursor: pointer;
+  outline: none;
 }
 
 .table {
@@ -26,7 +27,7 @@
 }
 
 .button:hover,
-.button:focus {
+.button:focus-visible {
   color: var(--bg-color);
   border-color: var(--accent-color);
   background-color: var(--accent-color);
@@ -42,7 +43,7 @@ td > .button:has(svg) span {
 }
 
 .button:has(svg) > span {
-  margin-left: 1rem;
+  margin-left: 0.5rem;
 }
 
 @media (min-width: 320px) {

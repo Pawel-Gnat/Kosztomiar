@@ -2,9 +2,10 @@
   position: absolute;
   min-height: 100vh;
   inset: 0;
-  background-image: url(/assets/svg/wave.svg);
+  background-image: url(/assets/svg/blob.svg);
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: top center;
   z-index: -1;
 }
 
