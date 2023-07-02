@@ -66,3 +66,15 @@ export type Modal = {
   handleCancel?: () => void;
   handleDelete?: () => void;
 };
+
+export type InputType = 'text' | 'number' | 'email' | 'password';
+
+export type Login = {
+  name: string;
+  email: string;
+  password: string;
+};
+
+export type Register = Login & {
+  passwordValidation: string;
+};

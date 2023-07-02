@@ -1,8 +1,9 @@
 import { FieldError, UseFormRegister, Path } from 'react-hook-form';
 import styles from './Input.module.css';
+import { InputType } from '@/types/types';
 
 type Props<T extends Record<string, unknown>> = {
-  type?: 'text' | 'number';
+  type?: InputType;
   content: string;
   name: keyof T;
   value?: string;
@@ -32,7 +33,7 @@ export const Input = <T extends Record<string, unknown>>({
       <label className={styles.label} htmlFor={name.toString()}>
         {content}
       </label>
-      {error && type === 'text' && (
+      {error && (type === 'text' || type === 'email' || type === 'password') && (
         <p className={`${styles['error-text']} ${styles.error}`}>{error.message}</p>
       )}
     </div>

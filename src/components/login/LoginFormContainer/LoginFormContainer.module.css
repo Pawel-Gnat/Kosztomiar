@@ -1,0 +1,9 @@
+.container {
+  width: 50%;
+  height: 100%;
+  padding-left: 10rem;
+}
+
+.heading {
+  font-size: var(--text-primary-heading-size);
+}

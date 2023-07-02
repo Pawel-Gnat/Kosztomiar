@@ -34,6 +34,7 @@
 }
 
 .input:focus-visible {
+  border-width: 2px;
   border-color: var(--accent-color);
 }
 
@@ -78,8 +79,8 @@
 }
 
 .radio-box-input:focus-visible,
-.radio-box-input:hover,
-.radio-box-label:hover {
+.radio-box-input:hover {
+  border-width: 2px;
   border-color: var(--accent-color);
   color: var(--accent-color);
 }
