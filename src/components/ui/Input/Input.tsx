@@ -3,9 +3,9 @@ import styles from './Input.module.css';
 import { InputType } from '@/types/types';
 
 type Props<T extends Record<string, unknown>> = {
-  type?: InputType;
+  type?: InputType | string;
   content: string;
-  name: keyof T;
+  name: keyof T | string;
   value?: string;
   error?: Omit<FieldError, 'type'>;
   register: UseFormRegister<T>;

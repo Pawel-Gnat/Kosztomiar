@@ -16,6 +16,7 @@ export const LoginFormHeader = () => {
         alt=""
         aria-hidden={true}
         className={styles.image}
+        priority
       />
       <Link href="/login" className={styles.link} onClick={() => router.back()}>
         Powrót do poprzedniej strony

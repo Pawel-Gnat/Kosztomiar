@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/Input/Input';
 import { FieldValues, useForm, useController } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/Button/Button';
-import { LoginFormSchema } from '@/schemas/LoginFormSchema';
+import { LoginFormSchema, RegisterFormSchema } from '@/schemas/AuthFormSchema';
 
 const LOGIN_DEFAULT_VALUES = {
   email: '',
@@ -17,6 +17,18 @@ const REGISTER_DEFAULT_VALUES = {
   password: '',
   passwordValidation: '',
 };
+
+const loginInputs = [
+  { type: 'email', content: 'Adres e-mail' },
+  { type: 'password', content: 'Hasło' },
+];
+
+const registerInputs = [
+  { type: 'text', name: 'name', content: 'Twoje imię' },
+  { type: 'email', name: 'email', content: 'Adres e-mail' },
+  { type: 'password', name: 'password', content: 'Hasło' },
+  { type: 'password', name: 'passwordValidation', content: 'Powtórz hasło' },
+];
 
 export const LoginForm = () => {
   const {
@@ -40,20 +52,17 @@ export const LoginForm = () => {
       autoComplete="off"
       onSubmit={handleSubmit(submitHandler)}
     >
-      <Input
-        type="email"
-        content="Adres e-mail"
-        name="email"
-        error={errors.email}
-        register={register}
-      />
-      <Input
-        type="password"
-        content="Hasło"
-        name="password"
-        error={errors.password}
-        register={register}
-      />
+      {loginInputs.map((el) => (
+        <Input
+          key={el.type}
+          type={el.type}
+          content={el.content}
+          name={el.type}
+          error={errors[el.type as keyof typeof errors]}
+          register={register}
+        />
+      ))}
+
       <Button type="submit" content="Zaloguj się" isSmall={true} accent={false} />
     </form>
   );
@@ -67,7 +76,7 @@ export const RegisterForm = () => {
     formState: { errors },
   } = useForm<Register>({
     defaultValues: REGISTER_DEFAULT_VALUES,
-    // resolver: zodResolver(LoginFormSchema()),
+    resolver: zodResolver(RegisterFormSchema()),
   });
 
   const submitHandler = async (formValues: FieldValues) => {
@@ -81,34 +90,17 @@ export const RegisterForm = () => {
       autoComplete="off"
       onSubmit={handleSubmit(submitHandler)}
     >
-      <Input
-        type="text"
-        content="Twoje imię"
-        name="name"
-        error={errors.name}
-        register={register}
-      />
-      <Input
-        type="email"
-        content="Adres e-mail"
-        name="email"
-        error={errors.email}
-        register={register}
-      />
-      <Input
-        type="password"
-        content="Hasło"
-        name="password"
-        error={errors.password}
-        register={register}
-      />
-      <Input
-        type="password"
-        content="Powtórz hasło"
-        name="passwordValidation"
-        error={errors.passwordValidation}
-        register={register}
-      />
+      {registerInputs.map((el) => (
+        <Input
+          key={el.name}
+          type={el.type}
+          content={el.content}
+          name={el.name}
+          error={errors[el.name as keyof typeof errors]}
+          register={register}
+        />
+      ))}
+
       <Button type="submit" content="Załóż konto" isSmall={true} accent={false} />
     </form>
   );

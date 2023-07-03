@@ -70,11 +70,11 @@ export type Modal = {
 export type InputType = 'text' | 'number' | 'email' | 'password';
 
 export type Login = {
-  name: string;
   email: string;
   password: string;
 };
 
 export type Register = Login & {
+  name: string;
   passwordValidation: string;
 };
