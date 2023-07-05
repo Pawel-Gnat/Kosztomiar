@@ -1,5 +1,5 @@
-import { checkIfProjectNameExists } from '@/utils/checkIfNameExists';
-import { removeExcessWhitespaces } from '@/utils/removeExcessWhitespaces';
+import { checkIfProjectNameExists } from '@/components/utils/checkIfNameExists';
+import { removeExcessWhitespaces } from '@/components/utils/removeExcessWhitespaces';
 import { Project } from '@/types/types';
 import { array, string, z } from 'zod';
 

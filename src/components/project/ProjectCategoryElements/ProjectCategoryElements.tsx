@@ -1,6 +1,6 @@
 import styles from './ProjectCategoryElements.module.css';
 import { Button } from '@/components/ui/Button/Button';
-import { sortElementsAlphabetically } from '@/utils/sortElementsAlphabetically';
+import { sortElementsAlphabetically } from '@/components/utils/sortElementsAlphabetically';
 import { Element, FormElement } from '@/types/types';
 import { CiCircleMore, CiCircleRemove } from 'react-icons/ci';
 import { UseFormReset } from 'react-hook-form';
