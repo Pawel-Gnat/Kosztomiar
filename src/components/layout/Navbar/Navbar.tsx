@@ -3,6 +3,7 @@ import styles from './Navbar.module.css';
 import stylesLink from '../../ui/Link/Link.module.css';
 import { Logo } from '@/assets/svg/Logo';
 import { Text } from '@/components/ui/Text/Text';
+import { useSession } from 'next-auth/react';
 
 export default function Navbar() {
   return (
@@ -18,9 +19,16 @@ export default function Navbar() {
           <Link href="/kreator" className={stylesLink.navlink}>
             Kreator
           </Link>
-          <Link href="/login" className={stylesLink.navlink}>
-            Zaloguj się
-          </Link>
+
+          {session ? (
+            <Link href="/kreator/profil" className={stylesLink.navlink}>
+              Twój profil
+            </Link>
+          ) : (
+            <Link href="/login" className={stylesLink.navlink}>
+              Zaloguj się
+            </Link>
+          )}
         </div>
       </nav>
     </header>

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import styles from './Hero.module.css';
-import stylesLink from '../../ui/Link/Link.module.css';
+import stylesLink from '../../../ui/Link/Link.module.css';
 import Image from 'next/image';
 import { Text } from '@/components/ui/Text/Text';
 
