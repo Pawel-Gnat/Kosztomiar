@@ -10,10 +10,6 @@
   padding: 2rem 2rem;
 }
 
-.nav div {
-  display: flex;
-}
-
 @media (min-width: 640px) {
   .nav {
     padding: 2rem 4rem;

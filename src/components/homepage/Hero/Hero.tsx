@@ -32,7 +32,6 @@ export const Hero = () => {
         alt=""
         aria-hidden={true}
         className={styles.image}
-        priority
       />
     </section>
   );

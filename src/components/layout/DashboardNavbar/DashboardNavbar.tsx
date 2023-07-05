@@ -8,13 +8,10 @@ import { FiLogIn, FiFolder, FiPlusSquare } from 'react-icons/fi';
 import { Text } from '@/components/ui/Text/Text';
 import { Logo } from '@/assets/svg/Logo';
 import { useRouter } from 'next/router';
-import { useSession } from 'next-auth/react';
-import { Button } from '@/components/ui/Button/Button';
 
 export const DashboardNavbar = () => {
   const context = useContext(UserContext);
   const router = useRouter();
-  const { data: session, status } = useSession();
 
   return (
     <>
@@ -58,17 +55,10 @@ export const DashboardNavbar = () => {
               <FiPlusSquare />
               Nowy projekt
             </Link>
-
-            {session ? (
-              <Link href="/kreator/profil" className={stylesLink.navlink}>
-                Twój profil
-              </Link>
-            ) : (
-              <Link href="/login" className={stylesLink.navlink}>
-                <FiLogIn />
-                Zaloguj się
-              </Link>
-            )}
+            <Link href="/login" className={stylesLink.navlink}>
+              <FiLogIn />
+              Zaloguj się
+            </Link>
           </div>
         </nav>
       </header>

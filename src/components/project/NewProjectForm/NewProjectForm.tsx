@@ -1,8 +1,8 @@
 import { useContext } from 'react';
 import styles from './NewProjectForm.module.css';
 import UserContext from '@/store/user-context';
-import { getDate } from '@/utils/getDate';
-import { createNewProject } from '@/utils/createUtils';
+import { getDate } from '@/components/utils/getDate';
+import { createNewProject } from '@/components/utils/createUtils';
 import { Text } from '@/components/ui/Text/Text';
 import { Button } from '@/components/ui/Button/Button';
 import { FiPlusSquare } from 'react-icons/fi';

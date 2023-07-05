@@ -1,7 +1,7 @@
 import { Project } from '@/types/types';
 import { Page, Text, View, Document, StyleSheet, Font } from '@react-pdf/renderer';
-import { sumValueOfProjectElements } from '../../utils/sumValueOfProjectElements';
-import { totalSumOfProjectElements } from '../../utils/totalSumOfProjectElements';
+import { sumValueOfProjectElements } from '../utils/sumValueOfProjectElements';
+import { totalSumOfProjectElements } from '../utils/totalSumOfProjectElements';
 
 const styles = StyleSheet.create({
   page: {
