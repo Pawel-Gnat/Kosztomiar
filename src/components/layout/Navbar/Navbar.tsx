@@ -6,6 +6,8 @@ import { Text } from '@/components/ui/Text/Text';
 import { useSession } from 'next-auth/react';
 
 export default function Navbar() {
+  const { data: session, status } = useSession();
+
   return (
     <header className={styles.header}>
       <nav className={styles.nav}>
