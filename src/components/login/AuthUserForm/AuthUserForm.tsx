@@ -1,10 +1,12 @@
 import { Login, Register } from '@/types/types';
-import styles from './authForm.module.css';
+import styles from './AuthUserForm.module.css';
 import { Input } from '@/components/ui/Input/Input';
-import { FieldValues, useForm, useController } from 'react-hook-form';
+import { FieldValues, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/Button/Button';
 import { LoginFormSchema, RegisterFormSchema } from '@/schemas/AuthFormSchema';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/router';
 
 const LOGIN_DEFAULT_VALUES = {
   email: '',
@@ -40,10 +42,16 @@ export const LoginForm = () => {
     defaultValues: LOGIN_DEFAULT_VALUES,
     resolver: zodResolver(LoginFormSchema()),
   });
+  const router = useRouter();
 
   const submitHandler = async (formValues: FieldValues) => {
-    console.log(formValues);
-    // reset();
+    const { email, password } = formValues;
+    const result = await signIn('credentials', { redirect: false, email, password });
+
+    if (result && !result.error) {
+      reset(LOGIN_DEFAULT_VALUES);
+      router.replace('/kreator');
+    }
   };
 
   return (
@@ -79,9 +87,38 @@ export const RegisterForm = () => {
     resolver: zodResolver(RegisterFormSchema()),
   });
 
+  async function createUser(formData: Register) {
+    const { name, email, password } = formData;
+
+    const response = await fetch('/api/auth/signUp', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ name, email, password }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      return {
+        error: {
+          message: data.message,
+        },
+      };
+    }
+
+    reset(REGISTER_DEFAULT_VALUES);
+    return data;
+  }
+
   const submitHandler = async (formValues: FieldValues) => {
-    console.log(formValues);
-    // reset();
+    try {
+      const result = await createUser(formValues as Register);
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
