@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import styles from './Footer.module.css';
-import stylesLink from '../../ui/Link/Link.module.css';
+import stylesLink from '../../../ui/Link/Link.module.css';
 import { Logo } from '@/assets/svg/Logo';
 
 export const Footer = () => {

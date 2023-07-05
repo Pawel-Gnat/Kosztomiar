@@ -1,6 +1,6 @@
 import { Text } from '@/components/ui/Text/Text';
 import styles from './CTA.module.css';
-import stylesLink from '../../ui/Link/Link.module.css';
+import stylesLink from '../../../ui/Link/Link.module.css';
 import Link from 'next/link';
 
 export const CTA = () => {
