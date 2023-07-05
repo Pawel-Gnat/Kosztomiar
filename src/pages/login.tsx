@@ -1,6 +1,6 @@
-import { LoginFormContainer } from '@/components/login/LoginFormContainer/LoginFormContainer';
-import { LoginFormHeader } from '@/components/login/LoginFormHeader/LoginFormHeader';
-import { LoginPageContainer } from '@/components/login/LoginPageContainer/LoginPageContainer';
+import { LoginFormContainer } from '@/components/pages/loginpage/LoginFormContainer/LoginFormContainer';
+import { LoginFormHeader } from '@/components/pages/loginpage/LoginFormHeader/LoginFormHeader';
+import { LoginPageContainer } from '@/components/pages/loginpage/LoginPageContainer/LoginPageContainer';
 import { GetServerSidePropsContext } from 'next';
 import { getSession } from 'next-auth/react';
 

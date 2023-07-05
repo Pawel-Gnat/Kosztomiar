@@ -4,7 +4,6 @@ import stylesLink from '../../ui/Link/Link.module.css';
 import { Logo } from '@/assets/svg/Logo';
 import { Text } from '@/components/ui/Text/Text';
 import { useSession } from 'next-auth/react';
-import { FiLogIn } from 'react-icons/fi';
 
 export default function Navbar() {
   const { data: session, status } = useSession();
@@ -29,7 +28,6 @@ export default function Navbar() {
             </Link>
           ) : (
             <Link href="/login" className={stylesLink.navlink}>
-              <FiLogIn />
               Zaloguj się
             </Link>
           )}
