@@ -1,7 +1,7 @@
 import {
   getProjectsFromLocalStorage,
   setProjectsToLocalStorage,
-} from '@/components/utils/localStorageDatabase';
+} from '@/utils/localStorageDatabase';
 import { Category, Project } from '@/types/types';
 
 export const editCategory = async (

@@ -1,5 +1,5 @@
-import { checkIfElementNameExists } from '@/components/utils/checkIfNameExists';
-import { removeExcessWhitespaces } from '@/components/utils/removeExcessWhitespaces';
+import { checkIfElementNameExists } from '@/utils/checkIfNameExists';
+import { removeExcessWhitespaces } from '@/utils/removeExcessWhitespaces';
 import { Category, Project } from '@/types/types';
 import { string, z } from 'zod';
 

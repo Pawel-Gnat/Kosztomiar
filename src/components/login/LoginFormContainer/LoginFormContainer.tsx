@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styles from './LoginFormContainer.module.css';
 import { Text } from '@/components/ui/Text/Text';
 import { Button } from '@/components/ui/Button/Button';
-import { LoginForm, RegisterForm } from '../authForm/authForm';
+import { LoginForm, RegisterForm } from '../AuthForm/authForm';
 
 export const LoginFormContainer = () => {
   const [isLogin, setIsLogin] = useState(true);

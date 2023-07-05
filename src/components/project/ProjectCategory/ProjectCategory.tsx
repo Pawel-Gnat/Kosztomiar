@@ -2,15 +2,15 @@ import styles from './ProjectCategory.module.css';
 import { ProjectCategoryElements } from '../ProjectCategoryElements/ProjectCategoryElements';
 import { NewCategoryElementForm } from '../NewCategoryElementForm/NewCategoryElementForm';
 import { Category, Element, FormElement } from '@/types/types';
-import { sumValueOfProjectElements } from '@/components/utils/sumValueOfProjectElements';
-import { deleteCategoryElement } from '@/components/utils/deleteUtils';
+import { sumValueOfProjectElements } from '@/utils/sumValueOfProjectElements';
+import { deleteCategoryElement } from '@/utils/deleteUtils';
 import { useContext, useState } from 'react';
 import UserContext from '@/store/user-context';
 import { FieldValues, useForm, useController } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { NewElementFormSchema } from '@/schemas/NewElementFormSchema';
 import { useProject } from '@/hooks/useProject';
-import { createNewCategoryElement } from '@/components/utils/createUtils';
+import { createNewCategoryElement } from '@/utils/createUtils';
 
 type Props = {
   name: string;

@@ -1,4 +1,4 @@
-import { removeExcessWhitespaces } from '@/components/utils/removeExcessWhitespaces';
+import { removeExcessWhitespaces } from '@/utils/removeExcessWhitespaces';
 import { string, z } from 'zod';
 
 export const LoginFormSchema = () =>

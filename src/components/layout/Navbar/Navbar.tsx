@@ -3,8 +3,12 @@ import styles from './Navbar.module.css';
 import stylesLink from '../../ui/Link/Link.module.css';
 import { Logo } from '@/assets/svg/Logo';
 import { Text } from '@/components/ui/Text/Text';
+import { useSession } from 'next-auth/react';
+import { FiLogIn } from 'react-icons/fi';
 
 export default function Navbar() {
+  const { data: session, status } = useSession();
+
   return (
     <header className={styles.header}>
       <nav className={styles.nav}>
@@ -18,9 +22,17 @@ export default function Navbar() {
           <Link href="/kreator" className={stylesLink.navlink}>
             Kreator
           </Link>
-          <Link href="/login" className={stylesLink.navlink}>
-            Zaloguj się
-          </Link>
+
+          {session ? (
+            <Link href="/kreator/profil" className={stylesLink.navlink}>
+              Twój profil
+            </Link>
+          ) : (
+            <Link href="/login" className={stylesLink.navlink}>
+              <FiLogIn />
+              Zaloguj się
+            </Link>
+          )}
         </div>
       </nav>
     </header>
