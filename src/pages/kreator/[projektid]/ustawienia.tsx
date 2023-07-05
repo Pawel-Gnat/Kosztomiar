@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/Button/Button';
 import {
   getProjectsFromLocalStorage,
   setProjectsToLocalStorage,
-} from '@/components/utils/localStorageDatabase';
+} from '@/utils/localStorageDatabase';
 import { useModal } from '@/hooks/useModal';
 import { useProject } from '@/hooks/useProject';
 import UserContext from '@/store/user-context';
