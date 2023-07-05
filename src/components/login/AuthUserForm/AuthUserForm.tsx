@@ -1,5 +1,5 @@
 import { Login, Register } from '@/types/types';
-import styles from './AuthForm.module.css';
+import styles from './AuthUserForm.module.css';
 import { Input } from '@/components/ui/Input/Input';
 import { FieldValues, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
