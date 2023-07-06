@@ -10,15 +10,12 @@
 }
 
 .image {
-  max-width: 70%;
+  max-width: 20rem;
   height: 100%;
-  width: auto;
-  margin: auto;
-  object-fit: contain;
   box-shadow: -5px 10px 15px 5px rgba(0, 0, 0, 0.25);
 }
 
-.card > svg {
+.svg > svg {
   max-width: 20rem;
   height: 100%;
   aspect-ratio: 1/1;
@@ -39,11 +36,6 @@
   .card {
     flex-direction: row;
     gap: 5rem;
-  }
-
-  .image {
-    max-width: 50%;
-    margin: 0;
   }
 
   .text-container {
