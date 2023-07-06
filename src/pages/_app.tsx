@@ -5,6 +5,7 @@ import UserContext from '@/store/user-context';
 import { getProjectsFromLocalStorage } from '@/utils/localStorageDatabase';
 import { useEffect, useState } from 'react';
 import { SessionProvider } from 'next-auth/react';
+import AOS from 'aos';
 
 const fonts = Space_Grotesk({
   weight: ['300', '400', '600'],
@@ -29,6 +30,13 @@ export default function App({
     };
 
     fetchProjects();
+  }, []);
+
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      once: true,
+    });
   }, []);
 
   return (

@@ -10,7 +10,7 @@ export const AccordionItem = (props: AccordionItemType) => {
   };
 
   return (
-    <div className={styles.item}>
+    <div className={styles.item} data-aos="fade-up" data-aos-delay="200">
       <h3
         className={props.isActive ? `${styles.heading} ${styles.rotate}` : styles.heading}
       >
