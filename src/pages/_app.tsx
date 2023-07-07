@@ -1,13 +1,13 @@
 import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
-import { Space_Grotesk } from 'next/font/google';
+import { Source_Sans_Pro } from 'next/font/google';
 import UserContext from '@/store/user-context';
 import { getProjectsFromLocalStorage } from '@/utils/localStorageDatabase';
 import { useEffect, useState } from 'react';
 import { SessionProvider } from 'next-auth/react';
 import AOS from 'aos';
 
-const fonts = Space_Grotesk({
+const fonts = Source_Sans_Pro({
   weight: ['300', '400', '600'],
   subsets: ['latin'],
 });

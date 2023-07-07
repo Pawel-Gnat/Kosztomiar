@@ -6,6 +6,8 @@
   display: inline-flex;
   justify-content: center;
   align-items: center;
+  gap: 0.5rem;
+  max-height: 4.5rem;
   padding: 2rem;
   margin: 1rem 0.25rem;
   border: 1px solid var(--primary-color);
@@ -18,7 +20,7 @@
 
 .table {
   font-size: var(--text-size-projects);
-  padding: 1rem;
+  padding: 0.5rem;
 }
 
 .accent {
@@ -33,17 +35,13 @@
   background-color: var(--accent-color);
 }
 
-td > .button:has(svg) span {
+td > .button > svg {
   display: none;
 }
 
 .button svg {
   min-height: 1.5rem;
   min-width: 1.5rem;
-}
-
-.button:has(svg) > span {
-  margin-left: 0.5rem;
 }
 
 @media (min-width: 320px) {
@@ -56,10 +54,14 @@ td > .button:has(svg) span {
   .button {
     margin: 1rem;
   }
+
+  .table {
+    padding: 1rem;
+  }
 }
 
 @media (min-width: 640px) {
-  td > .button:has(svg) span {
+  td > .button > svg {
     display: block;
   }
 }

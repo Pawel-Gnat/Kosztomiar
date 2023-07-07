@@ -6,7 +6,7 @@ type Button = {
   onClick?: () => void;
   icon?: ReactNode;
   isSmall: boolean;
-  content: string;
+  content: string | JSX.Element;
   accent: boolean;
 };
 
@@ -22,7 +22,7 @@ export const Button = (props: Button) => {
       onClick={props.onClick}
     >
       {props.icon}
-      <span>{props.content}</span>
+      {props.content}
     </button>
   );
 };

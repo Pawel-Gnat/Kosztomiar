@@ -78,3 +78,8 @@ export type Register = Login & {
   name: string;
   passwordValidation: string;
 };
+
+export interface LoadingContextType {
+  loading: boolean;
+  setIsLoading: (loading: boolean) => void;
+}
