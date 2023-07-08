@@ -83,3 +83,7 @@ export interface LoadingContextType {
   loading: boolean;
   setIsLoading: (loading: boolean) => void;
 }
+
+export interface RegisterFormType {
+  setIsLogin: (setIsLogin: boolean) => void;
+}

@@ -1,4 +1,4 @@
-import { Login, Register } from '@/types/types';
+import { Login, Register, RegisterFormType } from '@/types/types';
 import styles from './AuthUserForm.module.css';
 import { Input } from '@/components/ui/Input/Input';
 import { FieldValues, useForm } from 'react-hook-form';
@@ -86,7 +86,7 @@ export const LoginForm = () => {
   );
 };
 
-export const RegisterForm = () => {
+export const RegisterForm: React.FC<RegisterFormType> = ({ setIsLogin }) => {
   const {
     register,
     handleSubmit,
@@ -120,6 +120,7 @@ export const RegisterForm = () => {
     }
 
     reset(REGISTER_DEFAULT_VALUES);
+    setIsLogin(true);
     return data;
   }
 
@@ -128,9 +129,8 @@ export const RegisterForm = () => {
       setIsLoading(true);
       const result = await createUser(formValues as Register);
       setIsLoading(false);
-      // console.log(result);
     } catch (error) {
-      console.log(error);
+      throw new Error(`Błąd: ${error}`);
     }
   };
 
