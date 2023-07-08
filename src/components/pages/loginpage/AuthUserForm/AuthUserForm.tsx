@@ -1,4 +1,4 @@
-import { Login, Register } from '@/types/types';
+import { Login, Register, RegisterFormType } from '@/types/types';
 import styles from './AuthUserForm.module.css';
 import { Input } from '@/components/ui/Input/Input';
 import { FieldValues, useForm } from 'react-hook-form';
@@ -7,6 +7,9 @@ import { Button } from '@/components/ui/Button/Button';
 import { LoginFormSchema, RegisterFormSchema } from '@/schemas/AuthFormSchema';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/router';
+import { Loader } from '@/components/loader/Loader';
+import { useContext } from 'react';
+import { LoadingContext } from '@/store/loading-context';
 
 const LOGIN_DEFAULT_VALUES = {
   email: '',
@@ -43,11 +46,13 @@ export const LoginForm = () => {
     resolver: zodResolver(LoginFormSchema()),
   });
   const router = useRouter();
+  const { loading, setIsLoading } = useContext(LoadingContext);
 
   const submitHandler = async (formValues: FieldValues) => {
+    setIsLoading(true);
     const { email, password } = formValues;
     const result = await signIn('credentials', { redirect: false, email, password });
-
+    setIsLoading(false);
     if (result && !result.error) {
       reset(LOGIN_DEFAULT_VALUES);
       router.replace('/kreator');
@@ -71,12 +76,17 @@ export const LoginForm = () => {
         />
       ))}
 
-      <Button type="submit" content="Zaloguj się" isSmall={true} accent={false} />
+      <Button
+        type="submit"
+        content={loading ? <Loader /> : 'Zaloguj się'}
+        isSmall={true}
+        accent={false}
+      />
     </form>
   );
 };
 
-export const RegisterForm = () => {
+export const RegisterForm: React.FC<RegisterFormType> = ({ setIsLogin }) => {
   const {
     register,
     handleSubmit,
@@ -86,6 +96,7 @@ export const RegisterForm = () => {
     defaultValues: REGISTER_DEFAULT_VALUES,
     resolver: zodResolver(RegisterFormSchema()),
   });
+  const { loading, setIsLoading } = useContext(LoadingContext);
 
   async function createUser(formData: Register) {
     const { name, email, password } = formData;
@@ -109,15 +120,17 @@ export const RegisterForm = () => {
     }
 
     reset(REGISTER_DEFAULT_VALUES);
+    setIsLogin(true);
     return data;
   }
 
   const submitHandler = async (formValues: FieldValues) => {
     try {
+      setIsLoading(true);
       const result = await createUser(formValues as Register);
-      console.log(result);
+      setIsLoading(false);
     } catch (error) {
-      console.log(error);
+      throw new Error(`Błąd: ${error}`);
     }
   };
 
@@ -138,7 +151,12 @@ export const RegisterForm = () => {
         />
       ))}
 
-      <Button type="submit" content="Załóż konto" isSmall={true} accent={false} />
+      <Button
+        type="submit"
+        content={loading ? <Loader /> : 'Załóż konto'}
+        isSmall={true}
+        accent={false}
+      />
     </form>
   );
 };
