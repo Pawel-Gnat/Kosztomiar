@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import styles from './LoginFormContainer.module.css';
-import stylesAnimation from '../../../../styles/animations.module.css';
 import { Text } from '@/components/ui/Text/Text';
 import { Button } from '@/components/ui/Button/Button';
 import { LoginForm, RegisterForm } from '../AuthUserForm/AuthUserForm';
@@ -11,7 +10,7 @@ export const LoginFormContainer = () => {
 
   return (
     <LoadingProvider>
-      <div className={`${styles.container} ${stylesAnimation.showup}`}>
+      <div className={`${styles.container} show`}>
         <h2 className={styles.heading}>{isLogin ? 'Logowanie' : 'Rejestracja'}</h2>
         <Text content="Skorzystaj z możliwości jakie daje własne konto w aplikacji. Posiadaj dostęp do swoich danych gdziekolwiek jesteś!" />
         {isLogin ? <LoginForm /> : <RegisterForm setIsLogin={setIsLogin} />}

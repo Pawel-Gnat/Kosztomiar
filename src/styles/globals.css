@@ -52,3 +52,16 @@ section {
 button {
   font-family: inherit;
 }
+
+.show {
+  animation: show 0.3s linear backwards;
+}
+
+@keyframes show {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

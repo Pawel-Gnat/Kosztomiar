@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import styles from './LoginFormHeader.module.css';
-import stylesAnimation from '../../../../styles/animations.module.css';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -8,7 +7,7 @@ export const LoginFormHeader = () => {
   const router = useRouter();
 
   return (
-    <div className={`${styles.container} ${stylesAnimation.showup}`}>
+    <div className={`${styles.container} show`}>
       <h1 className={styles.heading}>Rozpocznij pracę z Kosztomiarem</h1>
       <Image
         src="/assets/img/hero-image.jpg"
