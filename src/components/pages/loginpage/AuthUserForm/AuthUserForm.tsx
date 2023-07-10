@@ -1,4 +1,4 @@
-import { Login, Register, RegisterFormType } from '@/types/types';
+import { AuthError, Login, Register, RegisterFormType } from '@/types/types';
 import styles from './AuthUserForm.module.css';
 import { Input } from '@/components/ui/Input/Input';
 import { FieldValues, useForm } from 'react-hook-form';
@@ -8,7 +8,7 @@ import { LoginFormSchema, RegisterFormSchema } from '@/schemas/AuthFormSchema';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { Loader } from '@/components/loader/Loader';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { LoadingContext } from '@/store/loading-context';
 
 const LOGIN_DEFAULT_VALUES = {
@@ -47,12 +47,47 @@ export const LoginForm = () => {
   });
   const router = useRouter();
   const { loading, setIsLoading } = useContext(LoadingContext);
+  const [authError, setAuthError] = useState<AuthError>({
+    text: '',
+    type: '',
+  });
+
+  const getAuthErrorType = (text: string) => {
+    if (text === 'Użytkownik nie istnieje') {
+      return 'email';
+    }
+
+    if (text === 'Niewłaściwe hasło') {
+      return 'password';
+    }
+
+    throw new Error('Błąd typowania błędu z formularza');
+  };
+
+  const showAuthError = (text: string, type: string) => {
+    setAuthError((prevState) => ({
+      ...prevState,
+      text: text,
+      type: type,
+    }));
+
+    setTimeout(() => {
+      setAuthError((prevState) => ({ ...prevState, text: '', type: '' }));
+    }, 1500);
+  };
 
   const submitHandler = async (formValues: FieldValues) => {
     setIsLoading(true);
     const { email, password } = formValues;
     const result = await signIn('credentials', { redirect: false, email, password });
     setIsLoading(false);
+
+    if (result && result.error) {
+      const errorType = getAuthErrorType(result.error);
+      const errorText = result.error;
+      showAuthError(errorText, errorType);
+    }
+
     if (result && !result.error) {
       reset(LOGIN_DEFAULT_VALUES);
       router.replace('/kreator');
@@ -73,6 +108,7 @@ export const LoginForm = () => {
           name={el.type}
           error={errors[el.type as keyof typeof errors]}
           register={register}
+          authError={authError}
         />
       ))}
 
@@ -97,6 +133,21 @@ export const RegisterForm: React.FC<RegisterFormType> = ({ setIsLogin }) => {
     resolver: zodResolver(RegisterFormSchema()),
   });
   const { loading, setIsLoading } = useContext(LoadingContext);
+  const [authError, setAuthError] = useState<AuthError>({
+    text: '',
+    type: 'email',
+  });
+
+  const showAuthError = (text: string) => {
+    setAuthError((prevState) => ({
+      ...prevState,
+      text: text,
+    }));
+
+    setTimeout(() => {
+      setAuthError((prevState) => ({ ...prevState, text: '' }));
+    }, 1500);
+  };
 
   async function createUser(formData: Register) {
     const { name, email, password } = formData;
@@ -129,6 +180,11 @@ export const RegisterForm: React.FC<RegisterFormType> = ({ setIsLogin }) => {
       setIsLoading(true);
       const result = await createUser(formValues as Register);
       setIsLoading(false);
+
+      if (result.error) {
+        const errorText = result.error.message;
+        showAuthError(errorText);
+      }
     } catch (error) {
       throw new Error(`Błąd: ${error}`);
     }
@@ -148,6 +204,7 @@ export const RegisterForm: React.FC<RegisterFormType> = ({ setIsLogin }) => {
           name={el.name}
           error={errors[el.name as keyof typeof errors]}
           register={register}
+          authError={authError}
         />
       ))}
 

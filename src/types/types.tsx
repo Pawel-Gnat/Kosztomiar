@@ -79,6 +79,11 @@ export type Register = Login & {
   passwordValidation: string;
 };
 
+export type AuthError = {
+  text: string | undefined;
+  type: string;
+};
+
 export interface LoadingContextType {
   loading: boolean;
   setIsLoading: (loading: boolean) => void;
