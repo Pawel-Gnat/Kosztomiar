@@ -1,6 +1,6 @@
 import { FieldError, UseFormRegister, Path } from 'react-hook-form';
 import styles from './Input.module.css';
-import { InputType } from '@/types/types';
+import { AuthError, InputType } from '@/types/types';
 
 type Props<T extends Record<string, unknown>> = {
   type?: InputType | string;
@@ -9,6 +9,7 @@ type Props<T extends Record<string, unknown>> = {
   value?: string;
   error?: Omit<FieldError, 'type'>;
   register: UseFormRegister<T>;
+  authError?: AuthError;
 };
 
 export const Input = <T extends Record<string, unknown>>({
@@ -17,8 +18,11 @@ export const Input = <T extends Record<string, unknown>>({
   name,
   error,
   register,
+  authError,
 }: Props<T>) => {
-  const labelClass = error ? `${styles.input} ${styles.error}` : styles.input;
+  const activeAuthError = authError?.text && authError?.type === type;
+  const labelClass =
+    error || activeAuthError ? `${styles.input} ${styles.error}` : styles.input;
 
   return (
     <div className={styles.container}>
@@ -35,6 +39,10 @@ export const Input = <T extends Record<string, unknown>>({
       </label>
       {error && (type === 'text' || type === 'email' || type === 'password') && (
         <p className={`${styles['error-text']} ${styles.error}`}>{error.message}</p>
+      )}
+
+      {activeAuthError && (
+        <p className={`${styles['error-text']} ${styles.error}`}>{authError.text}</p>
       )}
     </div>
   );
