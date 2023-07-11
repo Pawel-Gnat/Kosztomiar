@@ -8,7 +8,7 @@ type Props = {
 
 function DashboardLayout(props: Props) {
   return (
-    <div className={styles.dashboard}>
+    <div className={`${styles.dashboard} show`}>
       <DashboardNavbar />
       <main className={styles.main}>{props.children}</main>
     </div>

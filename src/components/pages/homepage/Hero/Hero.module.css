@@ -13,10 +13,6 @@
   text-align: center;
 }
 
-.heading {
-  font-size: var(--text-primary-heading-size);
-}
-
 .links {
   margin: 0 auto;
 }
