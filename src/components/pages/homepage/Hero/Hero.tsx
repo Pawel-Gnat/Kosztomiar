@@ -2,15 +2,15 @@ import Link from 'next/link';
 import styles from './Hero.module.css';
 import stylesLink from '../../../ui/Link/Link.module.css';
 import Image from 'next/image';
-import { Text } from '@/components/ui/Text/Text';
+import { H1, Text } from '@/components/ui/Text/Text';
 
 export const Hero = () => {
   return (
     <section className={styles.hero}>
       <div className={styles['text-container']}>
-        <h1 className={styles.heading} data-aos="fade-up" data-aos-delay="300">
-          Twórz raporty, które przekształcają Twoje dane w wartość biznesową
-        </h1>
+        <div data-aos="fade-up" data-aos-delay="300">
+          <H1 content="Twórz raporty, które przekształcają Twoje dane w wartość biznesową" />
+        </div>
         <div data-aos="fade-up" data-aos-delay="400">
           <Text
             content="Niezależnie od branży, aplikacja zapewnia narzędzia do efektywnego

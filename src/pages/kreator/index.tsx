@@ -1,10 +1,10 @@
 import DashboardLayout from '@/components/layout/DashboardLayout/DashboardLayout';
-import { Text } from '@/components/ui/Text/Text';
+import { InitialView } from '@/components/pages/kreatorpage/InitialView/InitialView';
 
 export default function KreatorPage() {
   return (
     <DashboardLayout>
-      <Text content="Kreator page" />
+      <InitialView />
     </DashboardLayout>
   );
 }
