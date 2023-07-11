@@ -1,6 +1,9 @@
 import { FieldError, UseFormRegister, Path } from 'react-hook-form';
 import styles from './Input.module.css';
 import { AuthError, InputType } from '@/types/types';
+import { useEffect, useState } from 'react';
+import { Button } from '../Button/Button';
+import { CiRead, CiUnread } from 'react-icons/ci';
 
 type Props<T extends Record<string, unknown>> = {
   type?: InputType | string;
@@ -24,11 +27,13 @@ export const Input = <T extends Record<string, unknown>>({
   const labelClass =
     error || activeAuthError ? `${styles.input} ${styles.error}` : styles.input;
 
+  const [showPassword, setShowPassword] = useState(false);
+
   return (
     <div className={styles.container}>
       <input
         className={labelClass}
-        type={type}
+        type={showPassword ? 'text' : type}
         id={name.toString()}
         placeholder=" "
         autoComplete="off"
@@ -37,6 +42,18 @@ export const Input = <T extends Record<string, unknown>>({
       <label className={styles.label} htmlFor={name.toString()}>
         {content}
       </label>
+
+      {type === 'password' && (
+        <Button
+          type="button"
+          isSmall={true}
+          accent={false}
+          content={showPassword ? <CiUnread /> : <CiRead />}
+          onClick={() => setShowPassword((prevState) => !prevState)}
+          aria-label={showPassword ? 'Ukryj hasło' : 'Pokaż hasło'}
+        />
+      )}
+
       {error && (type === 'text' || type === 'email' || type === 'password') && (
         <p className={`${styles['error-text']} ${styles.error}`}>{error.message}</p>
       )}
