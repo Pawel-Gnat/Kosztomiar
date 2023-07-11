@@ -33,7 +33,7 @@ const accordionContent = [
   {
     heading:
       'Czy aplikacja Kosztomiar oferuje wsparcie techniczne w przypadku jakichkolwiek pytań lub problemów?',
-    text: 'Tak, aplikacja Kosztomiar oferuje wsparcie techniczne dla użytkowników w przypadku pytań lub problemów. Możesz skontaktować się poprzez adres e-mail pawel_gnat@o2.pl lub za pośrednictwem profilu na LinkedIn: https://www.linkedin.com/in/paweł-gnat/. Jestem gotowy odpowiedzieć na Twoje pytania i pomóc w rozwiązaniu ewentualnych problemów związanych z aplikacją Kosztomiar. Aplikacja jest ciągle w fazie testowej, dlatego istnieje możliwość, że mogą wystąpić pewne ograniczenia lub niedoskonałości. Zachęcamy do udzielania swoich uwag i opinii, które pomogą w dalszym rozwoju aplikacji.',
+    text: 'Tak, aplikacja Kosztomiar oferuje wsparcie techniczne dla użytkowników w przypadku pytań lub problemów. Możesz skontaktować się poprzez profil LinkedIn: https://www.linkedin.com/in/paweł-gnat/. Aplikacja jest ciągle w fazie testowej, dlatego istnieje możliwość, że mogą wystąpić pewne ograniczenia lub niedoskonałości. Zachęcamy do udzielania swoich uwag i opinii, które pomogą w dalszym rozwoju aplikacji.',
   },
 ];
 
