@@ -3,3 +3,7 @@
   line-height: 25px;
   color: var(--text-color);
 }
+
+.heading {
+  font-size: var(--text-primary-heading-size);
+}

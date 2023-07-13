@@ -16,9 +16,6 @@ export const Footer = () => {
         <Link href="/login" className={stylesLink.footerlink}>
           Zaloguj się
         </Link>
-        <Link href="/polityka" className={stylesLink.footerlink}>
-          Polityka prywatności
-        </Link>
       </div>
     </footer>
   );

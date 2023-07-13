@@ -3,11 +3,7 @@
 }
 
 @media (min-width: 640px) {
-  .cards > div:nth-child(even) > div {
-    order: 1;
-  }
-
-  .cards > div:nth-child(even) > svg {
+  .cards > div:nth-child(even) > div:has(svg) {
     order: 2;
   }
 }

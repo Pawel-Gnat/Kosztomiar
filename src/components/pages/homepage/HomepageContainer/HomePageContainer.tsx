@@ -1,4 +1,4 @@
-import Navbar from '@/components/layout/Navbar/Navbar';
+import Navbar from '@/components/pages/homepage/Navbar/Navbar';
 import styles from './HomePageContainer.module.css';
 import { Footer } from '../Footer/Footer';
 

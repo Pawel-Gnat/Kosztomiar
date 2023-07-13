@@ -1,9 +1,9 @@
 import styles from './Text.module.css';
 
-type Text = {
-  content: string;
+export const Text = (props: { content: string }) => {
+  return <p className={styles.text}>{props.content}</p>;
 };
 
-export const Text = (props: Text) => {
-  return <p className={styles.text}>{props.content}</p>;
+export const H1 = (props: { content: string }) => {
+  return <h1 className={styles.heading}>{props.content}</h1>;
 };

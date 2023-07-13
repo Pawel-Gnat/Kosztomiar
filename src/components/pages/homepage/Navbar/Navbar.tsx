@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import styles from './Navbar.module.css';
-import stylesLink from '../../ui/Link/Link.module.css';
+import stylesLink from '../../../ui/Link/Link.module.css';
 import { Logo } from '@/assets/svg/Logo';
 import { Text } from '@/components/ui/Text/Text';
 import { useSession } from 'next-auth/react';

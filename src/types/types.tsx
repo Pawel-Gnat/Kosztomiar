@@ -78,3 +78,23 @@ export type Register = Login & {
   name: string;
   passwordValidation: string;
 };
+
+export type AuthError = {
+  text: string | undefined;
+  type: string;
+};
+
+export interface LoadingContextType {
+  loading: boolean;
+  setIsLoading: (loading: boolean) => void;
+}
+
+export interface RegisterFormType {
+  setIsLogin: (setIsLogin: boolean) => void;
+  handleNotification: (handleNotification: NotificationType) => void;
+}
+
+export interface NotificationType {
+  message: string;
+  status: string;
+}

@@ -4,6 +4,19 @@
   height: 5rem;
 }
 
+.container > button {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  translate: 0 -50%;
+  border: none;
+}
+
+.container > button > svg {
+  height: 100%;
+  width: 2.5rem;
+}
+
 .label {
   font-size: inherit;
   color: var(--text-color);
@@ -48,7 +61,7 @@
   font-size: var(--text-size-projects);
   position: relative;
   top: 50%;
-  right: 2rem;
+  right: 6rem;
   transform: translateY(-50%);
   text-align: right;
   pointer-events: none;
