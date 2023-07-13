@@ -122,7 +122,10 @@ export const LoginForm = () => {
   );
 };
 
-export const RegisterForm: React.FC<RegisterFormType> = ({ setIsLogin }) => {
+export const RegisterForm: React.FC<RegisterFormType> = ({
+  setIsLogin,
+  handleNotification,
+}) => {
   const {
     register,
     handleSubmit,
@@ -171,6 +174,7 @@ export const RegisterForm: React.FC<RegisterFormType> = ({ setIsLogin }) => {
     }
 
     reset(REGISTER_DEFAULT_VALUES);
+    handleNotification({ message: 'Konto zostało utworzone', status: 'success' });
     setIsLogin(true);
     return data;
   }
@@ -185,35 +189,38 @@ export const RegisterForm: React.FC<RegisterFormType> = ({ setIsLogin }) => {
         const errorText = result.error.message;
         showAuthError(errorText);
       }
+      // handleNotification({ message: 'Konto zostało utworzone', status: 'success' });
     } catch (error) {
       throw new Error(`Błąd: ${error}`);
     }
   };
 
   return (
-    <form
-      className={styles.form}
-      autoComplete="off"
-      onSubmit={handleSubmit(submitHandler)}
-    >
-      {registerInputs.map((el) => (
-        <Input
-          key={el.name}
-          type={el.type}
-          content={el.content}
-          name={el.name}
-          error={errors[el.name as keyof typeof errors]}
-          register={register}
-          authError={authError}
-        />
-      ))}
+    <>
+      <form
+        className={styles.form}
+        autoComplete="off"
+        onSubmit={handleSubmit(submitHandler)}
+      >
+        {registerInputs.map((el) => (
+          <Input
+            key={el.name}
+            type={el.type}
+            content={el.content}
+            name={el.name}
+            error={errors[el.name as keyof typeof errors]}
+            register={register}
+            authError={authError}
+          />
+        ))}
 
-      <Button
-        type="submit"
-        content={loading ? <Loader /> : 'Załóż konto'}
-        isSmall={true}
-        accent={false}
-      />
-    </form>
+        <Button
+          type="submit"
+          content={loading ? <Loader /> : 'Załóż konto'}
+          isSmall={true}
+          accent={false}
+        />
+      </form>
+    </>
   );
 };
