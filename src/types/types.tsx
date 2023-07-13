@@ -91,4 +91,10 @@ export interface LoadingContextType {
 
 export interface RegisterFormType {
   setIsLogin: (setIsLogin: boolean) => void;
+  handleNotification: (handleNotification: NotificationType) => void;
+}
+
+export interface NotificationType {
+  message: string;
+  status: string;
 }

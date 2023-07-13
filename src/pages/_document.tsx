@@ -10,6 +10,7 @@ export default function Document() {
       <body>
         <Main />
         <div id="portal"></div>
+        <div id="notifications"></div>
         <NextScript />
         <script async src="https://unpkg.com/aos@next/dist/aos.js" />
       </body>

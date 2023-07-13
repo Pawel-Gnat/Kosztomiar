@@ -1,0 +1,35 @@
+.container {
+  position: absolute;
+  bottom: 4rem;
+  left: 0;
+  right: 0;
+  max-width: max-content;
+  padding: 2rem;
+  margin: 0 auto;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  animation: animation 0.3s linear forwards;
+}
+
+.container p {
+  color: var(--secondary-color);
+}
+
+.success {
+  background-color: green;
+}
+
+.error {
+  background-color: var(--error-color);
+}
+
+@keyframes animation {
+  0% {
+    opacity: 0;
+    translate: 0rem 4rem;
+  }
+  100% {
+    opacity: 1;
+    translate: 0rem 0rem;
+  }
+}
