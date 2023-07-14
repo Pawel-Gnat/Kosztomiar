@@ -79,7 +79,12 @@ export type Register = Login & {
   passwordValidation: string;
 };
 
-export type AuthError = {
+export type Password = {
+  currentPassword: string;
+  newPassword: string;
+};
+
+export type NotificationError = {
   text: string | undefined;
   type: string;
 };
