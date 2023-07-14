@@ -21,10 +21,10 @@ const UNITS = [
   { content: 'litry', value: 'l' },
   { content: 'sztuki', value: 'szt' },
 ];
-const PRICES = ['true', 'false'];
+const PRICES = [true, false];
 const CURRENCIES = ['PLN', 'EUR', 'USD'];
 
-export default function NewProjectForm() {
+export const NewProjectForm = () => {
   const context = useContext(UserContext);
   const router = useRouter();
   const {
@@ -99,9 +99,9 @@ export default function NewProjectForm() {
         {PRICES.map((input, index) => (
           <RadioInput
             key={index}
-            content={input === 'true' ? 'Tak' : 'Nie'}
+            content={input ? 'Tak' : 'Nie'}
             name="price"
-            value={input}
+            value={input.toString()}
             error={errors.price}
             register={register}
           />
@@ -140,4 +140,4 @@ export default function NewProjectForm() {
       </div>
     </form>
   );
-}
+};

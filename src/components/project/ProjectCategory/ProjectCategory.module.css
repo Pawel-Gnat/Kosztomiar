@@ -55,6 +55,10 @@
   background-color: var(--secondary-color);
 }
 
+.footer tr > td {
+  padding-bottom: 1rem;
+}
+
 .full,
 .table td:nth-of-type(2) {
   width: 100%;
