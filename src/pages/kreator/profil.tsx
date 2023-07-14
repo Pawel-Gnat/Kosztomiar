@@ -1,3 +1,4 @@
+import { ProfileImage } from '@/assets/svg/ProfileImage';
 import DashboardLayout from '@/components/layout/DashboardLayout/DashboardLayout';
 import { ChangePasswordForm } from '@/components/pages/profilpage/ChangePasswordForm/ChangePasswordForm';
 import { ProfilpageContainer } from '@/components/pages/profilpage/ProfilpageContainer/ProfilpageContainer';
@@ -16,17 +17,18 @@ export default function ProfilPage() {
   return (
     <DashboardLayout>
       <ProfilpageContainer>
+        <ProfileImage />
+        <Text content="Ustawienia profilu użytkownika" />
         <LoadingProvider>
-          <Text content="Ustawienia profilu użytkownika" />
           <ChangePasswordForm />
-          <Button
-            type="button"
-            isSmall={false}
-            accent={false}
-            content="Wyloguj się"
-            onClick={logoutHandler}
-          />
         </LoadingProvider>
+        <Button
+          type="button"
+          isSmall={false}
+          accent={false}
+          content="Wyloguj się"
+          onClick={logoutHandler}
+        />
       </ProfilpageContainer>
     </DashboardLayout>
   );
