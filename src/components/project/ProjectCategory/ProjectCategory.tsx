@@ -116,7 +116,7 @@ export const ProjectCategory = (props: Props) => {
             reset={reset}
           />
         </tbody>
-        <tfoot>
+        <tfoot className={styles.footer}>
           {price === 'true' && (
             <tr>
               <td colSpan={4} className={styles['right-align']}>
