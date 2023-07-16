@@ -1,20 +1,29 @@
 import Link from 'next/link';
 import styles from './DashboardNavbar.module.css';
 import stylesLink from '../../ui/Link/Link.module.css';
-import { useContext } from 'react';
-import UserContext from '@/store/user-context';
-import { Project } from '@/types/types';
+import { FC, useContext } from 'react';
+import { UserContext } from '@/store/user-context';
 import { FiLogIn, FiFolder, FiPlusSquare } from 'react-icons/fi';
 import { Text } from '@/components/ui/Text/Text';
 import { Logo } from '@/assets/svg/Logo';
-import { useRouter } from 'next/router';
-import { useSession } from 'next-auth/react';
-import { Button } from '@/components/ui/Button/Button';
+import { getSession, useSession } from 'next-auth/react';
+import { ProjectList } from '@/components/pages/kreatorpage/ProjectList/ProjectList';
+import { GetServerSidePropsContext } from 'next';
+import { Session } from 'next-auth';
 
+// export const DashboardNavbar: FC<{ session: Session }> = ({ session }) => {
 export const DashboardNavbar = () => {
   const context = useContext(UserContext);
-  const router = useRouter();
   const { data: session, status } = useSession();
+
+  // console.log(context, session);
+
+  const projectList =
+    context.projects.length > 0 ? (
+      <ProjectList projects={context.projects} />
+    ) : (
+      <Text content="Brak projektów" />
+    );
 
   return (
     <>
@@ -32,22 +41,7 @@ export const DashboardNavbar = () => {
               <FiFolder className={styles.icon} />
               <Text content="Projekty" />
             </div>
-            {context.projects.length > 0 && (
-              <ul className={styles['list-container']}>
-                {context.projects.map((project: Project) => (
-                  <li key={project.id} className={styles.list}>
-                    <Link
-                      href={`/kreator/${project.id}`}
-                      className={
-                        router.query.projektid === project.id ? stylesLink.active : ''
-                      }
-                    >
-                      {project.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            )}
+            {projectList}
           </div>
 
           <div className={styles.buttons}>
@@ -75,3 +69,11 @@ export const DashboardNavbar = () => {
     </>
   );
 };
+
+// export async function getServerSideProps(context: GetServerSidePropsContext) {
+//   const session = await getSession({ req: context.req });
+
+//   return {
+//     props: { session },
+//   };
+// }

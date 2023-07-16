@@ -93,6 +93,12 @@ export interface LoadingContextType {
   setIsLoading: (loading: boolean) => void;
 }
 
+export interface UserContextType {
+  isUserLoggedIn: boolean;
+  projects: Project[];
+  setProjects: () => {};
+}
+
 export interface RegisterFormType {
   setIsLogin: (setIsLogin: boolean) => void;
   handleNotification: (handleNotification: NotificationType) => void;

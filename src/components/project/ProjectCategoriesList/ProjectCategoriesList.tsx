@@ -1,7 +1,7 @@
 import styles from './ProjectCategoriesList.module.css';
 import { FormCategory, Project } from '@/types/types';
 import { CiCircleMore, CiCircleRemove } from 'react-icons/ci';
-import UserContext from '@/store/user-context';
+import { UserContext } from '@/store/user-context';
 import { useContext, useState } from 'react';
 import { CategoryForm } from '../CategoryForm/CategoryForm';
 import { Button } from '@/components/ui/Button/Button';

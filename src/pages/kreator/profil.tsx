@@ -1,5 +1,5 @@
 import { ProfileImage } from '@/assets/svg/ProfileImage';
-import DashboardLayout from '@/components/layout/DashboardLayout/DashboardLayout';
+import { DashboardLayout } from '@/components/layout/DashboardLayout/DashboardLayout';
 import { ChangePasswordForm } from '@/components/pages/profilpage/ChangePasswordForm/ChangePasswordForm';
 import { ProfilpageContainer } from '@/components/pages/profilpage/ProfilpageContainer/ProfilpageContainer';
 import { Button } from '@/components/ui/Button/Button';
@@ -40,7 +40,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   if (!session) {
     return {
       redirect: {
-        destination: '/login',
+        destination: '/',
         permanent: false,
       },
     };

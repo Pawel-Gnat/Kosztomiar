@@ -8,7 +8,7 @@ import {
 } from '@/utils/localStorageDatabase';
 import { useModal } from '@/hooks/useModal';
 import { useProject } from '@/hooks/useProject';
-import UserContext from '@/store/user-context';
+import { UserContext } from '@/store/user-context';
 import { Project } from '@/types/types';
 import { useRouter } from 'next/router';
 import { useContext } from 'react';

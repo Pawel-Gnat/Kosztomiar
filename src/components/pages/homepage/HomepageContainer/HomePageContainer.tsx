@@ -7,7 +7,7 @@ export const HomePageContainer = (props: { children: React.ReactNode }) => {
     <>
       <div className={styles.waves}></div>
       <Navbar />
-      <main className={styles.main}>{props.children}</main>;
+      <main className={styles.main}>{props.children}</main>
       <Footer />
     </>
   );

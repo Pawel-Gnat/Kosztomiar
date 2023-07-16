@@ -1,4 +1,4 @@
-import UserContext from '@/store/user-context';
+import { UserContext } from '@/store/user-context';
 import { Project } from '@/types/types';
 import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
