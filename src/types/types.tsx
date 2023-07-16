@@ -43,29 +43,28 @@ export type EditedElement = {
   isEditing: boolean;
 };
 
-export type Card = {
+export interface Card {
   heading: string;
   text: string;
   img?: string;
   svg?: JSX.Element;
-};
+}
 
-export type AccordionItem = {
+export interface AccordionItem {
   key: number;
   heading: string;
   text: string;
   isActive: boolean;
   setActiveIndex: (index: number | null) => void;
   indexItem: number;
-};
-
-export type Modal = {
+}
+export interface Modal {
   active?: boolean;
   type: string;
   name: string;
   handleCancel?: () => void;
   handleDelete?: () => void;
-};
+}
 
 export type InputType = 'text' | 'number' | 'email' | 'password';
 
@@ -84,10 +83,10 @@ export type Password = {
   newPassword: string;
 };
 
-export type NotificationError = {
+export interface NotificationError {
   text: string | undefined;
   type: string;
-};
+}
 
 export interface LoadingContextType {
   loading: boolean;
