@@ -2,7 +2,7 @@
   text-align: center;
 }
 
-.section svg {
+.section > svg {
   max-width: 100%;
   height: max(20vw, 25rem);
   margin: 0 auto 2rem;

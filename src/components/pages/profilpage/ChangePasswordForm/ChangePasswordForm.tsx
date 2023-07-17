@@ -1,15 +1,14 @@
 import styles from './ChangePasswordForm.module.css';
 import { LoadingContext } from '@/store/loading-context';
-import { useNotification } from '@/hooks/useNotification';
-import { Notification } from '@/components/ui/Notification/Notification';
 import { Button } from '@/components/ui/Button/Button';
 import { Loader } from '@/components/loader/Loader';
 import { useContext, useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
-import { NotificationError, Password } from '@/types/types';
+import { Password, Response } from '@/types/types';
 import { ChangePasswordFormSchema } from '@/schemas/ChangePasswordFormSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '@/components/ui/Input/Input';
+import { NotificationContext } from '@/store/notification-context';
 
 const PASSWORD_DEFAULT_VALUES = {
   currentPassword: '',
@@ -33,8 +32,8 @@ export const ChangePasswordForm = () => {
   });
 
   const { loading, setIsLoading } = useContext(LoadingContext);
-  const { notification, handleNotification } = useNotification();
-  const [passwordError, setPasswordError] = useState<NotificationError>({
+  const { handleNotification } = useContext(NotificationContext);
+  const [passwordError, setPasswordError] = useState<Response>({
     text: '',
     type: 'password',
   });
@@ -106,7 +105,7 @@ export const ChangePasswordForm = () => {
             name={el.name}
             error={errors[el.name as keyof typeof errors]}
             register={register}
-            notificationError={index === 0 ? passwordError : undefined}
+            ResponseError={index === 0 ? passwordError : undefined}
           />
         ))}
 
@@ -117,9 +116,6 @@ export const ChangePasswordForm = () => {
           accent={false}
         />
       </form>
-      {notification.active && (
-        <Notification message={notification.message} status={notification.status} />
-      )}
     </>
   );
 };

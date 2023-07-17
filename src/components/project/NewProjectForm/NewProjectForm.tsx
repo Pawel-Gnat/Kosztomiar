@@ -1,6 +1,6 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import styles from './NewProjectForm.module.css';
-import UserContext from '@/store/user-context';
+import { UserContext } from '@/store/user-context';
 import { getDate } from '@/utils/getDate';
 import { createNewProject } from '@/utils/createUtils';
 import { Text } from '@/components/ui/Text/Text';
@@ -12,6 +12,10 @@ import { FieldValues, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { NewProjectFormSchema } from '@/schemas/NewProjectFormSchema';
 import { FormProject } from '@/types/types';
+import { useSession } from 'next-auth/react';
+import { LoadingContext } from '@/store/loading-context';
+import { Loader } from '@/components/loader/Loader';
+import { NotificationContext } from '@/store/notification-context';
 
 const UNITS = [
   { content: 'metry', value: 'm' },
@@ -25,7 +29,10 @@ const PRICES = [true, false];
 const CURRENCIES = ['PLN', 'EUR', 'USD'];
 
 export const NewProjectForm = () => {
+  const { data: session, status } = useSession();
   const context = useContext(UserContext);
+  const { loading, setIsLoading } = useContext(LoadingContext);
+  const { handleNotification } = useContext(NotificationContext);
   const router = useRouter();
   const {
     register,
@@ -61,11 +68,18 @@ export const NewProjectForm = () => {
     return data;
   };
 
+  useEffect(() => {
+    console.log(loading);
+  }, [loading]);
+
   const submitHandler = async (formValues: FieldValues) => {
+    setIsLoading(true);
     const data = setProjectValues(formValues);
-    await createNewProject(data);
+    await createNewProject(data, session);
     context.setProjects();
+    setIsLoading(false);
     redirectToNewProject(data.id);
+    handleNotification({ message: 'Utworzono nowy projekt', status: 'success' });
   };
 
   return (
@@ -132,8 +146,8 @@ export const NewProjectForm = () => {
         />
         <Button
           type="submit"
-          icon={<FiPlusSquare />}
-          content="Stwórz projekt"
+          icon={loading ? null : <FiPlusSquare />}
+          content={loading ? <Loader /> : 'Stwórz projekt'}
           accent={true}
           isSmall={false}
         />

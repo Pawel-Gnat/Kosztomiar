@@ -1,13 +1,18 @@
-import { Category, Element, Project } from '@/types/types';
+import { Category, Element, Project, UserSession } from '@/types/types';
 import {
   getProjectsFromLocalStorage,
   setProjectsToLocalStorage,
 } from './localStorageDatabase';
+import { mongoDatabaseProjects } from './mongoDatabaseProjects';
 
-export const createNewProject = async (project: Project) => {
-  const existingProjects = await getProjectsFromLocalStorage();
-  const updatedProjects = existingProjects.concat(project);
-  setProjectsToLocalStorage(updatedProjects);
+export const createNewProject = async (project: Project, session: UserSession) => {
+  if (session) {
+    await mongoDatabaseProjects('POST', project);
+  } else {
+    const existingProjects = await getProjectsFromLocalStorage();
+    const updatedProjects = existingProjects.concat(project);
+    setProjectsToLocalStorage(updatedProjects);
+  }
 };
 
 export const createNewCategory = async (

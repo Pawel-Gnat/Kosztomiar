@@ -1,7 +1,7 @@
 import styles from './NewCategoryElementForm.module.css';
 import { useProject } from '@/hooks/useProject';
 import { Input } from '@/components/ui/Input/Input';
-import { Dispatch, SetStateAction, useContext } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { Select } from '@/components/ui/Select/Select';
 import { FormElement } from '@/types/types';
 import { Button } from '@/components/ui/Button/Button';

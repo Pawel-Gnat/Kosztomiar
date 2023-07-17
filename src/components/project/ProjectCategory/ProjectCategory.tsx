@@ -5,7 +5,7 @@ import { Category, Element, FormElement } from '@/types/types';
 import { sumValueOfProjectElements } from '@/utils/sumValueOfProjectElements';
 import { deleteCategoryElement } from '@/utils/deleteUtils';
 import { useContext, useState } from 'react';
-import UserContext from '@/store/user-context';
+import { UserContext } from '@/store/user-context';
 import { FieldValues, useForm, useController } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { NewElementFormSchema } from '@/schemas/NewElementFormSchema';

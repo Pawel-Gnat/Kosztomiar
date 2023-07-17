@@ -1,0 +1,34 @@
+.list-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-height: 12rem;
+  padding: 0rem 1rem 2rem;
+  overflow: auto;
+}
+
+.list {
+  font-size: var(--text-size-projects);
+  margin-top: 1rem;
+  list-style-position: inside;
+}
+
+.list a {
+  color: var(--text-color);
+  transition: color 0.2s;
+  word-break: break-all;
+}
+
+.list a:hover {
+  color: var(--accent-color);
+}
+
+.list::marker {
+  color: var(--primary-color);
+}
+
+@media (min-width: 1024px) {
+  .list-container {
+    max-height: 70rem;
+  }
+}

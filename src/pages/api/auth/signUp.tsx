@@ -24,6 +24,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     name,
     email,
     password,
+    projects: [],
   });
 
   res.status(201).json({ message: 'Utworzono konto' });

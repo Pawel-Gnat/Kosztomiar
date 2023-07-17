@@ -2,7 +2,7 @@ import styles from './NewCategoryForm.module.css';
 import { useContext, useState } from 'react';
 import { useProject } from '@/hooks/useProject';
 import { createNewCategory } from '@/utils/createUtils';
-import UserContext from '@/store/user-context';
+import { UserContext } from '@/store/user-context';
 import { CategoryForm } from '../CategoryForm/CategoryForm';
 import { Button } from '@/components/ui/Button/Button';
 import { FieldValues, useForm } from 'react-hook-form';

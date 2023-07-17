@@ -1,18 +1,15 @@
 import styles from './DashBoardLayout.module.css';
-import { ReactNode } from 'react';
+import { FC, ReactNode } from 'react';
 import { DashboardNavbar } from '../DashboardNavbar/DashboardNavbar';
+import { NotificationProvider } from '@/store/notification-context';
 
-type Props = {
-  children: ReactNode;
-};
-
-function DashboardLayout(props: Props) {
+export const DashboardLayout: FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <div className={`${styles.dashboard} show`}>
       <DashboardNavbar />
-      <main className={styles.main}>{props.children}</main>
+      <NotificationProvider>
+        <main className={styles.main}>{children}</main>
+      </NotificationProvider>
     </div>
   );
-}
-
-export default DashboardLayout;
+};
