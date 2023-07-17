@@ -4,7 +4,8 @@
   flex-direction: column;
   gap: 2rem;
   position: relative;
-  width: max-content;
+  width: 100%;
+  max-width: 40rem;
   left: 50%;
   transform: translate(-50%, 0%);
   padding: 2rem;
@@ -20,6 +21,7 @@
 .form > .buttons {
   display: flex;
   flex-direction: row;
+  justify-content: center;
 }
 
 @media (min-width: 1024px) {

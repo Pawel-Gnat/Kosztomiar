@@ -1,22 +1,17 @@
 import Link from 'next/link';
 import styles from './DashboardNavbar.module.css';
 import stylesLink from '../../ui/Link/Link.module.css';
-import { FC, useContext } from 'react';
+import { useContext } from 'react';
 import { UserContext } from '@/store/user-context';
 import { FiLogIn, FiFolder, FiPlusSquare } from 'react-icons/fi';
 import { Text } from '@/components/ui/Text/Text';
 import { Logo } from '@/assets/svg/Logo';
-import { getSession, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import { ProjectList } from '@/components/pages/kreatorpage/ProjectList/ProjectList';
-import { GetServerSidePropsContext } from 'next';
-import { Session } from 'next-auth';
 
-// export const DashboardNavbar: FC<{ session: Session }> = ({ session }) => {
 export const DashboardNavbar = () => {
   const context = useContext(UserContext);
   const { data: session, status } = useSession();
-
-  // console.log(context, session);
 
   const projectList =
     context.projects.length > 0 ? (
@@ -69,11 +64,3 @@ export const DashboardNavbar = () => {
     </>
   );
 };
-
-// export async function getServerSideProps(context: GetServerSidePropsContext) {
-//   const session = await getSession({ req: context.req });
-
-//   return {
-//     props: { session },
-//   };
-// }

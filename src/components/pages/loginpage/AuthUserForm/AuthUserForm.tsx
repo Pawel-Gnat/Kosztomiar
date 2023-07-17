@@ -1,4 +1,4 @@
-import { Login, NotificationError, Register, RegisterFormType } from '@/types/types';
+import { Login, Register, RegisterFormType, Response } from '@/types/types';
 import styles from './AuthUserForm.module.css';
 import { Input } from '@/components/ui/Input/Input';
 import { FieldValues, useForm } from 'react-hook-form';
@@ -8,8 +8,9 @@ import { LoginFormSchema, RegisterFormSchema } from '@/schemas/AuthFormSchema';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { Loader } from '@/components/loader/Loader';
-import { useContext, useState } from 'react';
+import { FC, useContext, useState } from 'react';
 import { LoadingContext } from '@/store/loading-context';
+import { NotificationContext } from '@/store/notification-context';
 
 const LOGIN_DEFAULT_VALUES = {
   email: '',
@@ -47,7 +48,7 @@ export const LoginForm = () => {
   });
   const router = useRouter();
   const { loading, setIsLoading } = useContext(LoadingContext);
-  const [authError, setAuthError] = useState<NotificationError>({
+  const [authError, setAuthError] = useState<Response>({
     text: '',
     type: '',
   });
@@ -122,10 +123,7 @@ export const LoginForm = () => {
   );
 };
 
-export const RegisterForm: React.FC<RegisterFormType> = ({
-  setIsLogin,
-  handleNotification,
-}) => {
+export const RegisterForm: FC<RegisterFormType> = ({ setIsLogin }) => {
   const {
     register,
     handleSubmit,
@@ -136,7 +134,8 @@ export const RegisterForm: React.FC<RegisterFormType> = ({
     resolver: zodResolver(RegisterFormSchema()),
   });
   const { loading, setIsLoading } = useContext(LoadingContext);
-  const [authError, setAuthError] = useState<NotificationError>({
+  const { handleNotification } = useContext(NotificationContext);
+  const [authError, setAuthError] = useState<Response>({
     text: '',
     type: 'email',
   });

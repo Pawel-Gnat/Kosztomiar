@@ -1,4 +1,6 @@
-export async function mongoDatabaseProjects(method: string, title?: string) {
+import { Project } from '@/types/types';
+
+export async function mongoDatabaseProjects(method: string, project?: Project) {
   const options: RequestInit = {
     method: method,
     headers: {
@@ -6,8 +8,8 @@ export async function mongoDatabaseProjects(method: string, title?: string) {
     },
   };
 
-  if (title) {
-    options.body = JSON.stringify({ title });
+  if (project) {
+    options.body = JSON.stringify({ project });
   }
 
   const response = await fetch('/api/user/handleProjects', options);

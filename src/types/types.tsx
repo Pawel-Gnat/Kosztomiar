@@ -1,3 +1,5 @@
+import { Session } from 'next-auth';
+
 export type FormProject = {
   name: string;
   units: string[] | null;
@@ -83,7 +85,7 @@ export type Password = {
   newPassword: string;
 };
 
-export interface NotificationError {
+export interface Response {
   text: string | undefined;
   type: string;
 }
@@ -101,10 +103,11 @@ export interface UserContextType {
 
 export interface RegisterFormType {
   setIsLogin: (setIsLogin: boolean) => void;
-  handleNotification: (handleNotification: NotificationType) => void;
 }
 
 export interface NotificationType {
   message: string;
   status: string;
 }
+
+export type UserSession = Session | null;

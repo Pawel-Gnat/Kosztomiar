@@ -6,9 +6,5 @@ type ProfilpageContainerProps = {
 };
 
 export const ProfilpageContainer: React.FC<ProfilpageContainerProps> = ({ children }) => {
-  return (
-    <section className={styles.section}>
-      <div>{children}</div>
-    </section>
-  );
+  return <section className={styles.section}>{children}</section>;
 };

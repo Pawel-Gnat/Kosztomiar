@@ -27,6 +27,16 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     client.close();
     res.status(200).json(loggedUser.projects);
   }
+
+  if (req.method === 'POST') {
+    const project = req.body.project;
+    await userCollection.updateOne(
+      { email: userEmail },
+      { $addToSet: { projects: project } },
+    );
+    client.close();
+    res.status(200).json({ message: 'Utworzono nowy projekt', status: 'success' });
+  }
 }
 
 export default handler;
