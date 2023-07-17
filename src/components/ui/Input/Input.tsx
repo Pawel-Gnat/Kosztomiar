@@ -1,6 +1,6 @@
 import { FieldError, UseFormRegister, Path } from 'react-hook-form';
 import styles from './Input.module.css';
-import { NotificationError, InputType } from '@/types/types';
+import { InputType, Response } from '@/types/types';
 import { useState } from 'react';
 import { Button } from '../Button/Button';
 import { CiRead, CiUnread } from 'react-icons/ci';
@@ -12,7 +12,7 @@ type Props<T extends Record<string, unknown>> = {
   value?: string;
   error?: Omit<FieldError, 'type'>;
   register: UseFormRegister<T>;
-  notificationError?: NotificationError | undefined;
+  ResponseError?: Response | undefined;
 };
 
 export const Input = <T extends Record<string, unknown>>({
@@ -21,12 +21,11 @@ export const Input = <T extends Record<string, unknown>>({
   name,
   error,
   register,
-  notificationError,
+  ResponseError,
 }: Props<T>) => {
-  const activeNotificationError =
-    notificationError?.text && notificationError?.type === type;
+  const activeResponseError = ResponseError?.text && ResponseError?.type === type;
   const labelClass =
-    error || activeNotificationError ? `${styles.input} ${styles.error}` : styles.input;
+    error || activeResponseError ? `${styles.input} ${styles.error}` : styles.input;
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -59,10 +58,8 @@ export const Input = <T extends Record<string, unknown>>({
         <p className={`${styles['error-text']} ${styles.error}`}>{error.message}</p>
       )}
 
-      {activeNotificationError && (
-        <p className={`${styles['error-text']} ${styles.error}`}>
-          {notificationError.text}
-        </p>
+      {activeResponseError && (
+        <p className={`${styles['error-text']} ${styles.error}`}>{ResponseError.text}</p>
       )}
     </div>
   );

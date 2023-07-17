@@ -109,7 +109,7 @@ export const LoginForm = () => {
           name={el.type}
           error={errors[el.type as keyof typeof errors]}
           register={register}
-          notificationError={authError}
+          ResponseError={authError}
         />
       ))}
 
@@ -208,7 +208,7 @@ export const RegisterForm: FC<RegisterFormType> = ({ setIsLogin }) => {
             name={el.name}
             error={errors[el.name as keyof typeof errors]}
             register={register}
-            notificationError={authError}
+            ResponseError={authError}
           />
         ))}
 

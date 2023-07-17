@@ -105,7 +105,7 @@ export const ChangePasswordForm = () => {
             name={el.name}
             error={errors[el.name as keyof typeof errors]}
             register={register}
-            notificationError={index === 0 ? passwordError : undefined}
+            ResponseError={index === 0 ? passwordError : undefined}
           />
         ))}
 
