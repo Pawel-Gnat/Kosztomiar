@@ -37,6 +37,16 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     client.close();
     res.status(200).json({ message: 'Utworzono nowy projekt', status: 'success' });
   }
+
+  if (req.method === 'PUT') {
+    const project = req.body.project;
+    await userCollection.updateOne(
+      { email: userEmail },
+      { $pull: { projects: project } },
+    );
+    client.close();
+    res.status(200).json({ message: 'Projekt został usunięty', status: 'success' });
+  }
 }
 
 export default handler;

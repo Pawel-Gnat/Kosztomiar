@@ -22,7 +22,7 @@ export const DeleteModal = (props: Modal) => {
           />
           <Button
             type="button"
-            content="Usuń"
+            content={'Usuń'}
             accent={true}
             isSmall={true}
             icon={<CiCircleRemove />}

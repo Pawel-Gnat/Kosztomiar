@@ -1,8 +1,21 @@
-import { Category, Element, Project } from '@/types/types';
+import { Category, Element, Project, UserSession } from '@/types/types';
 import {
   getProjectsFromLocalStorage,
   setProjectsToLocalStorage,
 } from './localStorageDatabase';
+import { mongoDatabaseProjects } from './mongoDatabaseProjects';
+
+export const deleteProject = async (currentProject: Project, session: UserSession) => {
+  if (session) {
+    await mongoDatabaseProjects('PUT', currentProject);
+  } else {
+    const existingProjects = await getProjectsFromLocalStorage();
+    const filteredProjects = existingProjects.filter(
+      (project: Project) => JSON.stringify(project) !== JSON.stringify(currentProject),
+    );
+    await setProjectsToLocalStorage(filteredProjects);
+  }
+};
 
 export const deleteCategoryElement = async (
   projectId: string,

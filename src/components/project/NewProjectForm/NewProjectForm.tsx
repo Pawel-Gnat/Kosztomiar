@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import styles from './NewProjectForm.module.css';
 import { UserContext } from '@/store/user-context';
 import { getDate } from '@/utils/getDate';
@@ -68,18 +68,14 @@ export const NewProjectForm = () => {
     return data;
   };
 
-  useEffect(() => {
-    console.log(loading);
-  }, [loading]);
-
   const submitHandler = async (formValues: FieldValues) => {
     setIsLoading(true);
     const data = setProjectValues(formValues);
     await createNewProject(data, session);
     context.setProjects();
+    handleNotification({ message: 'Utworzono nowy projekt', status: 'success' });
     setIsLoading(false);
     redirectToNewProject(data.id);
-    handleNotification({ message: 'Utworzono nowy projekt', status: 'success' });
   };
 
   return (
