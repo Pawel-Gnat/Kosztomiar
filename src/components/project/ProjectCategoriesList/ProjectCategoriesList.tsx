@@ -2,7 +2,7 @@ import styles from './ProjectCategoriesList.module.css';
 import { FormCategory, Project } from '@/types/types';
 import { CiCircleMore, CiCircleRemove } from 'react-icons/ci';
 import { UserContext } from '@/store/user-context';
-import { useContext, useState } from 'react';
+import { FC, useContext, useState } from 'react';
 import { CategoryForm } from '../CategoryForm/CategoryForm';
 import { Button } from '@/components/ui/Button/Button';
 import { FieldValues, useForm } from 'react-hook-form';
@@ -14,8 +14,7 @@ import { useModal } from '@/hooks/useModal';
 import { DeleteModal } from '@/components/modal/DeleteModal';
 import { Text } from '@/components/ui/Text/Text';
 
-export const ProjectCategoriesList = (props: { project: Project }) => {
-  const { project } = props;
+export const ProjectCategoriesList: FC<{ project: Project }> = ({ project }) => {
   const [form, setForm] = useState({ currentCategoryName: '', isActive: false });
   const [category, setCategory] = useState('');
   const context = useContext(UserContext);
@@ -69,41 +68,52 @@ export const ProjectCategoriesList = (props: { project: Project }) => {
     context.setProjects();
   };
 
+  const CategoryList = (
+    <ul>
+      {project.data.map((el, index) => (
+        <li key={index} className={styles.list}>
+          <span>{el.category}</span>
+          <div>
+            <Button
+              type="button"
+              content="Edytuj nazwę"
+              isSmall={true}
+              accent={false}
+              icon={<CiCircleMore />}
+              onClick={() => handleEdit(el.category)}
+            />
+            <Button
+              type="button"
+              content="Usuń kategorię"
+              isSmall={true}
+              accent={false}
+              icon={<CiCircleRemove />}
+              onClick={() => {
+                handleModal({
+                  active: true,
+                  type: 'kategorię',
+                  name: el.category,
+                });
+                setCategory(el.category);
+              }}
+            />
+          </div>
+        </li>
+      ))}
+    </ul>
+  );
+
   return (
-    <>
-      <Text content="Twoje kategorie w projekcie" />
-      <ul className={styles.container}>
-        {project.data.map((el, index) => (
-          <li key={index} className={styles.list}>
-            <span>{el.category}</span>
-            <div>
-              <Button
-                type="button"
-                content="Edytuj nazwę"
-                isSmall={true}
-                accent={false}
-                icon={<CiCircleMore />}
-                onClick={() => handleEdit(el.category)}
-              />
-              <Button
-                type="button"
-                content="Usuń kategorię"
-                isSmall={true}
-                accent={false}
-                icon={<CiCircleRemove />}
-                onClick={() => {
-                  handleModal({
-                    active: true,
-                    type: 'kategorię',
-                    name: el.category,
-                  });
-                  setCategory(el.category);
-                }}
-              />
-            </div>
-          </li>
-        ))}
-      </ul>
+    <div className={styles.container}>
+      <Text
+        content={
+          project.data.length > 0
+            ? 'Twoje kategorie w projekcie'
+            : 'Brak utworzonych kategorii w projekcie do zarządzania'
+        }
+      />
+
+      {project.data.length > 0 && CategoryList}
 
       {form.isActive && (
         <CategoryForm
@@ -121,6 +131,6 @@ export const ProjectCategoriesList = (props: { project: Project }) => {
           handleDelete={() => deleteCategoryHandler(project)}
         />
       )}
-    </>
+    </div>
   );
 };
