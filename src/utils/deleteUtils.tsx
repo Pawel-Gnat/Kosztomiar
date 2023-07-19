@@ -11,9 +11,33 @@ export const deleteProject = async (currentProject: Project, session: UserSessio
   } else {
     const existingProjects = await getProjectsFromLocalStorage();
     const filteredProjects = existingProjects.filter(
-      (project: Project) => JSON.stringify(project) !== JSON.stringify(currentProject),
+      (project: Project) => project.id !== currentProject.id,
     );
     await setProjectsToLocalStorage(filteredProjects);
+  }
+};
+
+export const deleteCategory = async (
+  projectId: string,
+  categoryName: string,
+  session: UserSession,
+) => {
+  if (session) {
+    const category = {
+      projectId,
+      categoryName,
+    };
+    await mongoDatabaseProjects('PUT', undefined, category);
+  } else {
+    const existingProjects = await getProjectsFromLocalStorage();
+    const currentProject = existingProjects.find(
+      (currentProject: Project) => currentProject.id === projectId,
+    );
+    const newCategories = currentProject.data.filter(
+      (data: Category) => data.category !== categoryName,
+    );
+    currentProject.data = newCategories;
+    setProjectsToLocalStorage(existingProjects);
   }
 };
 
@@ -29,26 +53,9 @@ export const deleteCategoryElement = async (
   const currentCategory = currentProject[0].data.find(
     (data: Category) => data.category === category,
   );
-
   const newCategoryElements = currentCategory.elements.filter(
     (el: Element) => JSON.stringify(el) !== JSON.stringify(element),
   );
-
   currentCategory.elements = newCategoryElements;
-  setProjectsToLocalStorage(existingProjects);
-};
-
-export const deleteCategory = async (project: Project, element: string) => {
-  const existingProjects = await getProjectsFromLocalStorage();
-
-  const currentProject = existingProjects.find(
-    (currentProject: Project) => currentProject.id === project.id,
-  );
-
-  const newCategories = currentProject.data.filter(
-    (data: Category) => data.category !== element,
-  );
-
-  currentProject.data = newCategories;
   setProjectsToLocalStorage(existingProjects);
 };

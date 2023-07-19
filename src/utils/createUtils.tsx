@@ -16,16 +16,24 @@ export const createNewProject = async (project: Project, session: UserSession) =
 };
 
 export const createNewCategory = async (
-  projectID: string,
-  name: string,
-  category: Category,
+  projectId: string,
+  newCategory: Category,
+  session: UserSession,
 ) => {
-  const existingProjects: Project[] = await getProjectsFromLocalStorage();
-  const currentProject = existingProjects.find(
-    (project: Project) => project.id === projectID && project.name === name,
-  )!;
-  currentProject.data.push(category);
-  setProjectsToLocalStorage(existingProjects);
+  if (session) {
+    const category = {
+      projectId,
+      newCategory,
+    };
+    await mongoDatabaseProjects('POST', undefined, category);
+  } else {
+    const existingProjects: Project[] = await getProjectsFromLocalStorage();
+    const currentProject = existingProjects.find(
+      (project: Project) => project.id === projectId,
+    )!;
+    currentProject.data.push(newCategory);
+    setProjectsToLocalStorage(existingProjects);
+  }
 };
 
 export const createNewCategoryElement = async (

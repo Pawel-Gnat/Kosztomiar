@@ -1,6 +1,10 @@
 import { Project } from '@/types/types';
 
-export async function mongoDatabaseProjects(method: string, project?: Project) {
+export async function mongoDatabaseProjects(
+  method: string,
+  project?: Project,
+  category?: any,
+) {
   const options: RequestInit = {
     method: method,
     headers: {
@@ -10,6 +14,10 @@ export async function mongoDatabaseProjects(method: string, project?: Project) {
 
   if (project) {
     options.body = JSON.stringify({ project });
+  }
+
+  if (category) {
+    options.body = JSON.stringify({ category });
   }
 
   const response = await fetch('/api/user/handleProjects', options);
