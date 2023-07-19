@@ -13,11 +13,15 @@ import { editCategory } from '@/utils/editUtils';
 import { useModal } from '@/hooks/useModal';
 import { DeleteModal } from '@/components/modal/DeleteModal';
 import { Text } from '@/components/ui/Text/Text';
+import { useSession } from 'next-auth/react';
+import { LoadingContext } from '@/store/loading-context';
 
 export const ProjectCategoriesList: FC<{ project: Project }> = ({ project }) => {
   const [form, setForm] = useState({ currentCategoryName: '', isActive: false });
   const [category, setCategory] = useState('');
+  const { data: session, status } = useSession();
   const context = useContext(UserContext);
+  const { loading, setIsLoading } = useContext(LoadingContext);
   const { isModalOpen, handleModal } = useModal();
   const {
     register,
@@ -34,7 +38,7 @@ export const ProjectCategoriesList: FC<{ project: Project }> = ({ project }) => 
   };
 
   const deleteCategoryHandler = async (project: Project) => {
-    await deleteCategory(project, category);
+    await deleteCategory(project.id, category, session);
     context.setProjects();
     hideModal();
   };
@@ -62,7 +66,16 @@ export const ProjectCategoriesList: FC<{ project: Project }> = ({ project }) => 
   };
 
   const submitHandler = async (formValues: FieldValues) => {
-    await editCategory(project, form.currentCategoryName, formValues.category);
+    const fnArguments = {
+      projectId: project.id,
+      currentCategoryName: form.currentCategoryName,
+      newCategoryName: formValues.category,
+      session,
+    };
+
+    setIsLoading(true);
+    await editCategory(fnArguments);
+    setIsLoading(false);
     handleForm();
     setCurrentCategoryName('');
     context.setProjects();
@@ -121,6 +134,7 @@ export const ProjectCategoriesList: FC<{ project: Project }> = ({ project }) => 
           onClick={handleForm}
           error={errors}
           register={register}
+          loading={loading}
         />
       )}
       {isModalOpen.active && (
