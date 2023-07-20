@@ -142,7 +142,7 @@ export const NewProjectForm = () => {
         />
         <Button
           type="submit"
-          icon={loading ? null : <FiPlusSquare />}
+          icon={!loading && <FiPlusSquare />}
           content={loading ? <Loader /> : 'Stwórz projekt'}
           accent={true}
           isSmall={false}

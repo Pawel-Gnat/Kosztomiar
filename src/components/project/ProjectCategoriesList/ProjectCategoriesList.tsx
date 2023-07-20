@@ -15,12 +15,14 @@ import { DeleteModal } from '@/components/modal/DeleteModal';
 import { Text } from '@/components/ui/Text/Text';
 import { useSession } from 'next-auth/react';
 import { LoadingContext } from '@/store/loading-context';
+import { NotificationContext } from '@/store/notification-context';
 
 export const ProjectCategoriesList: FC<{ project: Project }> = ({ project }) => {
   const [form, setForm] = useState({ currentCategoryName: '', isActive: false });
   const [category, setCategory] = useState('');
   const { data: session, status } = useSession();
   const context = useContext(UserContext);
+  const { handleNotification } = useContext(NotificationContext);
   const { loading, setIsLoading } = useContext(LoadingContext);
   const { isModalOpen, handleModal } = useModal();
   const {
@@ -69,7 +71,7 @@ export const ProjectCategoriesList: FC<{ project: Project }> = ({ project }) => 
     const fnArguments = {
       projectId: project.id,
       currentCategoryName: form.currentCategoryName,
-      newCategoryName: formValues.category,
+      categoryData: formValues.category,
       session,
     };
 
@@ -77,6 +79,7 @@ export const ProjectCategoriesList: FC<{ project: Project }> = ({ project }) => 
     await editCategory(fnArguments);
     setIsLoading(false);
     handleForm();
+    handleNotification({ message: 'Zmieniono nazwę kategorii', status: 'success' });
     setCurrentCategoryName('');
     context.setProjects();
   };

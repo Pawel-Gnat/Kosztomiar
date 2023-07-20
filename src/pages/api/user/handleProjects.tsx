@@ -1,5 +1,4 @@
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
-import { Project } from '@/types/types';
 import { mongoDatabaseConnect } from '@/utils/mongoDatabaseConnect';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { Session, getServerSession } from 'next-auth';
@@ -40,12 +39,32 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 
   if (req.method === 'POST' && req.body.category) {
-    const { projectId, newCategory } = req.body.category;
+    const { projectId, categoryData } = req.body.category;
     const query = { 'projects.id': projectId };
-    const update = { $addToSet: { 'projects.$.data': newCategory } };
+    const update = { $addToSet: { 'projects.$.data': categoryData } };
     await userCollection.updateOne(query, update);
     client.close();
     res.status(200).json({ message: 'Utworzono nową kategorię', status: 'success' });
+  }
+
+  if (req.method === 'POST' && req.body.element) {
+    const { projectId, categoryName, elementObj } = req.body.element;
+    const query = {
+      'projects.id': projectId,
+      'projects.data.category': categoryName,
+    };
+    const update = {
+      $addToSet: {
+        'projects.$[project].data.$[categoryData].elements': elementObj,
+      },
+    };
+    const arrayFilters = [
+      { 'project.id': projectId },
+      { 'categoryData.category': categoryName },
+    ];
+    await userCollection.updateOne(query, update, { arrayFilters });
+    client.close();
+    res.status(200).json({ message: 'Utworzono nowy element', status: 'success' });
   }
 
   if (req.method === 'PUT' && req.body.project) {
@@ -59,23 +78,43 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 
   if (req.method === 'PUT' && req.body.category) {
-    const { projectId, categoryName } = req.body.category;
+    const { projectId, categoryData } = req.body.category;
     const query = { 'projects.id': projectId };
-    const update = { $pull: { 'projects.$.data': { category: categoryName } } };
+    const update = { $pull: { 'projects.$.data': { category: categoryData } } };
     await userCollection.updateOne(query, update);
     client.close();
     res.status(200).json({ message: 'Kategoria została usunięta', status: 'success' });
   }
 
+  if (req.method === 'PUT' && req.body.element) {
+    const { projectId, categoryName, elementObj } = req.body.element;
+    const query = {
+      'projects.id': projectId,
+      'projects.data.category': categoryName,
+    };
+    const update = {
+      $pull: {
+        'projects.$[project].data.$[categoryData].elements': { name: elementObj.name },
+      },
+    };
+    const arrayFilters = [
+      { 'project.id': projectId },
+      { 'categoryData.category': categoryName },
+    ];
+    await userCollection.updateOne(query, update, { arrayFilters });
+    client.close();
+    res.status(200).json({ message: 'Element został usunięty', status: 'success' });
+  }
+
   if (req.method === 'PATCH' && req.body.category) {
-    const { projectId, currentCategoryName, newCategoryName } = req.body.category;
+    const { projectId, currentCategoryName, categoryData } = req.body.category;
     const query = {
       'projects.id': projectId,
       'projects.data.category': currentCategoryName,
     };
     const update = {
       $set: {
-        'projects.$[project].data.$[categoryData].category': newCategoryName,
+        'projects.$[project].data.$[categoryData].category': categoryData,
       },
     };
     const arrayFilters = [

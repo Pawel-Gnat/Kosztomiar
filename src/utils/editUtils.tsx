@@ -8,20 +8,22 @@ import { mongoDatabaseProjects } from './mongoDatabaseProjects';
 export const editCategory = async ({
   projectId,
   currentCategoryName,
-  newCategoryName,
+  categoryData,
   session,
 }: {
   projectId: string;
   currentCategoryName: string;
-  newCategoryName: string;
+  categoryData: Category;
   session: UserSession;
 }) => {
   if (session) {
     const category = {
       projectId,
       currentCategoryName,
-      newCategoryName,
+      categoryData,
     };
+
+    console.log(category);
     await mongoDatabaseProjects('PATCH', undefined, category);
   } else {
     const existingProjects = await getProjectsFromLocalStorage();
@@ -32,7 +34,7 @@ export const editCategory = async ({
       (data: Category) => data.category === currentCategoryName,
     );
 
-    selectedCategory.category = newCategoryName;
+    selectedCategory.category = categoryData;
     setProjectsToLocalStorage(existingProjects);
   }
 };

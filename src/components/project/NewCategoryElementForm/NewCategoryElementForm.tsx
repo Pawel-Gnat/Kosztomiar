@@ -13,6 +13,7 @@ import {
   ControllerRenderProps,
   UseFormReset,
 } from 'react-hook-form';
+import { Loader } from '@/components/loader/Loader';
 
 type Props = {
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
@@ -28,6 +29,7 @@ type Props = {
       isEditing: boolean;
     }>
   >;
+  loading: boolean;
 };
 
 export const NewCategoryElementForm = ({
@@ -38,6 +40,7 @@ export const NewCategoryElementForm = ({
   reset,
   isFormActive,
   setIsFormActive,
+  loading,
 }: Props) => {
   const project = useProject()!;
 
@@ -105,10 +108,10 @@ export const NewCategoryElementForm = ({
             />
             <Button
               type="submit"
-              content="Dodaj"
+              content={loading ? <Loader /> : 'Dodaj'}
               isSmall={true}
               accent={false}
-              icon={<FiPlusCircle />}
+              icon={!loading && <FiPlusCircle />}
             />
           </div>
         </form>

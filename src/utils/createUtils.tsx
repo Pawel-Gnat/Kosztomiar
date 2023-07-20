@@ -17,13 +17,13 @@ export const createNewProject = async (project: Project, session: UserSession) =
 
 export const createNewCategory = async (
   projectId: string,
-  newCategory: Category,
+  categoryData: Category,
   session: UserSession,
 ) => {
   if (session) {
     const category = {
       projectId,
-      newCategory,
+      categoryData,
     };
     await mongoDatabaseProjects('POST', undefined, category);
   } else {
@@ -31,25 +31,34 @@ export const createNewCategory = async (
     const currentProject = existingProjects.find(
       (project: Project) => project.id === projectId,
     )!;
-    currentProject.data.push(newCategory);
+    currentProject.data.push(categoryData);
     setProjectsToLocalStorage(existingProjects);
   }
 };
 
 export const createNewCategoryElement = async (
-  project: Project,
-  category: string,
-  element: Element,
+  projectId: string,
+  categoryName: string,
+  elementObj: Element,
+  session: UserSession,
 ) => {
-  const existingProjects: Project[] = await getProjectsFromLocalStorage();
-  const currentProject = existingProjects.find(
-    (currentProject: Project) =>
-      currentProject.id === project.id && currentProject.name === project.name,
-  )!;
-  const currentCategory = currentProject.data.filter(
-    (item) => item.category === category,
-  );
+  if (session) {
+    const element = {
+      projectId,
+      categoryName,
+      elementObj,
+    };
+    await mongoDatabaseProjects('POST', undefined, undefined, element);
+  } else {
+    const existingProjects: Project[] = await getProjectsFromLocalStorage();
+    const currentProject = existingProjects.find(
+      (currentProject: Project) => currentProject.id === projectId,
+    )!;
+    const currentCategory = currentProject.data.filter(
+      (item) => item.category === categoryName,
+    );
 
-  currentCategory[0].elements.push(element);
-  setProjectsToLocalStorage(existingProjects);
+    currentCategory[0].elements.push(elementObj);
+    setProjectsToLocalStorage(existingProjects);
+  }
 };

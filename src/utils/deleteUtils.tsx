@@ -19,13 +19,13 @@ export const deleteProject = async (currentProject: Project, session: UserSessio
 
 export const deleteCategory = async (
   projectId: string,
-  categoryName: string,
+  categoryData: string,
   session: UserSession,
 ) => {
   if (session) {
     const category = {
       projectId,
-      categoryName,
+      categoryData,
     };
     await mongoDatabaseProjects('PUT', undefined, category);
   } else {
@@ -34,7 +34,7 @@ export const deleteCategory = async (
       (currentProject: Project) => currentProject.id === projectId,
     );
     const newCategories = currentProject.data.filter(
-      (data: Category) => data.category !== categoryName,
+      (data: Category) => data.category !== categoryData,
     );
     currentProject.data = newCategories;
     setProjectsToLocalStorage(existingProjects);
@@ -43,19 +43,29 @@ export const deleteCategory = async (
 
 export const deleteCategoryElement = async (
   projectId: string,
-  category: string,
-  element: Element,
+  categoryName: string,
+  elementObj: Element,
+  session: UserSession,
 ) => {
-  const existingProjects = await getProjectsFromLocalStorage();
-  const currentProject = existingProjects.filter(
-    (project: Project) => project.id === projectId,
-  );
-  const currentCategory = currentProject[0].data.find(
-    (data: Category) => data.category === category,
-  );
-  const newCategoryElements = currentCategory.elements.filter(
-    (el: Element) => JSON.stringify(el) !== JSON.stringify(element),
-  );
-  currentCategory.elements = newCategoryElements;
-  setProjectsToLocalStorage(existingProjects);
+  if (session) {
+    const element = {
+      projectId,
+      categoryName,
+      elementObj,
+    };
+    await mongoDatabaseProjects('PUT', undefined, undefined, element);
+  } else {
+    const existingProjects = await getProjectsFromLocalStorage();
+    const currentProject = existingProjects.filter(
+      (project: Project) => project.id === projectId,
+    );
+    const currentCategory = currentProject[0].data.find(
+      (data: Category) => data.category === categoryName,
+    );
+    const newCategoryElements = currentCategory.elements.filter(
+      (el: Element) => el.name !== elementObj.name,
+    );
+    currentCategory.elements = newCategoryElements;
+    setProjectsToLocalStorage(existingProjects);
+  }
 };

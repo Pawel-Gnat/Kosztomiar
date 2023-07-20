@@ -15,8 +15,6 @@ type Props = {
 };
 
 export const CategoryForm = ({ onSubmit, error, register, onClick, loading }: Props) => {
-  console.log(loading);
-
   return (
     <form autoComplete="off" className={styles.form} onSubmit={onSubmit}>
       <Input
