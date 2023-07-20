@@ -2,19 +2,23 @@ import Link from 'next/link';
 import styles from './DashboardNavbar.module.css';
 import stylesLink from '../../ui/Link/Link.module.css';
 import { useContext } from 'react';
-import UserContext from '@/store/user-context';
-import { Project } from '@/types/types';
+import { UserContext } from '@/store/user-context';
 import { FiLogIn, FiFolder, FiPlusSquare } from 'react-icons/fi';
 import { Text } from '@/components/ui/Text/Text';
 import { Logo } from '@/assets/svg/Logo';
-import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
-import { Button } from '@/components/ui/Button/Button';
+import { ProjectList } from '@/components/pages/kreatorpage/ProjectList/ProjectList';
 
 export const DashboardNavbar = () => {
   const context = useContext(UserContext);
-  const router = useRouter();
   const { data: session, status } = useSession();
+
+  const projectList =
+    context.projects.length > 0 ? (
+      <ProjectList projects={context.projects} />
+    ) : (
+      <Text content="Brak projektów" />
+    );
 
   return (
     <>
@@ -32,22 +36,7 @@ export const DashboardNavbar = () => {
               <FiFolder className={styles.icon} />
               <Text content="Projekty" />
             </div>
-            {context.projects.length > 0 && (
-              <ul className={styles['list-container']}>
-                {context.projects.map((project: Project) => (
-                  <li key={project.id} className={styles.list}>
-                    <Link
-                      href={`/kreator/${project.id}`}
-                      className={
-                        router.query.projektid === project.id ? stylesLink.active : ''
-                      }
-                    >
-                      {project.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            )}
+            {projectList}
           </div>
 
           <div className={styles.buttons}>

@@ -3,8 +3,11 @@ import styles from './Hero.module.css';
 import stylesLink from '../../../ui/Link/Link.module.css';
 import Image from 'next/image';
 import { H1, Text } from '@/components/ui/Text/Text';
+import { useSession } from 'next-auth/react';
 
 export const Hero = () => {
+  const { data: session, status } = useSession();
+
   return (
     <section className={styles.hero}>
       <div className={styles['text-container']}>
@@ -22,9 +25,15 @@ export const Hero = () => {
           <Link href="/kreator" className={stylesLink.navlink}>
             Wypróbuj
           </Link>
-          <Link href="/login" className={stylesLink.navlink}>
-            Zaloguj się
-          </Link>
+          {session ? (
+            <Link href="/kreator/profil" className={stylesLink.navlink}>
+              Twój profil
+            </Link>
+          ) : (
+            <Link href="/login" className={stylesLink.navlink}>
+              Zaloguj się
+            </Link>
+          )}
         </div>
       </div>
       <Image

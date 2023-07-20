@@ -1,3 +1,5 @@
+import { Session } from 'next-auth';
+
 export type FormProject = {
   name: string;
   units: string[] | null;
@@ -43,29 +45,28 @@ export type EditedElement = {
   isEditing: boolean;
 };
 
-export type Card = {
+export interface Card {
   heading: string;
   text: string;
   img?: string;
   svg?: JSX.Element;
-};
+}
 
-export type AccordionItem = {
+export interface AccordionItem {
   key: number;
   heading: string;
   text: string;
   isActive: boolean;
   setActiveIndex: (index: number | null) => void;
   indexItem: number;
-};
-
-export type Modal = {
+}
+export interface Modal {
   active?: boolean;
   type: string;
   name: string;
   handleCancel?: () => void;
   handleDelete?: () => void;
-};
+}
 
 export type InputType = 'text' | 'number' | 'email' | 'password';
 
@@ -79,22 +80,34 @@ export type Register = Login & {
   passwordValidation: string;
 };
 
-export type AuthError = {
+export type Password = {
+  currentPassword: string;
+  newPassword: string;
+};
+
+export interface Response {
   text: string | undefined;
   type: string;
-};
+}
 
 export interface LoadingContextType {
   loading: boolean;
   setIsLoading: (loading: boolean) => void;
 }
 
+export interface UserContextType {
+  isUserLoggedIn: boolean;
+  projects: Project[];
+  setProjects: () => {};
+}
+
 export interface RegisterFormType {
   setIsLogin: (setIsLogin: boolean) => void;
-  handleNotification: (handleNotification: NotificationType) => void;
 }
 
 export interface NotificationType {
   message: string;
   status: string;
 }
+
+export type UserSession = Session | null;

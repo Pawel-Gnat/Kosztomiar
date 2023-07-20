@@ -2,22 +2,39 @@ import {
   getProjectsFromLocalStorage,
   setProjectsToLocalStorage,
 } from '@/utils/localStorageDatabase';
-import { Category, Project } from '@/types/types';
+import { Category, Project, UserSession } from '@/types/types';
+import { mongoDatabaseProjects } from './mongoDatabaseProjects';
 
-export const editCategory = async (
-  project: Project,
-  currentCategoryName: string,
-  element: string,
-) => {
-  const existingProjects = await getProjectsFromLocalStorage();
-  const currentProject = existingProjects.find(
-    (currentProject: Project) =>
-      JSON.stringify(currentProject) === JSON.stringify(project),
-  );
-  const selectedCategory = currentProject.data.find(
-    (data: Category) => data.category === currentCategoryName,
-  );
+export const editCategory = async ({
+  projectId,
+  currentCategoryName,
+  categoryData,
+  session,
+}: {
+  projectId: string;
+  currentCategoryName: string;
+  categoryData: Category;
+  session: UserSession;
+}) => {
+  if (session) {
+    const category = {
+      projectId,
+      currentCategoryName,
+      categoryData,
+    };
 
-  selectedCategory.category = element;
-  setProjectsToLocalStorage(existingProjects);
+    console.log(category);
+    await mongoDatabaseProjects('PATCH', undefined, category);
+  } else {
+    const existingProjects = await getProjectsFromLocalStorage();
+    const currentProject = existingProjects.find(
+      (currentProject: Project) => currentProject.id === projectId,
+    );
+    const selectedCategory = currentProject.data.find(
+      (data: Category) => data.category === currentCategoryName,
+    );
+
+    selectedCategory.category = categoryData;
+    setProjectsToLocalStorage(existingProjects);
+  }
 };

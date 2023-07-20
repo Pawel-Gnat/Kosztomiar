@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import styles from './NewProjectForm.module.css';
-import UserContext from '@/store/user-context';
+import { UserContext } from '@/store/user-context';
 import { getDate } from '@/utils/getDate';
 import { createNewProject } from '@/utils/createUtils';
 import { Text } from '@/components/ui/Text/Text';
@@ -12,6 +12,10 @@ import { FieldValues, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { NewProjectFormSchema } from '@/schemas/NewProjectFormSchema';
 import { FormProject } from '@/types/types';
+import { useSession } from 'next-auth/react';
+import { LoadingContext } from '@/store/loading-context';
+import { Loader } from '@/components/loader/Loader';
+import { NotificationContext } from '@/store/notification-context';
 
 const UNITS = [
   { content: 'metry', value: 'm' },
@@ -21,11 +25,14 @@ const UNITS = [
   { content: 'litry', value: 'l' },
   { content: 'sztuki', value: 'szt' },
 ];
-const PRICES = ['true', 'false'];
+const PRICES = [true, false];
 const CURRENCIES = ['PLN', 'EUR', 'USD'];
 
-export default function NewProjectForm() {
+export const NewProjectForm = () => {
+  const { data: session, status } = useSession();
   const context = useContext(UserContext);
+  const { loading, setIsLoading } = useContext(LoadingContext);
+  const { handleNotification } = useContext(NotificationContext);
   const router = useRouter();
   const {
     register,
@@ -62,9 +69,12 @@ export default function NewProjectForm() {
   };
 
   const submitHandler = async (formValues: FieldValues) => {
+    setIsLoading(true);
     const data = setProjectValues(formValues);
-    await createNewProject(data);
+    await createNewProject(data, session);
     context.setProjects();
+    handleNotification({ message: 'Utworzono nowy projekt', status: 'success' });
+    setIsLoading(false);
     redirectToNewProject(data.id);
   };
 
@@ -99,9 +109,9 @@ export default function NewProjectForm() {
         {PRICES.map((input, index) => (
           <RadioInput
             key={index}
-            content={input === 'true' ? 'Tak' : 'Nie'}
+            content={input ? 'Tak' : 'Nie'}
             name="price"
-            value={input}
+            value={input.toString()}
             error={errors.price}
             register={register}
           />
@@ -132,12 +142,12 @@ export default function NewProjectForm() {
         />
         <Button
           type="submit"
-          icon={<FiPlusSquare />}
-          content="Stwórz projekt"
+          icon={!loading && <FiPlusSquare />}
+          content={loading ? <Loader /> : 'Stwórz projekt'}
           accent={true}
           isSmall={false}
         />
       </div>
     </form>
   );
-}
+};

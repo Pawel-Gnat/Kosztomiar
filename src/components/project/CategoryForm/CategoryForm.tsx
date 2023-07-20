@@ -4,15 +4,17 @@ import { Input } from '@/components/ui/Input/Input';
 import { FiPlusSquare } from 'react-icons/fi';
 import { FieldErrors, UseFormRegister } from 'react-hook-form';
 import { FormCategory } from '@/types/types';
+import { Loader } from '@/components/loader/Loader';
 
 type Props = {
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   error: FieldErrors<FormCategory>;
   register: UseFormRegister<FormCategory>;
   onClick: () => void;
+  loading: boolean;
 };
 
-export const CategoryForm = ({ onSubmit, error, register, onClick }: Props) => {
+export const CategoryForm = ({ onSubmit, error, register, onClick, loading }: Props) => {
   return (
     <form autoComplete="off" className={styles.form} onSubmit={onSubmit}>
       <Input
@@ -33,10 +35,10 @@ export const CategoryForm = ({ onSubmit, error, register, onClick }: Props) => {
         />
         <Button
           type="submit"
-          content="Dodaj"
+          content={loading ? <Loader /> : 'Dodaj'}
           isSmall={true}
           accent={false}
-          icon={<FiPlusSquare />}
+          icon={!loading && <FiPlusSquare />}
         />
       </div>
     </form>
