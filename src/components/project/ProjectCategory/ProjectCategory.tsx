@@ -4,13 +4,15 @@ import { NewCategoryElementForm } from '../NewCategoryElementForm/NewCategoryEle
 import { Category, Element, FormElement } from '@/types/types';
 import { sumValueOfProjectElements } from '@/utils/sumValueOfProjectElements';
 import { deleteCategoryElement } from '@/utils/deleteUtils';
-import { useContext, useState } from 'react';
+import { FC, useContext, useState } from 'react';
 import { UserContext } from '@/store/user-context';
 import { FieldValues, useForm, useController } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { NewElementFormSchema } from '@/schemas/NewElementFormSchema';
 import { useProject } from '@/hooks/useProject';
 import { createNewCategoryElement } from '@/utils/createUtils';
+import { LoadingContext } from '@/store/loading-context';
+import { useSession } from 'next-auth/react';
 
 type Props = {
   name: string;
@@ -22,7 +24,7 @@ type Props = {
   id: string;
 };
 
-const INITIAL_EDITED_ELEMENT_STATE = {
+const INITIAL_EDITED_ELEMENT_STATE: Element = {
   name: '',
   value: 0,
   unit: '',
@@ -41,8 +43,9 @@ const FORM_DEFAULT_VALUES = {
   price: '0',
 };
 
-export const ProjectCategory = (props: Props) => {
-  const { name, currency, price, data, id } = props;
+export const ProjectCategory: FC<Props> = ({ name, currency, price, data, id }) => {
+  const { data: session, status } = useSession();
+  const { loading, setIsLoading } = useContext(LoadingContext);
   const context = useContext(UserContext);
   const project = useProject()!;
   const [isFormActive, setIsFormActive] = useState(INITIAL_IS_FORM_ACTIVE_STATE);
@@ -66,26 +69,31 @@ export const ProjectCategory = (props: Props) => {
   const { field } = useController({ name: 'unit', control });
 
   const deleteElement = async (element: Element) => {
-    await deleteCategoryElement(id, categoryName.category, element);
+    await deleteCategoryElement(id, categoryName.category, element, session);
     context.setProjects();
   };
 
   const submitHandler = async (formValues: FieldValues) => {
+    setIsLoading(true);
     if (isFormActive.isEditing) {
-      await deleteCategoryElement(id, categoryName.category, editedElement);
+      await deleteCategoryElement(id, categoryName.category, editedElement, session);
+
       setEditedElement((prevState) => ({
         ...prevState,
         ...INITIAL_EDITED_ELEMENT_STATE,
       }));
     }
 
-    await createNewCategoryElement(project, categoryName.category, formValues as Element);
+    await createNewCategoryElement(
+      project.id,
+      categoryName.category,
+      formValues as Element,
+      session,
+    );
+    setIsLoading(false);
     reset((prevState) => ({
       ...prevState,
-      name: '',
-      value: 0,
-      unit: [''],
-      price: '0',
+      ...FORM_DEFAULT_VALUES,
     }));
     setIsFormActive((prevState) => ({ ...prevState, ...INITIAL_IS_FORM_ACTIVE_STATE }));
     context.setProjects();
@@ -139,6 +147,7 @@ export const ProjectCategory = (props: Props) => {
           reset={reset}
           setIsFormActive={setIsFormActive}
           isFormActive={isFormActive.isActive}
+          loading={loading}
         />
       </div>
     </div>

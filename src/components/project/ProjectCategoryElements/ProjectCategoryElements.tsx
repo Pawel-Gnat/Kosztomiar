@@ -4,7 +4,7 @@ import { sortElementsAlphabetically } from '@/utils/sortElementsAlphabetically';
 import { Element, FormElement } from '@/types/types';
 import { CiCircleMore, CiCircleRemove } from 'react-icons/ci';
 import { UseFormReset } from 'react-hook-form';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { DeleteModal } from '@/components/modal/DeleteModal';
 import { useModal } from '@/hooks/useModal';
 
