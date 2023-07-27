@@ -1,6 +1,6 @@
 import { UserContextType } from '@/types/types';
 import { getProjectsFromLocalStorage } from '@/utils/localStorageDatabase';
-import { mongoDatabaseProjects } from '@/utils/mongoDatabaseProjects';
+import mongoDatabaseProjects from '@/utils/mongoDatabaseProjects';
 import { useSession } from 'next-auth/react';
 import { FC, ReactNode, createContext, useCallback, useEffect, useState } from 'react';
 

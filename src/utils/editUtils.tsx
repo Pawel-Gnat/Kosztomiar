@@ -3,7 +3,7 @@ import {
   setProjectsToLocalStorage,
 } from '@/utils/localStorageDatabase';
 import { Category, Project, UserSession } from '@/types/types';
-import { mongoDatabaseProjects } from './mongoDatabaseProjects';
+import mongoDatabaseProjects from './mongoDatabaseProjects';
 
 export const editCategory = async ({
   projectId,
@@ -23,7 +23,6 @@ export const editCategory = async ({
       categoryData,
     };
 
-    console.log(category);
     await mongoDatabaseProjects('PATCH', undefined, category);
   } else {
     const existingProjects = await getProjectsFromLocalStorage();
