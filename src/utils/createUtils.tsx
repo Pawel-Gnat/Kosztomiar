@@ -3,7 +3,7 @@ import {
   getProjectsFromLocalStorage,
   setProjectsToLocalStorage,
 } from './localStorageDatabase';
-import { mongoDatabaseProjects } from './mongoDatabaseProjects';
+import mongoDatabaseProjects from './mongoDatabaseProjects';
 
 export const createNewProject = async (project: Project, session: UserSession) => {
   if (session) {

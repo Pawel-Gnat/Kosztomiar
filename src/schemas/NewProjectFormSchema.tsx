@@ -1,7 +1,7 @@
 import { checkIfProjectNameExists } from '@/utils/checkIfNameExists';
 import { removeExcessWhitespaces } from '@/utils/removeExcessWhitespaces';
 import { Project } from '@/types/types';
-import { array, boolean, string, z } from 'zod';
+import { array, string, z } from 'zod';
 
 export const NewProjectFormSchema = (projects: Project[]) =>
   z.object({
