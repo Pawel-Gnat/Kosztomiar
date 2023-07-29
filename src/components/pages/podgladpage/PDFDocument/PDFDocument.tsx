@@ -1,7 +1,8 @@
 import { Project } from '@/types/types';
 import { Page, Text, View, Document, StyleSheet, Font } from '@react-pdf/renderer';
-import { sumValueOfProjectElements } from '../../utils/sumValueOfProjectElements';
-import { totalSumOfProjectElements } from '../../utils/totalSumOfProjectElements';
+import { sumValueOfProjectElements } from '../../../../utils/sumValueOfProjectElements';
+import { totalSumOfProjectElements } from '../../../../utils/totalSumOfProjectElements';
+import { FC } from 'react';
 
 const styles = StyleSheet.create({
   page: {
@@ -50,8 +51,8 @@ Font.register({
   src: 'https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-light-webfont.ttf',
 });
 
-export const PDFDocument = (props: { data: Project }) => {
-  const pdfData = props.data;
+export const PDFDocument: FC<{ data: Project }> = ({ data }) => {
+  const pdfData = data;
 
   return (
     <Document>
