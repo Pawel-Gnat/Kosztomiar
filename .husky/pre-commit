@@ -1,4 +1,9 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
+echo "running Prettier"
 npx lint-staged
+
+echo "running Jest tests"
+npm test --watchAll=false
+

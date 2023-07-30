@@ -9,7 +9,7 @@ export const Hero = () => {
   const { data: session, status } = useSession();
 
   return (
-    <section className={styles.hero}>
+    <section className={styles.hero} role="hero">
       <div className={styles['text-container']}>
         <div data-aos="fade-up" data-aos-delay="300">
           <H1 content="Twórz raporty, które przekształcają Twoje dane w wartość biznesową" />
