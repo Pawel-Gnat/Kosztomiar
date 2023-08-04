@@ -5,12 +5,12 @@ import Link from 'next/link';
 
 export const CTA = () => {
   return (
-    <section className={styles.cta}>
+    <section className={styles.cta} role="cta">
       <h4 className={styles.heading} data-aos="fade-up" data-aos-delay="200">
         Zbuduj lepsze kosztorysy szybciej i sprawniej.
       </h4>
       <div data-aos="fade-up" data-aos-delay="300">
-        <Text content=" Wypróbuj aplikację Kosztomiar i przekonaj się, jak wiele zyskasz!" />
+        <Text content="Wypróbuj aplikację Kosztomiar i przekonaj się, jak wiele zyskasz!" />
       </div>
       <Link
         href="/kreator"

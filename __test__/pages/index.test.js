@@ -20,4 +20,11 @@ describe('HomePage', () => {
     const footerComponent = screen.getByRole('footer');
     expect(footerComponent).toBeInTheDocument();
   });
+
+  it('Should render CTA component properly', () => {
+    render(<HomePage />);
+
+    const ctaComponent = screen.getByRole('cta');
+    expect(ctaComponent).toBeInTheDocument();
+  });
 });
