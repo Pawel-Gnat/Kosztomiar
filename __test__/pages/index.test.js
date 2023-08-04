@@ -14,6 +14,13 @@ describe('HomePage', () => {
     expect(heroComponent).toBeInTheDocument();
   });
 
+  it('Should render Footer component properly', () => {
+    render(<HomePage />);
+
+    const footerComponent = screen.getByRole('footer');
+    expect(footerComponent).toBeInTheDocument();
+  });
+
   it('Should render CTA component properly', () => {
     render(<HomePage />);
 

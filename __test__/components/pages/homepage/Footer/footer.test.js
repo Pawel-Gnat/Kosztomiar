@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { Hero } from '@/components/pages/homepage/Hero/Hero';
+import { Footer } from '@/components/pages/homepage/Footer/Footer';
 import '@testing-library/jest-dom';
 import {
   nextAuthenticatedMock,
@@ -8,39 +8,32 @@ import {
 import { useSession } from 'next-auth/react';
 jest.mock('next-auth/react');
 
-describe('Hero component', () => {
-  it('Should render H1 tag properly', () => {
+describe('Footer component', () => {
+  it('Should render homepage link properly', () => {
     useSession.mockReturnValue(nextAuthenticatedMock);
-    render(<Hero />);
+    render(<Footer />);
 
-    const heading = screen.getByRole('heading', { level: 1 });
-    const headingText =
-      'Twórz raporty, które przekształcają Twoje dane w wartość biznesową';
-
-    expect(heading).toHaveTextContent(headingText);
+    expect(screen.getByRole('link', { name: '' })).toHaveAttribute('href', '/');
   });
 
-  it('Should render paragraph text properly', () => {
-    render(<Hero />);
+  it('Should render homepage link logo properly', () => {
+    const { container } = render(<Footer />);
 
-    const paragraph = screen.getByText(
-      `Niezależnie od branży, aplikacja zapewnia narzędzia do efektywnego tworzenia i prezentowania kosztów, co pomaga w podejmowaniu mądrych decyzji biznesowych.`,
-    );
-
-    expect(paragraph).toBeInTheDocument();
+    const svg = container.querySelector('svg');
+    expect(svg).toBeInTheDocument();
   });
 
   it('Should render kreator link properly', () => {
-    render(<Hero />);
+    render(<Footer />);
 
-    expect(screen.getByRole('link', { name: 'Wypróbuj' })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: 'Kreator' })).toHaveAttribute(
       'href',
       '/kreator',
     );
   });
 
   it('Should render profil link properly if user is authenticated', () => {
-    render(<Hero />);
+    render(<Footer />);
 
     expect(screen.getByRole('link', { name: 'Twój profil' })).toHaveAttribute(
       'href',
@@ -52,7 +45,7 @@ describe('Hero component', () => {
 
   it('Should render login link properly if user is not authenticated', () => {
     useSession.mockReturnValueOnce(nextUnauthenticatedMock);
-    render(<Hero />);
+    render(<Footer />);
 
     expect(screen.queryByRole('link', { name: 'Twój profil' })).toBeNull();
 
@@ -60,12 +53,5 @@ describe('Hero component', () => {
       'href',
       '/login',
     );
-  });
-
-  it('Should render hero image if user is authenticated', () => {
-    const { container } = render(<Hero />);
-
-    const image = container.querySelector('img');
-    expect(image).toBeInTheDocument();
   });
 });
