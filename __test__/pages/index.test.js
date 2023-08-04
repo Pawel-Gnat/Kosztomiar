@@ -13,4 +13,11 @@ describe('HomePage', () => {
     const heroComponent = screen.getByRole('hero');
     expect(heroComponent).toBeInTheDocument();
   });
+
+  it('Should render Footer component properly', () => {
+    render(<HomePage />);
+
+    const footerComponent = screen.getByRole('footer');
+    expect(footerComponent).toBeInTheDocument();
+  });
 });
