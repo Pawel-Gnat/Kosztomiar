@@ -10,7 +10,7 @@ export default function Navbar() {
 
   return (
     <header className={styles.header}>
-      <nav className={styles.nav}>
+      <nav className={styles.nav} role="navbar">
         <div className={stylesLink['logo-container']}>
           <Link href="/" className={stylesLink.logo}>
             <Logo />
