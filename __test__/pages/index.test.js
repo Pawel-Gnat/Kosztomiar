@@ -6,8 +6,15 @@ import { useSession } from 'next-auth/react';
 jest.mock('next-auth/react');
 
 describe('HomePage', () => {
-  it('Should render Hero component properly', () => {
+  it('Should render Navbar component properly', () => {
     useSession.mockReturnValue(nextAuthenticatedMock);
+    render(<HomePage />);
+
+    const navbarComponent = screen.getByRole('navbar');
+    expect(navbarComponent).toBeInTheDocument();
+  });
+
+  it('Should render Hero component properly', () => {
     render(<HomePage />);
 
     const heroComponent = screen.getByRole('hero');
