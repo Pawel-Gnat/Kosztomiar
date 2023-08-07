@@ -14,17 +14,24 @@ describe('HomePage', () => {
     expect(heroComponent).toBeInTheDocument();
   });
 
-  it('Should render Footer component properly', () => {
-    render(<HomePage />);
-
-    const footerComponent = screen.getByRole('footer');
-    expect(footerComponent).toBeInTheDocument();
-  });
-
   it('Should render CTA component properly', () => {
     render(<HomePage />);
 
     const ctaComponent = screen.getByRole('cta');
     expect(ctaComponent).toBeInTheDocument();
+  });
+
+  it('Should render feature cards component properly', () => {
+    render(<HomePage />);
+
+    const cardsComponent = screen.getByRole('features');
+    expect(cardsComponent).toBeInTheDocument();
+  });
+
+  it('Should render Footer component properly', () => {
+    render(<HomePage />);
+
+    const footerComponent = screen.getByRole('footer');
+    expect(footerComponent).toBeInTheDocument();
   });
 });
