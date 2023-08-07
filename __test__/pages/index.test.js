@@ -28,6 +28,13 @@ describe('HomePage', () => {
     expect(cardsComponent).toBeInTheDocument();
   });
 
+  it('Should render accordion component properly', () => {
+    render(<HomePage />);
+
+    const accordionComponent = screen.getByRole('accordion');
+    expect(accordionComponent).toBeInTheDocument();
+  });
+
   it('Should render Footer component properly', () => {
     render(<HomePage />);
 
