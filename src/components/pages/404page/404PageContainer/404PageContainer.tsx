@@ -8,11 +8,11 @@ export const WrongPageContainer = () => {
   const router = useRouter();
 
   return (
-    <div className={styles.container}>
+    <section className={styles.container} role="404page">
       <H1 content="Strona o podanym adresie nie istnieje" />
       <Link href="/" className={stylesLink.navlink} onClick={() => router.back()}>
         Powrót do poprzedniej strony
       </Link>
-    </div>
+    </section>
   );
 };
