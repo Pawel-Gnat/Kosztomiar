@@ -1,8 +1,10 @@
-import stylesButton from '../../../components/ui/Button/Button.module.css';
+import stylesButton from '@/components/ui/Button/Button.module.css';
 import { ProjectLayout } from '@/components/layout/ProjectLayout/ProjectLayout';
-import { PDFDocument } from '@/components/pdf/PDFDocument';
+import { PDFDocument } from '@/components/pages/podgladpage/PDFDocument/PDFDocument';
 import { useProject } from '@/hooks/useProject';
 import { PDFDownloadLink, PDFViewer } from '@react-pdf/renderer';
+import { Loader } from '@/components/loader/Loader';
+import { PDFContainer } from '@/components/pages/podgladpage/PDFContainer/PDFContainer';
 
 export default function PodgladPage() {
   const project = useProject()!;
@@ -12,20 +14,24 @@ export default function PodgladPage() {
     aspectRatio: '1/1',
   };
 
+  const DownloadLink = (
+    <PDFDownloadLink
+      document={<PDFDocument data={project} />}
+      fileName={project && project.name}
+      className={stylesButton.button}
+    >
+      {({ loading }) => (loading ? <Loader /> : 'Pobierz dokument w PDF')}
+    </PDFDownloadLink>
+  );
+
   return (
     <ProjectLayout>
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <PDFContainer>
         <PDFViewer style={viewerStyle} width={'100%'}>
           <PDFDocument data={project} />
         </PDFViewer>
-        <PDFDownloadLink
-          document={<PDFDocument data={project} />}
-          fileName={project && project.name}
-          className={stylesButton.button}
-        >
-          Pobierz w PDF
-        </PDFDownloadLink>
-      </div>
+        {DownloadLink}
+      </PDFContainer>
     </ProjectLayout>
   );
 }

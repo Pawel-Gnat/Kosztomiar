@@ -1,4 +1,4 @@
-import { mongoDatabaseConnect } from '@/utils/mongoDatabaseConnect';
+import mongoDatabaseConnect from '@/utils/mongoDatabaseConnect';
 import NextAuth from 'next-auth/next';
 import type { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';

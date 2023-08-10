@@ -8,7 +8,7 @@ export const LoginFormHeader = () => {
   const router = useRouter();
 
   return (
-    <div className={`${styles.container} show`}>
+    <div className={`${styles.container} show`} data-testid="login-form-header">
       <H1 content="Rozpocznij pracę z Kosztomiarem" />
       <Image
         src="/assets/img/hero-image.jpg"

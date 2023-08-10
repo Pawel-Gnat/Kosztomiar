@@ -1,5 +1,5 @@
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
-import { mongoDatabaseConnect } from '@/utils/mongoDatabaseConnect';
+import mongoDatabaseConnect from '@/utils/mongoDatabaseConnect';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { Session, getServerSession } from 'next-auth';
 

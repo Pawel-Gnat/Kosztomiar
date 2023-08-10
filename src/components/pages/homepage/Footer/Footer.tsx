@@ -8,7 +8,7 @@ export const Footer = () => {
   const { data: session, status } = useSession();
 
   return (
-    <footer className={styles.footer}>
+    <footer className={styles.footer} role="footer">
       <div>
         <Link href="/" className={stylesLink.logo}>
           <Logo />

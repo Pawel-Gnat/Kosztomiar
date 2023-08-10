@@ -41,7 +41,7 @@ export const AccordionContainer = () => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   return (
-    <section>
+    <section role="accordion">
       <div className={styles.accordion}>
         {accordionContent.map((item, index) => (
           <AccordionItem

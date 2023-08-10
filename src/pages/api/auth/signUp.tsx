@@ -1,4 +1,4 @@
-import { mongoDatabaseConnect } from '@/utils/mongoDatabaseConnect';
+import mongoDatabaseConnect from '@/utils/mongoDatabaseConnect';
 import { NextApiRequest, NextApiResponse } from 'next/types';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {

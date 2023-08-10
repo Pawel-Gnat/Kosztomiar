@@ -32,7 +32,7 @@ const cardsContent = [
 
 export const CardsContainer = () => {
   return (
-    <section className={styles.cards}>
+    <section className={styles.cards} role="features">
       {cardsContent.map((card, index) => (
         <Card
           key={index}

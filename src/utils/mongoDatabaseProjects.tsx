@@ -1,6 +1,7 @@
 import { Category, Element, Project } from '@/types/types';
+import axios from 'axios';
 
-export async function mongoDatabaseProjects(
+export default async function mongoDatabaseProjects(
   method: string,
   project?: Project,
   category?: {
@@ -14,35 +15,20 @@ export async function mongoDatabaseProjects(
     elementObj: Element;
   },
 ) {
-  const options: RequestInit = {
-    method: method,
-    headers: {
-      'Content-Type': 'application/json',
-    },
+  const getDataConfig = () => {
+    if (project) return { project };
+    if (category) return { category };
+    if (element) return { element };
   };
 
-  if (project) {
-    options.body = JSON.stringify({ project });
+  try {
+    const response = await axios({
+      method,
+      url: '/api/user/handleProjects',
+      data: getDataConfig(),
+    });
+    return response.data;
+  } catch (error) {
+    return error;
   }
-
-  if (category) {
-    options.body = JSON.stringify({ category });
-  }
-
-  if (element) {
-    options.body = JSON.stringify({ element });
-  }
-
-  const response = await fetch('/api/user/handleProjects', options);
-  const data = await response.json();
-
-  if (!response.ok) {
-    return {
-      error: {
-        message: data.message,
-      },
-    };
-  }
-
-  return data;
 }
