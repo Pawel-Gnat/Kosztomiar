@@ -12,7 +12,7 @@ export const LoginFormContainer = () => {
   return (
     <LoadingProvider>
       <NotificationProvider>
-        <div className={`${styles.container} show`}>
+        <div className={`${styles.container} show`} data-testid="login-form-container">
           <h2 className={styles.heading}>{isLogin ? 'Logowanie' : 'Rejestracja'}</h2>
           <Text content="Skorzystaj z możliwości jakie daje własne konto w aplikacji. Posiadaj dostęp do swoich danych gdziekolwiek jesteś!" />
           {isLogin ? <LoginForm /> : <RegisterForm setIsLogin={setIsLogin} />}
