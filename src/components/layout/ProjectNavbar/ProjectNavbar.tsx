@@ -21,7 +21,7 @@ export const ProjectNavbar = (props: { name: string; id: string }) => {
   }
 
   return (
-    <nav className={styles.nav}>
+    <nav className={styles.nav} role="project-navbar">
       <Text content={props.name} />
       <div>
         <Link className={handleActiveLink('/')} href={`/kreator/${props.id}`}>
