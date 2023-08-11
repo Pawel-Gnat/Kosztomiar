@@ -23,7 +23,7 @@ export const DashboardNavbar = () => {
   return (
     <>
       <header>
-        <nav className={styles.nav}>
+        <nav className={styles.nav} role="dashboard-navbar">
           <div className={styles.logo}>
             <Link href="/" className={stylesLink.logo}>
               <Logo />
