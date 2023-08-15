@@ -83,6 +83,7 @@ export const NewProjectForm = () => {
       className={styles.form}
       autoComplete="off"
       onSubmit={handleSubmit(submitHandler)}
+      role="new-project-form"
     >
       <Input
         type="text"

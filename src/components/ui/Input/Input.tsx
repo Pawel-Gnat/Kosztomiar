@@ -113,7 +113,7 @@ export const RadioInput = <T extends Record<string, unknown>>({
         {...register(name as Path<T>)}
       />
       <label className={labelClass} htmlFor={content}>
-        {content}:
+        {content}
       </label>
     </div>
   );
