@@ -10,7 +10,7 @@ export const DeleteModal = (props: Modal) => {
 
   return createPortal(
     <div className={styles.background}>
-      <div className={styles.modal}>
+      <div className={styles.modal} role="modal">
         <Text content={`Czy na pewno chcesz usunąć ${type} o nazwie ${name} ?`} />
         <div className={styles.buttons}>
           <Button
