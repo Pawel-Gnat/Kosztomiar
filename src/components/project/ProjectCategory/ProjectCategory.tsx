@@ -124,8 +124,8 @@ export const ProjectCategory: FC<Props> = ({ name, currency, price, data, id }) 
             reset={reset}
           />
         </tbody>
-        <tfoot className={styles.footer}>
-          {price === 'true' && (
+        {price === 'true' && (
+          <tfoot className={styles.footer}>
             <tr>
               <td colSpan={4} className={styles['right-align']}>
                 Suma:
@@ -134,8 +134,8 @@ export const ProjectCategory: FC<Props> = ({ name, currency, price, data, id }) 
                 {sumValueOfProjectElements(categoryElements)} {currency}
               </td>
             </tr>
-          )}
-        </tfoot>
+          </tfoot>
+        )}
       </table>
       <div className={styles['new-element-container']}>
         <NewCategoryElementForm
