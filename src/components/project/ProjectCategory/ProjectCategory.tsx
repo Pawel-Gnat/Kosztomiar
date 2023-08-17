@@ -100,7 +100,7 @@ export const ProjectCategory: FC<Props> = ({ name, currency, price, data, id }) 
   };
 
   return (
-    <div>
+    <>
       <table className={styles.table}>
         <caption>{name}</caption>
         <thead>
@@ -150,6 +150,6 @@ export const ProjectCategory: FC<Props> = ({ name, currency, price, data, id }) 
           loading={loading}
         />
       </div>
-    </div>
+    </>
   );
 };
