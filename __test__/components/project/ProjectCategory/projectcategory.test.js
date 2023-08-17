@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { ProjectCategory } from '@/components/project/ProjectCategory/ProjectCategory';
 import { nextAuthenticatedMock } from '../../../../__mocks__/mock';
 import { useSession } from 'next-auth/react';
