@@ -13,6 +13,7 @@ import { useProject } from '@/hooks/useProject';
 import { createNewCategoryElement } from '@/utils/createUtils';
 import { LoadingContext } from '@/store/loading-context';
 import { useSession } from 'next-auth/react';
+import { Searchbar } from '@/components/ui/Searchbar/Searchbar';
 
 type Props = {
   name: string;
@@ -50,10 +51,14 @@ export const ProjectCategory: FC<Props> = ({ name, currency, price, data, id }) 
   const project = useProject()!;
   const [isFormActive, setIsFormActive] = useState(INITIAL_IS_FORM_ACTIVE_STATE);
   const [editedElement, setEditedElement] = useState(INITIAL_EDITED_ELEMENT_STATE);
+  const [searchbarValue, setSearchbarValue] = useState<string>('');
 
   const filteredData = Array.from(data.filter((el) => el.category === name));
   const categoryName = data.find((el) => el.category === name)!;
   const categoryElements = filteredData[0].elements;
+  const filteredCategoryElements = categoryElements.filter((el) =>
+    el.name.toLowerCase().includes(searchbarValue.toLowerCase()),
+  );
 
   const {
     register,
@@ -100,7 +105,7 @@ export const ProjectCategory: FC<Props> = ({ name, currency, price, data, id }) 
   };
 
   return (
-    <>
+    <div className={styles.container}>
       <table className={styles.table}>
         <caption>{name}</caption>
         <thead>
@@ -115,7 +120,7 @@ export const ProjectCategory: FC<Props> = ({ name, currency, price, data, id }) 
         </thead>
         <tbody className={styles.body}>
           <ProjectCategoryElements
-            data={categoryElements}
+            data={filteredCategoryElements}
             currency={currency}
             price={price}
             deleteElement={deleteElement}
@@ -137,6 +142,7 @@ export const ProjectCategory: FC<Props> = ({ name, currency, price, data, id }) 
           </tfoot>
         )}
       </table>
+      <Searchbar setSearchbarValue={setSearchbarValue} />
       <div className={styles['new-element-container']}>
         <NewCategoryElementForm
           onSubmit={handleSubmit(submitHandler)}
@@ -150,6 +156,6 @@ export const ProjectCategory: FC<Props> = ({ name, currency, price, data, id }) 
           loading={loading}
         />
       </div>
-    </>
+    </div>
   );
 };
