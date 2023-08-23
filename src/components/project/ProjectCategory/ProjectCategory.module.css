@@ -1,3 +1,9 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
 .table {
   font-size: var(--text-size-projects);
   color: var(--text-color);
@@ -72,7 +78,6 @@
 .new-element-container {
   display: flex;
   justify-content: flex-end;
-  margin: 2rem;
 }
 
 @media (min-width: 350px) {
