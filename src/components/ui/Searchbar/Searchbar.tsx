@@ -1,18 +1,17 @@
+import { FC } from 'react';
 import { Input } from '../Input/Input';
 
 type Props = {
   setSearchbarValue: (value: string) => void;
 };
 
-export const Searchbar = ({ setSearchbarValue }: Props) => {
+export const Searchbar: FC<Props> = ({ setSearchbarValue }) => {
   return (
-    <label>
-      <Input
-        type="text"
-        content="Wyszukaj materiał"
-        name="searchbar"
-        onChange={setSearchbarValue}
-      />
-    </label>
+    <Input
+      type="text"
+      content="Wyszukaj materiał"
+      name="searchbar"
+      onChange={setSearchbarValue}
+    />
   );
 };
