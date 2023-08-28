@@ -1,0 +1,48 @@
+.input {
+  width: 1px;
+  opacity: 0;
+}
+
+.label {
+  position: relative;
+  width: 5rem;
+  height: 2.5rem;
+  padding: 1rem;
+  margin: auto;
+  border-radius: 50vw;
+  background-color: var(--primary-color);
+  text-align: center;
+  cursor: pointer;
+}
+
+.label span::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 5%;
+  height: 70%;
+  aspect-ratio: 1/1;
+  transform: translate(0%, -50%);
+  border-radius: 50%;
+  background-color: var(--secondary-color);
+  transition: transform 300ms, background-color 300ms;
+}
+
+.input:checked ~ .label span::after {
+  transform: translate(155%, -50%);
+}
+
+@media (min-width: 640px) {
+  .input:hover + .label span::after {
+    background-color: var(--accent-color);
+  }
+
+  .label {
+    width: 10rem;
+    height: 5rem;
+  }
+
+  .label span::after {
+    transform: translate(0%, -50%);
+  }
+}

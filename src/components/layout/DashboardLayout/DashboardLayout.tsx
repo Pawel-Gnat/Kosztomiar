@@ -6,7 +6,7 @@ import { LoadingProvider } from '@/store/loading-context';
 
 export const DashboardLayout: FC<{ children: ReactNode }> = ({ children }) => {
   return (
-    <div className={`${styles.dashboard} show`}>
+    <div className={`${styles.dashboard} show`} data-app="app">
       <DashboardNavbar />
       <NotificationProvider>
         <LoadingProvider>

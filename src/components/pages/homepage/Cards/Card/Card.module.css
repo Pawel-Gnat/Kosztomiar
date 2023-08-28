@@ -30,6 +30,7 @@
 .heading {
   font-size: var(--text-secondary-headings-size);
   margin-bottom: 1rem;
+  color: var(--text-color);
 }
 
 @media (min-width: 640px) {

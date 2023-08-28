@@ -8,6 +8,7 @@ import { Text } from '@/components/ui/Text/Text';
 import { Logo } from '@/assets/svg/Logo';
 import { useSession } from 'next-auth/react';
 import { ProjectList } from '@/components/pages/kreatorpage/ProjectList/ProjectList';
+import { ThemeSwitcher } from '@/components/ui/ThemeSwitcher/ThemeSwitcher';
 
 export const DashboardNavbar = () => {
   const context = useContext(UserContext);
@@ -58,6 +59,7 @@ export const DashboardNavbar = () => {
                 Zaloguj się
               </Link>
             )}
+            <ThemeSwitcher />
           </div>
         </nav>
       </header>
