@@ -19,6 +19,7 @@
   background-color: transparent;
   cursor: pointer;
   outline: none;
+  color: var(--text-color);
 }
 
 .heading > button:focus-visible {
