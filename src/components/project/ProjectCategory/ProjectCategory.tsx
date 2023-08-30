@@ -14,6 +14,8 @@ import { createNewCategoryElement } from '@/utils/createUtils';
 import { LoadingContext } from '@/store/loading-context';
 import { useSession } from 'next-auth/react';
 import { Searchbar } from '@/components/ui/Searchbar/Searchbar';
+import { Button } from '@/components/ui/Button/Button';
+import { CiCircleChevDown, CiCircleChevUp } from 'react-icons/ci';
 
 type Props = {
   name: string;
@@ -52,6 +54,7 @@ export const ProjectCategory: FC<Props> = ({ name, currency, price, data, id }) 
   const [isFormActive, setIsFormActive] = useState(INITIAL_IS_FORM_ACTIVE_STATE);
   const [editedElement, setEditedElement] = useState(INITIAL_EDITED_ELEMENT_STATE);
   const [searchbarValue, setSearchbarValue] = useState<string>('');
+  const [isCategoryHidden, setIsCategoryHidden] = useState(false);
 
   const filteredData = Array.from(data.filter((el) => el.category === name));
   const categoryName = data.find((el) => el.category === name)!;
@@ -115,21 +118,32 @@ export const ProjectCategory: FC<Props> = ({ name, currency, price, data, id }) 
             <th>Ilość</th>
             <th>J.m.</th>
             {price === 'true' && <th>Cena</th>}
-            <th></th>
+            <th>
+              <Button
+                type="button"
+                content={isCategoryHidden ? 'Maksymalizuj' : 'Minimalizuj'}
+                accent={false}
+                isSmall={true}
+                icon={isCategoryHidden ? <CiCircleChevUp /> : <CiCircleChevDown />}
+                onClick={() => setIsCategoryHidden((prev) => !prev)}
+              />
+            </th>
           </tr>
         </thead>
-        <tbody className={styles.body}>
-          <ProjectCategoryElements
-            data={filteredCategoryElements}
-            currency={currency}
-            price={price}
-            deleteElement={deleteElement}
-            setIsFormActive={setIsFormActive}
-            setEditedElement={setEditedElement}
-            reset={reset}
-          />
-        </tbody>
-        {price === 'true' && (
+        {!isCategoryHidden && (
+          <tbody className={styles.body}>
+            <ProjectCategoryElements
+              data={filteredCategoryElements}
+              currency={currency}
+              price={price}
+              deleteElement={deleteElement}
+              setIsFormActive={setIsFormActive}
+              setEditedElement={setEditedElement}
+              reset={reset}
+            />
+          </tbody>
+        )}
+        {price === 'true' && !isCategoryHidden && (
           <tfoot className={styles.footer}>
             <tr>
               <td colSpan={4} className={styles['right-align']}>
@@ -142,20 +156,24 @@ export const ProjectCategory: FC<Props> = ({ name, currency, price, data, id }) 
           </tfoot>
         )}
       </table>
-      <Searchbar setSearchbarValue={setSearchbarValue} />
-      <div className={styles['new-element-container']}>
-        <NewCategoryElementForm
-          onSubmit={handleSubmit(submitHandler)}
-          error={errors}
-          register={register}
-          control={control}
-          field={field}
-          reset={reset}
-          setIsFormActive={setIsFormActive}
-          isFormActive={isFormActive.isActive}
-          loading={loading}
-        />
-      </div>
+      {!isCategoryHidden && (
+        <>
+          <Searchbar setSearchbarValue={setSearchbarValue} />
+          <div className={styles['new-element-container']}>
+            <NewCategoryElementForm
+              onSubmit={handleSubmit(submitHandler)}
+              error={errors}
+              register={register}
+              control={control}
+              field={field}
+              reset={reset}
+              setIsFormActive={setIsFormActive}
+              isFormActive={isFormActive.isActive}
+              loading={loading}
+            />
+          </div>
+        </>
+      )}
     </div>
   );
 };

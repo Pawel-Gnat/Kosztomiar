@@ -1,4 +1,4 @@
-.waves {
+body:not([data-theme='dark']) .waves {
   position: absolute;
   min-height: 100vh;
   inset: 0;
