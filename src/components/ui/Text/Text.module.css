@@ -6,4 +6,5 @@
 
 .heading {
   font-size: var(--text-primary-heading-size);
+  color: var(--text-color);
 }

@@ -96,6 +96,7 @@ export const ChangePasswordForm = () => {
         className={styles.form}
         autoComplete="off"
         onSubmit={handleSubmit(submitHandler)}
+        role="change-password-form"
       >
         {passwordInputs.map((el, index) => (
           <Input

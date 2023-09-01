@@ -85,7 +85,7 @@ export const ProjectCategoriesList: FC<{ project: Project }> = ({ project }) => 
   };
 
   const CategoryList = (
-    <ul>
+    <ul role="category-list">
       {project.data.map((el, index) => (
         <li key={index} className={styles.list}>
           <span>{el.category}</span>
