@@ -40,11 +40,10 @@ If you have an account, you can log in and access your password to change it.
 
 ### Screenshot
 
-<!-- ![](./screenshots/screenshot1.jpg)
-![](./screenshots/screenshot3.jpg)
+![](./screenshots/screenshot1.jpg)
+![](./screenshots/screenshot2.jpg)
+<img src="./screenshots/screenshot3.jpg" alt="" width="300">
 <img src="./screenshots/screenshot4.jpg" alt="" width="300">
-<img src="./screenshots/screenshot5.jpg" alt="" width="300">
-<img src="./screenshots/screenshot2.jpg" alt="" width="300"> -->
 
 ### Technology stack
 
