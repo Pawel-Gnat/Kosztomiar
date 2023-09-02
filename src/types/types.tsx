@@ -1,4 +1,5 @@
 import { Session } from 'next-auth';
+import { ReactNode } from 'react';
 
 export type FormProject = {
   name: string;
@@ -69,6 +70,17 @@ export interface Modal {
 }
 
 export type InputType = 'text' | 'number' | 'email' | 'password';
+
+export type Button = {
+  type: 'submit' | 'button';
+  ariaLabel?: string;
+  ariaExpanded?: boolean;
+  onClick?: () => void;
+  icon?: ReactNode;
+  isSmall: boolean;
+  content: string | JSX.Element;
+  accent: boolean;
+};
 
 export type Login = {
   email: string;

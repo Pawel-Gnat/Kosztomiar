@@ -1,16 +1,7 @@
+import { Button as ButtonType } from '@/types/types';
 import styles from './Button.module.css';
-import { ReactNode } from 'react';
 
-type Button = {
-  type: 'submit' | 'button';
-  onClick?: () => void;
-  icon?: ReactNode;
-  isSmall: boolean;
-  content: string | JSX.Element;
-  accent: boolean;
-};
-
-export const Button = (props: Button) => {
+export const Button = (props: ButtonType) => {
   const buttonClassName = props.accent
     ? `${styles.button} ${styles.accent}`
     : styles.button;
@@ -20,6 +11,8 @@ export const Button = (props: Button) => {
       className={props.isSmall ? `${styles.table} ${buttonClassName}` : buttonClassName}
       type={props.type}
       onClick={props.onClick}
+      aria-label={props.ariaLabel}
+      aria-expanded={props.ariaExpanded}
     >
       {props.icon}
       {props.content}
