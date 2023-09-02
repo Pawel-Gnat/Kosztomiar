@@ -93,6 +93,7 @@ export const ProjectCategoriesList: FC<{ project: Project }> = ({ project }) => 
             <Button
               type="button"
               content="Edytuj nazwę"
+              ariaLabel={`Edytuj kategorię: ${el.category}`}
               isSmall={true}
               accent={false}
               icon={<CiCircleMore />}
@@ -101,6 +102,7 @@ export const ProjectCategoriesList: FC<{ project: Project }> = ({ project }) => 
             <Button
               type="button"
               content="Usuń kategorię"
+              ariaLabel={`Usuń kategorię: ${el.category}`}
               isSmall={true}
               accent={false}
               icon={<CiCircleRemove />}

@@ -122,6 +122,10 @@ export const ProjectCategory: FC<Props> = ({ name, currency, price, data, id }) 
               <Button
                 type="button"
                 content={isCategoryHidden ? 'Maksymalizuj' : 'Minimalizuj'}
+                ariaLabel={
+                  isCategoryHidden ? 'Maksymalizuj kategorię' : 'Minimalizuj kategorię'
+                }
+                ariaExpanded={!isCategoryHidden}
                 accent={false}
                 isSmall={true}
                 icon={isCategoryHidden ? <CiCircleChevUp /> : <CiCircleChevDown />}

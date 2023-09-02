@@ -33,17 +33,27 @@ describe('ProjectCategoriesList component', () => {
     const category2 = screen.getByText('Category 2');
     expect(category2).toBeInTheDocument();
 
-    const editButtons = screen.getAllByRole('button', { name: 'Edytuj nazwę' });
-    expect(editButtons).toHaveLength(2);
+    mockProject.data.forEach((category) => {
+      const categoryName = category.category;
 
-    const deleteButtons = screen.getAllByRole('button', { name: 'Usuń kategorię' });
-    expect(deleteButtons).toHaveLength(2);
+      const categoryButton = screen.getByRole('button', {
+        name: `Edytuj kategorię: ${categoryName}`,
+      });
+      expect(categoryButton).toBeInTheDocument();
+
+      const deleteButton = screen.getByRole('button', {
+        name: `Usuń kategorię: ${categoryName}`,
+      });
+      expect(deleteButton).toBeInTheDocument();
+    });
   });
 
   it('Should render CategoryForm component properly if isActive', () => {
     render(<ProjectCategoriesList project={mockProject} />);
 
-    const editButtons = screen.getAllByRole('button', { name: 'Edytuj nazwę' });
+    const editButtons = screen.getAllByRole('button', {
+      name: `Edytuj kategorię: ${mockProject.data[0].category}`,
+    });
     fireEvent.click(editButtons[0]);
 
     const categoryForm = screen.getByRole('category-form');

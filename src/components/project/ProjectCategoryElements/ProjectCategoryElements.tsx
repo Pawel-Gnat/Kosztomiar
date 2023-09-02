@@ -92,6 +92,7 @@ export const ProjectCategoryElements = ({
             <Button
               type="button"
               content="Edytuj"
+              ariaLabel={`Edytuj element: ${el.name}`}
               accent={false}
               isSmall={true}
               icon={<CiCircleMore />}
@@ -100,6 +101,7 @@ export const ProjectCategoryElements = ({
             <Button
               type="button"
               content="Usuń"
+              ariaLabel={`Usuń element: ${el.name}`}
               accent={false}
               isSmall={true}
               icon={<CiCircleRemove />}
