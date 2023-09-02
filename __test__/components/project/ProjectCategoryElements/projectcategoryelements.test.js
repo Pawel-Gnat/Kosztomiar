@@ -17,7 +17,11 @@ describe('ProjectCategoryElements component', () => {
   it('Should render button elements properly', () => {
     render(<ProjectCategoryElements data={mockElements} />);
 
-    expect(screen.getByRole('button', { name: 'Edytuj' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Usuń' })).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: `Edytuj element: ${mockElements[0].name}` }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: `Usuń element: ${mockElements[0].name}` }),
+    ).toBeInTheDocument();
   });
 });
